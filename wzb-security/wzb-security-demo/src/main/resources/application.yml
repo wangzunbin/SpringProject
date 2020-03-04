@@ -15,3 +15,8 @@ security:
      en
 server:
   port: 8060
+
+wzb:
+  security:
+    browser:
+      loginPage: /demo-signIn.html

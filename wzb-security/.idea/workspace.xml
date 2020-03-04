@@ -218,8 +218,8 @@
       <item itemvalue="JUnit.UserControllerTest.whenUpdateSuccess" />
       <item itemvalue="JUnit.UserControllerTest.whenDeleteSuccess" />
       <item itemvalue="JUnit.UserControllerTest.whenUploadSuccess" />
-      <item itemvalue="Spring Boot.DemoApplication" />
       <item itemvalue="JUnit.TypeTest.testInteger" />
+      <item itemvalue="Spring Boot.DemoApplication" />
     </list>
     <recent_temporary>
       <list>
@@ -296,22 +296,22 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="805" y="311" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1583292291980" />
-    <state width="1214" height="407" key="GridCell.Tab.0.bottom" timestamp="1583292967912">
+    <state width="1214" height="280" key="GridCell.Tab.0.bottom" timestamp="1583294559499">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="1214" height="407" key="GridCell.Tab.0.bottom/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
-    <state width="1214" height="407" key="GridCell.Tab.0.center" timestamp="1583292967912">
+    <state width="1214" height="280" key="GridCell.Tab.0.bottom/0.0.2048.1112@0.0.2048.1112" timestamp="1583294559499" />
+    <state width="1214" height="280" key="GridCell.Tab.0.center" timestamp="1583294559499">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="1214" height="407" key="GridCell.Tab.0.center/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
-    <state width="1214" height="407" key="GridCell.Tab.0.left" timestamp="1583292967912">
+    <state width="1214" height="280" key="GridCell.Tab.0.center/0.0.2048.1112@0.0.2048.1112" timestamp="1583294559499" />
+    <state width="1214" height="280" key="GridCell.Tab.0.left" timestamp="1583294559499">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="1214" height="407" key="GridCell.Tab.0.left/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
-    <state width="1214" height="407" key="GridCell.Tab.0.right" timestamp="1583292967912">
+    <state width="1214" height="280" key="GridCell.Tab.0.left/0.0.2048.1112@0.0.2048.1112" timestamp="1583294559499" />
+    <state width="1214" height="280" key="GridCell.Tab.0.right" timestamp="1583294559499">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="1214" height="407" key="GridCell.Tab.0.right/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="280" key="GridCell.Tab.0.right/0.0.2048.1112@0.0.2048.1112" timestamp="1583294559499" />
     <state width="1214" height="407" key="GridCell.Tab.1.bottom" timestamp="1583292967912">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
