@@ -1,0 +1,75 @@
+package com.wzb.browser;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+/**
+ * ClassName:BrowserSecurityConfig  <br/>
+ * Funtion:  <br/>
+ *
+ * @author WangZunBin <br/>
+ * @version 0.4 2020/3/4 9:54   <br/>
+ */
+
+@Configuration
+public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    /**
+     *     你要登陆论坛，输入用户名张三，密码1234，密码正确，证明你张三确实是张三，这就是 authentication；
+     *     再一check用户张三是个版主，所以有权限加精删别人帖，这就是 authorization。
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+             http// 表单登陆
+                //这个是去到一个页面, 输入用户名和密码
+                .formLogin()
+                     //告诉spring先跳到这个页面
+                .loginPage("/authentication/require")
+                // 告诉spring security去UsernamePasswordAuthenticationFilter认证
+                .loginProcessingUrl("/authentication/form")
+                // 这个是弹框输入用户名和密码
+//                .httpBasic()
+                .and()
+                // 对下面请求的授权
+                .authorizeRequests()
+                // 下面的地址不需要身份认证
+                .antMatchers("/authentication/require").permitAll()
+                // 剩下任何请求都需要认证
+                .anyRequest()
+                //  都需要身份认证
+                .authenticated()
+                .and()
+                // 暂时把跨域关掉
+                .csrf().disable();
+//        第一版本
+   /*     http// 表单登陆
+                //这个是去到一个页面, 输入用户名和密码
+                .formLogin()
+                .loginPage("/wzb-login.html")
+                // 告诉spring security去UsernamePasswordAuthenticationFilter认证
+                .loginProcessingUrl("/authentication/form")
+                // 这个是弹框输入用户名和密码
+//                .httpBasic()
+                .and()
+                // 对下面请求的授权
+                .authorizeRequests()
+                // 下面的地址不需要身份认证
+                .antMatchers("/wzb-login.html").permitAll()
+                // 剩下任何请求都需要认证
+                .anyRequest()
+                //  都需要身份认证
+                .authenticated()
+                .and()
+                // 暂时把跨域关掉
+                .csrf().disable();*/
+    }
+}

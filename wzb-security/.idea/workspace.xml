@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="778a1956-5cdc-4c11-9369-833d04ded26e" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="AnnotationType" />
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="F:\developer\repository" />
+        <option name="mavenHome" value="D:/developer/apache-maven-3.3.9" />
+        <option name="userSettingsFile" value="D:\developer\apache-maven-3.3.9\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProjectId" id="1YZ8ta9Bbl8BK5ali2r3NP9a2oX" />
+  <component name="ProjectViewState">
+    <option name="compactDirectories" value="true" />
+    <option name="flattenModules" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showModules" value="false" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="android.project.structure.last.selected" value="SDK Location" />
+    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="android.sdk.path" value="E:/SDK" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="H:/BaiduNetdiskDownload/Spring Security 4/p1o6vt" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.wzb.web" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.wzb.dto" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\SpringProject\wzb-security\wzb-security-browser\src\main\resources\static" />
+      <recent name="G:\SpringProject\wzb-security\wzb-security-browser\src\main\resources" />
+      <recent name="G:\SpringProject\wzb-security\wzb-security-browser\src\main\resources\resource" />
+      <recent name="G:\SpringProject\wzb-security\doc" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.DemoApplication">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+      <method />
+    </configuration>
+    <configuration name="MockServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.wzb.web.wiremock.MockServer" />
+      <module name="wzb-security-demo" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wzb.web.wiremock.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TypeTest.testInteger" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wzb-security-demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wzb.web.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.wzb.web.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.wzb.web.controller.TypeTest" />
+      <option name="METHOD_NAME" value="testInteger" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserControllerTest.whenDeleteSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wzb-security-demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wzb.web.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.wzb.web.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.wzb.web.controller.UserControllerTest" />
+      <option name="METHOD_NAME" value="whenDeleteSuccess" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserControllerTest.whenUpdateSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wzb-security-demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wzb.web.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.wzb.web.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.wzb.web.controller.UserControllerTest" />
+      <option name="METHOD_NAME" value="whenUpdateSuccess" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserControllerTest.whenUploadSuccess" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wzb-security-demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wzb.web.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.wzb.web.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.wzb.web.controller.UserControllerTest" />
+      <option name="METHOD_NAME" value="whenUploadSuccess" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="wzb-security-demo" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wzb.DemoApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.MockServer" />
+      <item itemvalue="JUnit.UserControllerTest.whenUpdateSuccess" />
+      <item itemvalue="JUnit.UserControllerTest.whenDeleteSuccess" />
+      <item itemvalue="JUnit.UserControllerTest.whenUploadSuccess" />
+      <item itemvalue="Spring Boot.DemoApplication" />
+      <item itemvalue="JUnit.TypeTest.testInteger" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TypeTest.testInteger" />
+        <item itemvalue="Application.MockServer" />
+        <item itemvalue="JUnit.UserControllerTest.whenUploadSuccess" />
+        <item itemvalue="JUnit.UserControllerTest.whenDeleteSuccess" />
+        <item itemvalue="JUnit.UserControllerTest.whenUpdateSuccess" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="778a1956-5cdc-4c11-9369-833d04ded26e" name="Default Changelist" comment="" />
+      <created>1583138971751</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583138971751</updated>
+      <workItem from="1583138974360" duration="15003000" />
+      <workItem from="1583193313657" duration="6059000" />
+      <workItem from="1583209925161" duration="8843000" />
+      <workItem from="1583286622017" duration="6850000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="141" y="190" width="814" height="692" key="#Project_Structure" timestamp="1583291199158">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="141" y="190" width="814" height="692" key="#Project_Structure/0.0.2048.1112@0.0.2048.1112" timestamp="1583291199158" />
+    <state x="169" y="155" width="1136" height="690" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583142035746">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="169" y="155" width="1136" height="690" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1583142035746" />
+    <state x="93" y="93" width="1862" height="926" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1583158134146">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="93" y="93" width="1862" height="926" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1583158134146" />
+    <state x="830" y="265" key="#com.intellij.ide.util.MemberChooser" timestamp="1583292397348">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="830" y="265" key="#com.intellij.ide.util.MemberChooser/0.0.2048.1112@0.0.2048.1112" timestamp="1583292397348" />
+    <state x="467" y="283" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1583142032717">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="467" y="283" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1583142032717" />
+    <state x="309" y="366" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1583154453730">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="309" y="366" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.2048.1112@0.0.2048.1112" timestamp="1583154453730" />
+    <state x="783" y="435" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1583154455668">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="783" y="435" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.2048.1112@0.0.2048.1112" timestamp="1583154455668" />
+    <state x="805" y="311" key="FileChooserDialogImpl" timestamp="1583292291980">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="805" y="311" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1583292291980" />
+    <state width="1214" height="407" key="GridCell.Tab.0.bottom" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.0.bottom/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.0.center" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.0.center/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.0.left" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.0.left/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.0.right" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.0.right/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.1.bottom" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.1.bottom/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.1.center" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.1.center/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.1.left" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.1.left/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.1.right" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.1.right/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.2.bottom" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.2.bottom/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.2.center" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.2.center/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.2.left" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.2.left/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state width="1214" height="407" key="GridCell.Tab.2.right" timestamp="1583292967912">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1214" height="407" key="GridCell.Tab.2.right/0.0.2048.1112@0.0.2048.1112" timestamp="1583292967912" />
+    <state x="526" y="198" key="SettingsEditor" timestamp="1583140266834">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="526" y="198" key="SettingsEditor/0.0.2048.1112@0.0.2048.1112" timestamp="1583140266834" />
+    <state x="389" y="244" width="1034" height="524" key="find.popup" timestamp="1583289673908">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="389" y="244" width="1034" height="524" key="find.popup/0.0.2048.1112@0.0.2048.1112" timestamp="1583289673908" />
+    <state width="300" height="341" key="javadoc.popup.new" timestamp="1583293563930">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="300" height="341" key="javadoc.popup.new/0.0.2048.1112@0.0.2048.1112" timestamp="1583293563930" />
+    <state x="453" y="251" key="new project wizard" timestamp="1583140654801">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="453" y="251" key="new project wizard/0.0.2048.1112@0.0.2048.1112" timestamp="1583140654801" />
+    <state x="687" y="242" width="672" height="678" key="search.everywhere.popup" timestamp="1583293249409">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="687" y="242" width="672" height="678" key="search.everywhere.popup/0.0.2048.1112@0.0.2048.1112" timestamp="1583293249409" />
+  </component>
+</project>

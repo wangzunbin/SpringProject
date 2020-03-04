@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="wzb-security-app" />
+        <module name="wzb-security-browser" />
+        <module name="wzb-security-demo" />
+        <module name="wzb-security-core" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="wzb-secutity-demo" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="wzb-security" options="-parameters" />
+      <module name="wzb-security-app" options="-parameters" />
+      <module name="wzb-security-browser" options="-parameters" />
+      <module name="wzb-security-core" options="-parameters" />
+      <module name="wzb-security-demo" options="-parameters" />
+      <module name="wzb-secutity-demo" options="-parameters" />
+    </option>
+  </component>
+</project>
