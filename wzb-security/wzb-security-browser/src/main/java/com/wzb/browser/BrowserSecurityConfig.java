@@ -1,5 +1,7 @@
 package com.wzb.browser;
 
+import com.wzb.security.core.properties.SecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private SecurityProperties securityProperties;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -42,7 +47,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 对下面请求的授权
                 .authorizeRequests()
                 // 下面的地址不需要身份认证
-                .antMatchers("/authentication/require").permitAll()
+                .antMatchers("/authentication/require"
+                , securityProperties.getBrowserProperties().getLoginPage()).permitAll()
                 // 剩下任何请求都需要认证
                 .anyRequest()
                 //  都需要身份认证

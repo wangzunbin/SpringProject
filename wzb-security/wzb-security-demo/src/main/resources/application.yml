@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.0.102:3306/security?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:mysql://192.168.0.101:3306/security?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: root
 #    把返回到前端的时间变成时间戳
@@ -16,7 +16,7 @@ security:
 server:
   port: 8060
 
-wzb:
-  security:
-    browser:
-      loginPage: /demo-signIn.html
+#wzb:
+#  security:
+#    browser:
+#      loginPage: /demo-signIn.html
