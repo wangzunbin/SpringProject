@@ -14,4 +14,7 @@ import lombok.Data;
 public class BrowserProperties {
 
     private String loginPage = "/wzb-login.html";
+
+    // 默认是返回JSON语句
+    private LoginResponseType loginResponseType = LoginResponseType.JSON;
 }

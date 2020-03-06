@@ -1,5 +1,7 @@
 package com.wzb.browser;
 
+import com.wzb.browser.authentication.WzbAuthenctiationFailureHandler;
+import com.wzb.browser.authentication.WzbAuthenticationSuccessHandler;
 import com.wzb.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,24 +25,34 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
+    private WzbAuthenticationSuccessHandler wzbAuthenticationSuccessHandler;
+
+    @Autowired
+    private WzbAuthenctiationFailureHandler wzbAuthenctiationFailureHandler;
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     /**
-     *     你要登陆论坛，输入用户名张三，密码1234，密码正确，证明你张三确实是张三，这就是 authentication；
-     *     再一check用户张三是个版主，所以有权限加精删别人帖，这就是 authorization。
+     * 你要登陆论坛，输入用户名张三，密码1234，密码正确，证明你张三确实是张三，这就是 authentication；
+     * 再一check用户张三是个版主，所以有权限加精删别人帖，这就是 authorization。
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-             http// 表单登陆
+        http// 表单登陆
                 //这个是去到一个页面, 输入用户名和密码
                 .formLogin()
-                     //告诉spring先跳到这个页面
+                //告诉spring先跳到这个页面
                 .loginPage("/authentication/require")
-                // 告诉spring security去UsernamePasswordAuthenticationFilter认证
+                // 告诉spring security去/authentication/require"再去UsernamePasswordAuthenticationFilter认证
                 .loginProcessingUrl("/authentication/form")
+                // 登录成功
+                .successHandler(wzbAuthenticationSuccessHandler)
+                // 登录失败
+                .failureHandler(wzbAuthenctiationFailureHandler)
                 // 这个是弹框输入用户名和密码
 //                .httpBasic()
                 .and()
@@ -48,7 +60,10 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 下面的地址不需要身份认证
                 .antMatchers("/authentication/require"
-                , securityProperties.getBrowserProperties().getLoginPage()).permitAll()
+                        // 下面这个error要加上, 不然这个页面会要求认证
+                        , "/error"
+                        , securityProperties.getBrowserProperties().getLoginPage()
+                ).permitAll()
                 // 剩下任何请求都需要认证
                 .anyRequest()
                 //  都需要身份认证
