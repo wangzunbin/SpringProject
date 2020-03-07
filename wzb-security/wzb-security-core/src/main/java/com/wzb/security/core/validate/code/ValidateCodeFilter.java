@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -53,18 +54,21 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
         String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(securityProperties.getCode().getImage().getUrl(), ",");
-        for (String configUrl : configUrls) {
-            urls.add(configUrl);
+        if (Objects.nonNull(configUrls)) {
+            for (String configUrl : configUrls) {
+                urls.add(configUrl);
+            }
         }
+
         urls.add("/authentication/form");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        boolean action = false;
+        boolean action = Boolean.FALSE;
         for (String url : urls) {
             if(pathMatcher.match(url, request.getRequestURI())) {
-                action = true;
+                action = Boolean.TRUE;
             }
         }
         if(action) {

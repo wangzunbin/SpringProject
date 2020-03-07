@@ -17,4 +17,7 @@ public class BrowserProperties {
 
     // 默认是返回JSON语句
     private LoginResponseType loginResponseType = LoginResponseType.JSON;
+
+    // 过期时间
+    private int rememberMeSeconds = 3600;
 }

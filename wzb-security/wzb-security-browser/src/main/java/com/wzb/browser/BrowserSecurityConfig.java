@@ -9,9 +9,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * ClassName:BrowserSecurityConfig  <br/>
@@ -36,10 +41,30 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ValidateCodeFilter validateCodeFilter;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Autowired
+    private DataSource dataSource;
+
+
+    /**
+     * 实现记住我的功能
+     * @return 操作JDBC的模板
+     */
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository(){
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+//        tokenRepository.setCreateTableOnStartup(Boolean.TRUE);
+        return tokenRepository;
+    }
+
 
     /**
      * 你要登陆论坛，输入用户名张三，密码1234，密码正确，证明你张三确实是张三，这就是 authentication；
@@ -52,17 +77,23 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 //这个是去到一个页面, 输入用户名和密码
                 .formLogin()
-                //告诉spring先跳到这个页面
-                .loginPage("/authentication/require")
-                // 告诉spring security去/authentication/require"再去UsernamePasswordAuthenticationFilter认证
-                .loginProcessingUrl("/authentication/form")
-                // 登录成功
-                .successHandler(wzbAuthenticationSuccessHandler)
-                // 登录失败
-                .failureHandler(wzbAuthenctiationFailureHandler)
-                // 这个是弹框输入用户名和密码
-//                .httpBasic()
-                .and()
+                    //告诉spring先跳到这个页面
+                    .loginPage("/authentication/require")
+                    // 告诉spring security去/authentication/require"再去UsernamePasswordAuthenticationFilter认证
+                    .loginProcessingUrl("/authentication/form")
+                    // 登录成功
+                    .successHandler(wzbAuthenticationSuccessHandler)
+                    // 登录失败
+                    .failureHandler(wzbAuthenctiationFailureHandler)
+                    // 这个是弹框输入用户名和密码
+    //                .httpBasic()
+                    .and()
+                // 记住我的功能(RememberMeAuthenticationFilter: 当前面的过滤器没有效果不行的时候, 它会调用此过滤器)
+                .rememberMe()
+                    .tokenRepository(persistentTokenRepository())
+                    .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
+                    .userDetailsService(userDetailsService)
+                    .and()
                 // 对下面请求的授权
                 .authorizeRequests()
                 // 下面的地址不需要身份认证

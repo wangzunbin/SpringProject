@@ -29,7 +29,7 @@ public class MyConstraintValidator implements ConstraintValidator<MyConstraint, 
     public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
         helloService.greeting(String.valueOf(o));
         System.out.println(o);
-        return false;
+        return Boolean.FALSE;
     }
 
 
