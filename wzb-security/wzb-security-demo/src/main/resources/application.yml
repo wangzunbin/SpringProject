@@ -16,8 +16,8 @@ security:
 server:
   port: 8060
 
-wzb:
-  security:
-    browserProperties:
+#wzb:
+#  security:
+#    browserProperties:
 #      loginPage: /demo-signIn.html
-      loginResponseType: REDIRECT
+#      loginResponseType: REDIRECT

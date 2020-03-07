@@ -1,6 +1,7 @@
 package com.wzb.browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wzb.browser.support.SimpleResponse;
 import com.wzb.security.core.properties.LoginResponseType;
 import com.wzb.security.core.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -44,8 +45,8 @@ public class WzbAuthenctiationFailureHandler extends SimpleUrlAuthenticationFail
             httpServletResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             // 设置这个主要是charset=UTF-8
             httpServletResponse.setContentType("application/json;charset=UTF-8");
-//            httpServletResponse.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(e.getMessage())));
-        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(e));
+            httpServletResponse.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(e.getMessage())));
+//        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(e));
         }else {
             // 默认使用浏览器的跳转, 也就是网页
             super.onAuthenticationFailure(httpServletRequest, httpServletResponse, e);

@@ -3,6 +3,7 @@ package com.wzb.browser;
 import com.wzb.browser.authentication.WzbAuthenctiationFailureHandler;
 import com.wzb.browser.authentication.WzbAuthenticationSuccessHandler;
 import com.wzb.security.core.properties.SecurityProperties;
+import com.wzb.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * ClassName:BrowserSecurityConfig  <br/>
@@ -31,6 +33,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private WzbAuthenctiationFailureHandler wzbAuthenctiationFailureHandler;
 
+    @Autowired
+    private ValidateCodeFilter validateCodeFilter;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -42,7 +47,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http// 表单登陆
+                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 //这个是去到一个页面, 输入用户名和密码
                 .formLogin()
                 //告诉spring先跳到这个页面
@@ -61,7 +68,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 下面的地址不需要身份认证
                 .antMatchers("/authentication/require"
                         // 下面这个error要加上, 不然这个页面会要求认证
-                        , "/error"
+                        , "/error", "/code/image"
                         , securityProperties.getBrowserProperties().getLoginPage()
                 ).permitAll()
                 // 剩下任何请求都需要认证
