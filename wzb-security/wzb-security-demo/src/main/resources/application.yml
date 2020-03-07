@@ -14,7 +14,7 @@ security:
     basic:
      en
 server:
-  port: 8060
+  port: 8061
 
 #wzb:
 #  security:

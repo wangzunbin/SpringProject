@@ -55,10 +55,11 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 实现记住我的功能
+     *
      * @return 操作JDBC的模板
      */
     @Bean
-    public PersistentTokenRepository persistentTokenRepository(){
+    public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
 //        tokenRepository.setCreateTableOnStartup(Boolean.TRUE);
@@ -77,30 +78,32 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 //这个是去到一个页面, 输入用户名和密码
                 .formLogin()
-                    //告诉spring先跳到这个页面
-                    .loginPage("/authentication/require")
-                    // 告诉spring security去/authentication/require"再去UsernamePasswordAuthenticationFilter认证
-                    .loginProcessingUrl("/authentication/form")
-                    // 登录成功
-                    .successHandler(wzbAuthenticationSuccessHandler)
-                    // 登录失败
-                    .failureHandler(wzbAuthenctiationFailureHandler)
-                    // 这个是弹框输入用户名和密码
-    //                .httpBasic()
-                    .and()
+                //告诉spring先跳到这个页面
+                .loginPage("/authentication/require")
+                // 告诉spring security去/authentication/require"再去UsernamePasswordAuthenticationFilter认证
+                .loginProcessingUrl("/authentication/form")
+                // 登录成功
+                .successHandler(wzbAuthenticationSuccessHandler)
+                // 登录失败
+                .failureHandler(wzbAuthenctiationFailureHandler)
+                // 这个是弹框输入用户名和密码
+                //                .httpBasic()
+                .and()
                 // 记住我的功能(RememberMeAuthenticationFilter: 当前面的过滤器没有效果不行的时候, 它会调用此过滤器)
                 .rememberMe()
-                    .tokenRepository(persistentTokenRepository())
-                    .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
-                    .userDetailsService(userDetailsService)
-                    .and()
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
+                .userDetailsService(userDetailsService)
+                .and()
                 // 对下面请求的授权
                 .authorizeRequests()
                 // 下面的地址不需要身份认证
-                .antMatchers("/authentication/require"
-                        // 下面这个error要加上, 不然这个页面会要求认证
-                        , "/error", "/code/image"
-                        , securityProperties.getBrowser().getLoginPage()
+                // 下面这个error要加上, 不然这个页面会要求认证
+                .antMatchers("/authentication/require",
+                        "/error",
+                        "/code/image",
+                        "/code/sms",
+                        securityProperties.getBrowser().getLoginPage()
                 ).permitAll()
                 // 剩下任何请求都需要认证
                 .anyRequest()
