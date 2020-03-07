@@ -2,6 +2,7 @@ package com.wzb.browser;
 
 import com.wzb.browser.authentication.WzbAuthenctiationFailureHandler;
 import com.wzb.browser.authentication.WzbAuthenticationSuccessHandler;
+import com.wzb.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.wzb.security.core.properties.SecurityProperties;
 import com.wzb.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;;
+
 
     /**
      * 实现记住我的功能
@@ -73,7 +77,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        validateCodeFilter.afterPropertiesSet();
+
+
         http// 表单登陆
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 //这个是去到一个页面, 输入用户名和密码
@@ -111,7 +116,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 // 暂时把跨域关掉
-                .csrf().disable();
+                .csrf().disable()
+                .apply(smsCodeAuthenticationSecurityConfig);
+
 //        第一版本
    /*     http// 表单登陆
                 //这个是去到一个页面, 输入用户名和密码

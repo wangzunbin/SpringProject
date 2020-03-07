@@ -22,6 +22,7 @@ server:
 #          image:
 #            length: 6
 #            width: 100
+# 什么样的验证码需要验证, 下面的url
 #            url: /user/*
 #    browser:
 #      loginPage: /demo-signIn.html
