@@ -41,7 +41,7 @@ public class WzbAuthenctiationFailureHandler extends SimpleUrlAuthenticationFail
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         log.info("登录失败");
-        if (LoginResponseType.JSON.equals(securityProperties.getBrowserProperties().getLoginResponseType())) {
+        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLoginResponseType())) {
             httpServletResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             // 设置这个主要是charset=UTF-8
             httpServletResponse.setContentType("application/json;charset=UTF-8");

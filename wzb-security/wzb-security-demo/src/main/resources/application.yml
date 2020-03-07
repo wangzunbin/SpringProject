@@ -16,8 +16,13 @@ security:
 server:
   port: 8060
 
-#wzb:
-#  security:
-#    browserProperties:
+wzb:
+  security:
+        code:
+          image:
+            length: 6
+            width: 100
+            url: /user/*
+#    browser:
 #      loginPage: /demo-signIn.html
 #      loginResponseType: REDIRECT

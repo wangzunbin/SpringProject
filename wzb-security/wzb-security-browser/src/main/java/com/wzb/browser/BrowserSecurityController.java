@@ -50,7 +50,7 @@ public class BrowserSecurityController {
              * 如果是页面是重定向到一个页面, 如果是不是, 放回一个json数据
              */
             if(StringUtils.endsWithIgnoreCase(redirectUrl, ".html")) {
-                redirectStrategy.sendRedirect(request, response, securityProperties.getBrowserProperties().getLoginPage());
+                redirectStrategy.sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());
             }
         }
         return new SimpleResponse("访问的服务器需要身份认证, 请引导用户到登陆页面");

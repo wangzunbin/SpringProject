@@ -47,7 +47,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        validateCodeFilter.afterPropertiesSet();
         http// 表单登陆
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 //这个是去到一个页面, 输入用户名和密码
@@ -69,7 +69,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/authentication/require"
                         // 下面这个error要加上, 不然这个页面会要求认证
                         , "/error", "/code/image"
-                        , securityProperties.getBrowserProperties().getLoginPage()
+                        , securityProperties.getBrowser().getLoginPage()
                 ).permitAll()
                 // 剩下任何请求都需要认证
                 .anyRequest()

@@ -36,7 +36,7 @@ public class WzbAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         log.info("登录成功");
-        if (LoginResponseType.JSON.equals(securityProperties.getBrowserProperties().getLoginResponseType())) {
+        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLoginResponseType())) {
             httpServletResponse.setContentType("application/json;charset=UTF-8");
             httpServletResponse.getWriter().write(objectMapper.writeValueAsString(authentication));
         } else {
