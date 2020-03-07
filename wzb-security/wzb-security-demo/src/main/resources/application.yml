@@ -1,10 +1,22 @@
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.0.104:3306/security?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: root
-#    把返回到前端的时间变成时间戳
+  redis:
+    database: 1
+    host: 192.168.0.104
+    port: 6379
+    password: 123456
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 0
+  #    把返回到前端的时间变成时间戳
   jackson:
     serialization:
       write-dates-as-timestamps: true
@@ -12,7 +24,7 @@ spring:
     store-type: none
 security:
     basic:
-     en
+      enabled: false
 server:
   port: 8061
 
@@ -27,3 +39,11 @@ server:
 #    browser:
 #      loginPage: /demo-signIn.html
 #      loginResponseType: REDIRECT
+
+wzb:
+  security:
+      social:
+        qq:
+          app-id: wxd99431bbff8305a0
+          app-secret: 60f78681d063590a469f1b297feff3c4
+

@@ -18,11 +18,11 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="wzb-security" options="-parameters" />
-      <module name="wzb-security-app" options="-parameters" />
-      <module name="wzb-security-browser" options="-parameters" />
-      <module name="wzb-security-core" options="-parameters" />
-      <module name="wzb-security-demo" options="-parameters" />
+      <module name="wzb-security" options="" />
+      <module name="wzb-security-app" options="" />
+      <module name="wzb-security-browser" options="" />
+      <module name="wzb-security-core" options="" />
+      <module name="wzb-security-demo" options="" />
       <module name="wzb-secutity-demo" options="-parameters" />
     </option>
   </component>

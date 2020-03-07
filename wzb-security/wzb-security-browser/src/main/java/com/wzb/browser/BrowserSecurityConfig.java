@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 
@@ -53,6 +54,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;;
 
 
+    @Autowired
+    private SpringSocialConfigurer wzbSocialSecurityConfig;
+
     /**
      * 实现记住我的功能
      *
@@ -78,6 +82,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
                     .and()
+                .apply(wzbSocialSecurityConfig)
+                    .and()
                 .rememberMe()
                     .tokenRepository(persistentTokenRepository())
                     .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
@@ -88,7 +94,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                             SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
                             SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
                             securityProperties.getBrowser().getLoginPage(),
-                            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*")
+                            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
+                            "/auth/qq"
+                    )
                     .permitAll()
                     .anyRequest()
                     .authenticated()

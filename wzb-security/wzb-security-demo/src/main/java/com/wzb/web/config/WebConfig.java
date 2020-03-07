@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  * @version 0.4 2020/3/2 23:12   <br/>
  */
 //@Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private TimerInterceptor interceptor;
