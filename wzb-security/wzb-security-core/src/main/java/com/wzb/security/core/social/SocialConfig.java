@@ -1,5 +1,6 @@
 package com.wzb.security.core.social;
 
+import com.wzb.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,8 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
-
+    @Autowired
+    private SecurityProperties securityProperties;
 
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
@@ -41,8 +43,11 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
 
     @Bean
-    public SpringSocialConfigurer wzbSocialSecurityConfig() {
-       return new SpringSocialConfigurer();
+    public SpringSocialConfigurer imoocSocialSecurityConfig() {
+        String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
+        WzbSpringSocialConfigurer configurer = new WzbSpringSocialConfigurer(filterProcessesUrl);
+//        configurer.signupUrl(securityProperties.getBrowser().getSignUpUrl());
+        return configurer;
     }
 
 }
