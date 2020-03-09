@@ -8,9 +8,9 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <groupId>com.wzb</groupId>
-    <artifactId>rabbitmq-springboot-consumer</artifactId>
+    <artifactId>rabbitmq-springboot-producer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rabbitmq-springboot-consumer</name>
+    <name>rabbitmq-springboot-producer</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

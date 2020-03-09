@@ -26,6 +26,7 @@
         <module>rabbitmq-api</module>
         <module>rabbitmq-spring</module>
         <module>rabbitmq-springboot-consumer</module>
+        <module>rabbitmq-springboot-producer</module>
     </modules>
 
     <dependencies>
