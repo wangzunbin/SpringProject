@@ -44,7 +44,7 @@ public class Consumer {
         channel.basicConsume(queueName, true, queueingConsumer);
 
         // 7. 获取消息
-        while (true){
+        while (true) {
             QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
             String msg = new String(delivery.getBody());
             System.out.println("消费端: " + msg);

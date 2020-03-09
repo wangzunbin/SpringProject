@@ -48,7 +48,7 @@ public class Producer {
                 .build();
 
         // 4. 通过channel发送数据
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             String msg = "Hello RabbitMQ!!!!";
             // 参数1:  exchange(没有设置的话, 就会往这个AMQP default发), 参数2:  routingKey
             // 参数3:  添加附加信息和设置

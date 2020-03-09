@@ -15,7 +15,7 @@ import org.springframework.amqp.support.converter.MessageConverter;
 public class TextMessageConverter implements MessageConverter {
 
     /**
-     *  java对象转成message对象
+     * java对象转成message对象
      */
     @Override
     public Message toMessage(Object object, MessageProperties messageProperties) throws MessageConversionException {
@@ -23,7 +23,7 @@ public class TextMessageConverter implements MessageConverter {
     }
 
     /**
-     *  message对象转成java对象
+     * message对象转成java对象
      */
     @Override
     public Object fromMessage(Message message) throws MessageConversionException {

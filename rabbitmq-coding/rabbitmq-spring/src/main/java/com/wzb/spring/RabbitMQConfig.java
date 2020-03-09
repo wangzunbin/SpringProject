@@ -245,7 +245,7 @@ public class RabbitMQConfig {
         adapter.setDefaultListenerMethod("consumeMessage");
 
         //全局的转换器:
-       ContentTypeDelegatingMessageConverter convert = new ContentTypeDelegatingMessageConverter();
+        ContentTypeDelegatingMessageConverter convert = new ContentTypeDelegatingMessageConverter();
 
         TextMessageConverter textConvert = new TextMessageConverter();
         convert.addDelegate("text", textConvert);

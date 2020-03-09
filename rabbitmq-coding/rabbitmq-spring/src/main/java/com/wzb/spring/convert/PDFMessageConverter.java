@@ -13,26 +13,26 @@ import java.util.Map;
 
 public class PDFMessageConverter implements MessageConverter {
 
-	@Override
-	public Message toMessage(Object object, MessageProperties messageProperties) throws MessageConversionException {
-		throw new MessageConversionException(" convert error ! ");
-	}
+    @Override
+    public Message toMessage(Object object, MessageProperties messageProperties) throws MessageConversionException {
+        throw new MessageConversionException(" convert error ! ");
+    }
 
-	@Override
-	public Object fromMessage(Message message) throws MessageConversionException {
-		System.err.println("-----------PDF MessageConverter----------");
-		
-		byte[] body = message.getBody();
+    @Override
+    public Object fromMessage(Message message) throws MessageConversionException {
+        System.err.println("-----------PDF MessageConverter----------");
+
+        byte[] body = message.getBody();
 //		String fileName = UUID.randomUUID().toString();
-		Map<String, Object> headers = message.getMessageProperties().getHeaders();
-		String path = "f:/010_test/" + headers.get("fileName") + ".pdf";
-		File f = new File(path);
-		try {
-			Files.copy(new ByteArrayInputStream(body), f.toPath());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return f;
-	}
+        Map<String, Object> headers = message.getMessageProperties().getHeaders();
+        String path = "f:/010_test/" + headers.get("fileName") + ".pdf";
+        File f = new File(path);
+        try {
+            Files.copy(new ByteArrayInputStream(body), f.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return f;
+    }
 
 }

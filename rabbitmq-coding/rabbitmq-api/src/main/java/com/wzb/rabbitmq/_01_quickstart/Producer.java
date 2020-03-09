@@ -30,7 +30,7 @@ public class Producer {
         Channel channel = connection.createChannel();
 
         // 4. 通过channel发送数据
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             String msg = "Hello RabbitMQ!!!!";
             // 参数1:  exchange(没有设置的话, 就会往这个AMQP default发), 参数2:  routingKey
             channel.basicPublish("", "test001", null, msg.getBytes());

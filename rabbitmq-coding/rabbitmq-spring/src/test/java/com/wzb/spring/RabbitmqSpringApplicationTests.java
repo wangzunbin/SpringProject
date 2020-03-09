@@ -30,7 +30,7 @@ class RabbitmqSpringApplicationTests {
     private RabbitAdmin rabbitAdmin;
 
     @Test
-    public void testAdmin() throws Exception{
+    public void testAdmin() throws Exception {
         // 创建交换机
         rabbitAdmin.declareExchange(new DirectExchange("test.direct", false, false));
         rabbitAdmin.declareExchange(new TopicExchange("test.topic", false, false));
@@ -62,7 +62,7 @@ class RabbitmqSpringApplicationTests {
     private RabbitTemplate rabbitTemplate;
 
     @Test
-    void testSendMessage() throws Exception{
+    void testSendMessage() throws Exception {
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.getHeaders().put("desc", "信息描述..");
         messageProperties.getHeaders().put("type", "自定义消息类型...");
@@ -181,18 +181,18 @@ class RabbitmqSpringApplicationTests {
 
     @Test
     public void testSendExtConverterMessage() throws Exception {
-/*			byte[] body = Files.readAllBytes(Paths.get("f:/002_books", "picture.png"));
-			MessageProperties messageProperties = new MessageProperties();
-			messageProperties.setContentType("image/png");
-			messageProperties.getHeaders().put("extName", "png");
-			Message message = new Message(body, messageProperties);
-			rabbitTemplate.send("", "image_queue", message);*/
-        String fileName = "01-Wb容器学习路径.pdf";
+        byte[] body = Files.readAllBytes(Paths.get("f:/002_books", "picture.png"));
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setContentType("image/png");
+        messageProperties.getHeaders().put("extName", "png");
+        Message message = new Message(body, messageProperties);
+        rabbitTemplate.send("", "image_queue", message);
+ /*       String fileName = "01-Wb容器学习路径.pdf";
         byte[] body = Files.readAllBytes(Paths.get("f:/002_books", fileName));
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setContentType("application/pdf");
         messageProperties.getHeaders().put("fileName", fileName);
         Message message = new Message(body, messageProperties);
-        rabbitTemplate.send("", "pdf_queue", message);
+        rabbitTemplate.send("", "pdf_queue", message);*/
     }
 }

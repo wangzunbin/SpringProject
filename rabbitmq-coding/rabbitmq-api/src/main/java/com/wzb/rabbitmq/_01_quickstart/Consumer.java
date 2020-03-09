@@ -33,7 +33,7 @@ public class Consumer {
         /**
          * 参数2: 是否持久化, 参数3: 独用,参数4: 当Yes, 代表当最后一个监听被移除之后, 该队列自动被删除
          */
-        channel.queueDeclare(queueName, true, false, true, null);
+        channel.queueDeclare(queueName, true, false, false, null);
 
         // 5. 创建消费者
         QueueingConsumer queueingConsumer = new QueueingConsumer(channel);
@@ -42,7 +42,7 @@ public class Consumer {
         channel.basicConsume(queueName, true, queueingConsumer);
 
         // 7. 获取消息
-        while (true){
+        while (true) {
             QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
             String msg = new String(delivery.getBody());
             System.out.println("消费端: " + msg);

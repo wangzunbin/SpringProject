@@ -28,7 +28,7 @@ public class Producer {
 
         String msg = "Hello RabbitMQ Consumer Message";
 
-        for(int i =0; i<5; i ++){
+        for (int i = 0; i < 5; i++) {
             channel.basicPublish(exchange, routingKey, true, null, msg.getBytes());
         }
 

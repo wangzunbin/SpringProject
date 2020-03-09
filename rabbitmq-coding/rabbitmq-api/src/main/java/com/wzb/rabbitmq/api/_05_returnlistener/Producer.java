@@ -14,8 +14,7 @@ import com.rabbitmq.client.ConnectionFactory;
 public class Producer {
 
     /**
-     *  添加addReturnListener, 主要是解决一些消息不可到达, 就是消息没有消费者
-     *
+     * 添加addReturnListener, 主要是解决一些消息不可到达, 就是消息没有消费者
      */
     public static void main(String[] args) throws Exception {
 

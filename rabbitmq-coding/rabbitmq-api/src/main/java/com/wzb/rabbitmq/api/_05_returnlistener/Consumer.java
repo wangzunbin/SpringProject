@@ -14,7 +14,7 @@ import com.rabbitmq.client.QueueingConsumer;
  */
 public class Consumer {
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("192.168.0.104");
         connectionFactory.setPort(5672);
@@ -35,7 +35,7 @@ public class Consumer {
 
         channel.basicConsume(queueName, true, queueingConsumer);
 
-        while(true){
+        while (true) {
             QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
             String msg = new String(delivery.getBody());
             System.err.println("消费者: " + msg);
