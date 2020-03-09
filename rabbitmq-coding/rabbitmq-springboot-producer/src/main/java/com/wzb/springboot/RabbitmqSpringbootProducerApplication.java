@@ -1,13 +1,13 @@
-package com.wzb.springboot.consumer;
+package com.wzb.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RabbitmqSpringbootConsumerApplication {
+public class RabbitmqSpringbootProducerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RabbitmqSpringbootConsumerApplication.class, args);
+        SpringApplication.run(RabbitmqSpringbootProducerApplication.class, args);
     }
 
 }

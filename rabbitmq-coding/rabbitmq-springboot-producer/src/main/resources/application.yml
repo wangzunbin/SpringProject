@@ -1,0 +1,21 @@
+spring:
+  rabbitmq:
+    addresses: 192.168.0.104
+    username: guest
+    password: guest
+    virtual-host: /
+    connection-timeout: 15000
+#    实现一个监听器用于监听broke端给我们的返回的确认请求: RabbitTemplate.ConfirmCallback
+    #    保证消息对broke端是可达的, 如果出现路邮件不可达的情况, 则使用监听器对不可达的消息进行后续的处理,
+    publisher-confirm-type: correlated
+#    保证消息的路由成功: RabbitTemplate.ReturnCallback
+    publisher-returns: true
+#     注意一点, 在发送消息的时候对template进行配置mandatory=true保证监听有效,
+#    生产端还可以配置其他属性, 比如发送重试, 超时时间、次数、间隔等
+    template:
+      mandatory: true
+
+
+
+
+

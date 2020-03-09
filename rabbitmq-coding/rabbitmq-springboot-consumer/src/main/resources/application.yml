@@ -1,0 +1,28 @@
+spring:
+  rabbitmq:
+    addresses: 192.168.0.104
+    username: guest
+    password: guest
+    virtual-host: /
+    connection-timeout: 15000
+    listener:
+      simple:
+#      手段确认: 首先配置手工确认模式,, 用于ACK的手工处理, 这样我们可以保证消息的可靠性送达, 或者
+#        在消费端消费失败的时候可以做到重回队列、根据业务记录日志等处理, 不建议重回队列
+        acknowledge-mode: manual
+#        设置的是对每个listener在初始化的时候设置的并发消费者的个数
+#        可以设置消费端监听个数和最大个数, 用于控制消费端的并发情况
+        concurrency: 5
+        max-concurrency: 10
+      order:
+        queue:
+          name: queue-2
+          durable: true
+        exchange:
+          name: exchange-2
+          durable: true
+          type: topic
+          ignoreDeclarationExceptions: true
+        key: springboot.*
+
+
