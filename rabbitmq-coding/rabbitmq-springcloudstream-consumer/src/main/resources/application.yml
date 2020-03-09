@@ -1,0 +1,55 @@
+server:
+  port: 8002
+  servlet:
+    context-path: /consumer
+
+spring:
+  application:
+    name: consumer
+  cloud:
+    stream:
+      bindings:
+        input_channel:
+          destination: exchange-3
+          group: queue-3
+          binder: rabbit_cluster
+          consumer:
+            concurrency: 1
+      rabbit:
+        bindings:
+          input_channel:
+            consumer:
+              requeue-rejected: false
+              acknowledge-mode: MANUAL
+              recovery-interval: 3000
+              durable-subscription: true
+              max-concurrency: 5
+      binders:
+        rabbit_cluster:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                addresses: 192.168.0.104:5672
+                username: guest
+                password: guest
+                virtual-host: /
+#  server.port=8002
+#  server.context-path=/consumer
+#
+#  spring.application.name=consumer
+#  spring.cloud.stream.bindings.input_channel.destination=exchange-3
+#  spring.cloud.stream.bindings.input_channel.group=queue-3
+#  spring.cloud.stream.bindings.input_channel.binder=rabbit_cluster
+#  spring.cloud.stream.bindings.input_channel.consumer.concurrency=1
+#  spring.cloud.stream.rabbit.bindings.input_channel.consumer.requeue-rejected=false
+#  spring.cloud.stream.rabbit.bindings.input_channel.consumer.acknowledge-mode=MANUAL
+#  spring.cloud.stream.rabbit.bindings.input_channel.consumer.recovery-interval=3000
+#  spring.cloud.stream.rabbit.bindings.input_channel.consumer.durable-subscription=true
+#  spring.cloud.stream.rabbit.bindings.input_channel.consumer.max-concurrency=5
+#
+#  spring.cloud.stream.binders.rabbit_cluster.type=rabbit
+#  spring.cloud.stream.binders.rabbit_cluster.environment.spring.rabbitmq.addresses=192.168.11.76:5672
+#  spring.cloud.stream.binders.rabbit_cluster.environment.spring.rabbitmq.username=guest
+#  spring.cloud.stream.binders.rabbit_cluster.environment.spring.rabbitmq.password=guest
+#  spring.cloud.stream.binders.rabbit_cluster.environment.spring.rabbitmq.virtual-host=/
