@@ -16,7 +16,7 @@ public class Producer {
     public static void main(String[] args) throws Exception {
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("192.168.0.101");
+        connectionFactory.setHost("192.168.0.70");
         connectionFactory.setPort(5672);
         connectionFactory.setUsername("user");
         connectionFactory.setPassword("user");

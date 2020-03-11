@@ -17,7 +17,8 @@ public class Consumer {
 
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("192.168.0.101");
+        // 70是keepalived的虚拟地址
+        connectionFactory.setHost("192.168.0.70");
         connectionFactory.setPort(5672);
         // 由于添加了haproxy代理, 设置的超时间是15s, 所以我这边的配置是10s
         connectionFactory.setRequestedHeartbeat(10);
