@@ -19,7 +19,7 @@ public class Producer {
     public static void main(String[] args) throws IOException, TimeoutException {
         // 1. 创建一个connetionfactory
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("192.168.0.104");
+        connectionFactory.setHost("192.168.0.101");
         connectionFactory.setPort(5672);
         connectionFactory.setVirtualHost("/");
 

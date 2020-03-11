@@ -17,9 +17,13 @@ public class Consumer {
 
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("192.168.0.104");
+        connectionFactory.setHost("192.168.0.101");
         connectionFactory.setPort(5672);
-        connectionFactory.setVirtualHost("/");
+        // 由于添加了haproxy代理, 设置的超时间是15s, 所以我这边的配置是10s
+        connectionFactory.setRequestedHeartbeat(10);
+        connectionFactory.setUsername("user");
+        connectionFactory.setPassword("user");
+        connectionFactory.setVirtualHost("test");
 
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();

@@ -17,8 +17,10 @@ public class Consumer {
     public static void main(String[] args) throws Exception {
         // 1. 创建一个connetionfactory
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("192.168.0.104");
+        connectionFactory.setHost("192.168.0.101");
         connectionFactory.setPort(5672);
+        // 由于添加了haproxy代理, 设置的超时间是15s, 所以我这边的配置是10s
+        connectionFactory.setRequestedHeartbeat(10);
         connectionFactory.setVirtualHost("/");
 
         // 2. 通过连接工厂创建连接
@@ -41,12 +43,19 @@ public class Consumer {
         // 6. 设置channel
         channel.basicConsume(queueName, true, queueingConsumer);
 
-        // 7. 获取消息
-        while (true) {
-            QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
-            String msg = new String(delivery.getBody());
-            System.out.println("消费端: " + msg);
+//        new Thread(() -> {
+            // 7. 获取消息
+            while (true) {
+                QueueingConsumer.Delivery delivery = null;
+                try {
+                    delivery = queueingConsumer.nextDelivery();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                String msg = new String(delivery.getBody());
+                System.out.println("消费端: " + msg);
 
-        }
+            }
+//        });
     }
 }
