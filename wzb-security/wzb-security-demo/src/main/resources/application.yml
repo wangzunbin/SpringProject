@@ -25,6 +25,7 @@ spring:
 security:
     basic:
       enabled: false
+#      注意QQ登录默认是80端口
 server:
   port: 80
 
@@ -45,6 +46,6 @@ wzb:
       social:
         filterProcessesUrl: /qqLogin
         qq:
-          app-id: 100550231
-          app-secret: 69b6ab57b22f3c2fe6a6149274e3295e
+          app-id: 101860144
+          app-secret: 8f92b83413f0c899bc284d2b27fdb82a
           providerId: callback.do
