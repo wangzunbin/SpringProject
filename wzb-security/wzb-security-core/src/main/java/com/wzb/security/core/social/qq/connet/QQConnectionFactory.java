@@ -5,7 +5,7 @@ import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 
 /**
  * ClassName:QQConnectionFactory  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 22:29   <br/>

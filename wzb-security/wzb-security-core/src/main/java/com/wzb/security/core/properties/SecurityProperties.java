@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * ClassName:SecurityProperties  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/4 12:09   <br/>

@@ -4,7 +4,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 /**
  * ClassName:ValidateCodeProcessor  <br/>
- * Funtion: 校验码处理器，封装不同校验码的处理逻辑 <br/>
+ * Function: 校验码处理器，封装不同校验码的处理逻辑 <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 16:46   <br/>

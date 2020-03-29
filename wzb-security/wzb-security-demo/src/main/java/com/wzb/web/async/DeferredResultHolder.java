@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * ClassName:DeFerredResulterHolder  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/3 15:13   <br/>

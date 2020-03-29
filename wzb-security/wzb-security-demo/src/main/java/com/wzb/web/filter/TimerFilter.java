@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * ClassName:TimerFilter  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/2 23:05   <br/>

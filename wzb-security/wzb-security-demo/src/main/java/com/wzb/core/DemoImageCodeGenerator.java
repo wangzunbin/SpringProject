@@ -6,7 +6,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 /**
  * ClassName:DemoImageCodeGenerator  <br/>
- * Funtion: 此代码会覆盖core的默认imageCodeGenerator <br/>
+ * Function: 此代码会覆盖core的默认imageCodeGenerator <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 12:59   <br/>

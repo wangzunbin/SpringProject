@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * ClassName:SmsCodeAuthenticationFilter  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 18:28   <br/>

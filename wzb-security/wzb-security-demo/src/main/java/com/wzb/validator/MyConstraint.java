@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * ClassName:MyConstrait  <br/>
- * Funtion: 自定义参数校验 <br/>
+ * Function: 自定义参数校验 <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/2 22:19   <br/>

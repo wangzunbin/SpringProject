@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * ClassName:TimerInterceptor  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/2 23:20   <br/>

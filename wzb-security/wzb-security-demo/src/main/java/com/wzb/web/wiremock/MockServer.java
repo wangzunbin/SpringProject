@@ -4,7 +4,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 /**
  * ClassName:MockServer  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/3 17:58   <br/>

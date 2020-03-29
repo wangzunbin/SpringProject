@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  * ClassName:MyConstraintValidator  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/2 22:22   <br/>

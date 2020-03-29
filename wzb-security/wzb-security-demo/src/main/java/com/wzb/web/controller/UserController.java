@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * ClassName:UserController  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/2 20:59   <br/>

@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * ClassName:SimpleResponse  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/4 11:46   <br/>

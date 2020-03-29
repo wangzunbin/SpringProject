@@ -25,7 +25,7 @@ import java.util.Set;
 
 /**
  * ClassName:ValidateCodeFilter  <br/>
- * Funtion: 此过滤器一定要在Spring security的前面生效, 所以在BrowserSecurityConfig.addFilterBefore配置 <br/>
+ * Function: 此过滤器一定要在Spring security的前面生效, 所以在BrowserSecurityConfig.addFilterBefore配置 <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 9:36   <br/>

@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * ClassName:QQUserInfo  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 22:11   <br/>

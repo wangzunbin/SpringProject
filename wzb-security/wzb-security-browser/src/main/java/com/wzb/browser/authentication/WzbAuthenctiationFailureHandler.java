@@ -18,7 +18,7 @@ import java.io.IOException;
 
 /**
  * ClassName:WzbAuthenctiationFailureHandler  <br/>
- * Funtion: 登录失败之后 <br/>
+ * Function: 登录失败之后 <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/6 11:33   <br/>

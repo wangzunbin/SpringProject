@@ -16,7 +16,7 @@ import java.io.IOException;
 
 /**
  * ClassName:WzbAuthenticationSuccessHandler  <br/>
- * Funtion: 认证成功 <br/>
+ * Function: 认证成功 <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/6 11:24   <br/>

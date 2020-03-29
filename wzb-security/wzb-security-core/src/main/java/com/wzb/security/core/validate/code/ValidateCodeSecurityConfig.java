@@ -11,7 +11,7 @@ import javax.servlet.Filter;
 
 /**
  * ClassName:ValidateCodeSecurityConfig  <br/>
- * Funtion: 验证码校验  <br/>
+ * Function: 验证码校验  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 21:30   <br/>

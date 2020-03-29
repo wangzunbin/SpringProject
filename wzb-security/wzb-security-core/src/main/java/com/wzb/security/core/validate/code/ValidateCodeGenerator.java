@@ -4,7 +4,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 /**
  * ClassName:ValidateCodeGenerator  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 12:49   <br/>

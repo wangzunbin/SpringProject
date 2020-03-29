@@ -8,7 +8,7 @@ import org.springframework.social.connect.UserProfile;
 
 /**
  * ClassName:QQAdapter  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 22:26   <br/>

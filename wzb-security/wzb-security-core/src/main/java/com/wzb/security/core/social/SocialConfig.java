@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 /**
  * ClassName:SocialConfig  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 22:31   <br/>
@@ -27,6 +27,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+
     @Autowired
     private SecurityProperties securityProperties;
 
@@ -43,7 +44,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
 
     @Bean
-    public SpringSocialConfigurer imoocSocialSecurityConfig() {
+    public SpringSocialConfigurer wzbSocialSecurityConfig() {
         String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
         WzbSpringSocialConfigurer configurer = new WzbSpringSocialConfigurer(filterProcessesUrl);
 //        configurer.signupUrl(securityProperties.getBrowser().getSignUpUrl());

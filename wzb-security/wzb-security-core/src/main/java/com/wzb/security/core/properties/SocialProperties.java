@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * ClassName:SocialProperties  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 22:56   <br/>

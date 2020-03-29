@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 
 /**
  * ClassName:BrowserSecurityConfig  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/4 9:54   <br/>
@@ -54,6 +54,7 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;;
 
 
+    // 要注意命令对应创建的bean
     @Autowired
     private SpringSocialConfigurer wzbSocialSecurityConfig;
 

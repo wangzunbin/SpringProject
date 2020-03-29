@@ -21,7 +21,7 @@ import java.io.IOException;
 
 /**
  * ClassName:BrowserSecurityController  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/4 11:37   <br/>

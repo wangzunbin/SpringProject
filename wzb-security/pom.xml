@@ -10,12 +10,12 @@
     <packaging>pom</packaging>
 
 
-<!--    <parent>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--        <version>2.0.8.RELEASE</version>-->
-<!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-<!--    </parent>-->
+    <!--    <parent>-->
+    <!--        <groupId>org.springframework.boot</groupId>-->
+    <!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+    <!--        <version>2.0.8.RELEASE</version>-->
+    <!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    <!--    </parent>-->
 
     <properties>
         <security.version>1.0.0-SNAPSHOT</security.version>
@@ -28,27 +28,36 @@
         <module>wzb-security-core</module>
         <module>wzb-security-demo</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+            <version>8.0.13</version>
+        </dependency>
 
-<!--    <dependencyManagement>-->
-<!--        &lt;!&ndash;保证版本兼容&ndash;&gt;-->
-<!--        <dependencies>-->
-<!--            <dependency>-->
-<!--                <groupId>io.spring.platform</groupId>-->
-<!--                <artifactId>platform-bom</artifactId>-->
-<!--                <version>Cairo-SR7</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
+    </dependencies>
 
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.cloud</groupId>-->
-<!--                <artifactId>spring-cloud-dependencies</artifactId>-->
-<!--                <version>Finchley.SR4</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-<!--        </dependencies>-->
-<!--    </dependencyManagement>-->
+    <!--    <dependencyManagement>-->
+    <!--        &lt;!&ndash;保证版本兼容&ndash;&gt;-->
+    <!--        <dependencies>-->
+    <!--            <dependency>-->
+    <!--                <groupId>io.spring.platform</groupId>-->
+    <!--                <artifactId>platform-bom</artifactId>-->
+    <!--                <version>Cairo-SR7</version>-->
+    <!--                <type>pom</type>-->
+    <!--                <scope>import</scope>-->
+    <!--            </dependency>-->
+
+    <!--            <dependency>-->
+    <!--                <groupId>org.springframework.cloud</groupId>-->
+    <!--                <artifactId>spring-cloud-dependencies</artifactId>-->
+    <!--                <version>Finchley.SR4</version>-->
+    <!--                <type>pom</type>-->
+    <!--                <scope>import</scope>-->
+    <!--            </dependency>-->
+    <!--        </dependencies>-->
+    <!--    </dependencyManagement>-->
 
     <dependencyManagement>
         <dependencies>

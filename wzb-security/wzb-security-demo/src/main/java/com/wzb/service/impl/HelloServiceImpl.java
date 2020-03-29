@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * ClassName:HelloServiceImpl  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/2 22:26   <br/>

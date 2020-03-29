@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * ClassName:ValidateCodeController  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 9:25   <br/>

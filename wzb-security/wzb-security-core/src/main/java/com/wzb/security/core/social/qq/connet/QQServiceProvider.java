@@ -6,7 +6,7 @@ import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
 
 /**
  * ClassName:QQServiceProvider  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 22:21   <br/>

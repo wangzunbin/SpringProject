@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * ClassName:UserQueryCondition  <br/>
- * Funtion: User的查询条件 <br/>
+ * Function: User的查询条件 <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/2 21:13   <br/>

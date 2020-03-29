@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * ClassName:ImageCodeProperties  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 11:39   <br/>

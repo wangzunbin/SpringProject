@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * ClassName:MockQueue  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/3 8:54   <br/>

@@ -4,7 +4,7 @@ import org.springframework.security.core.AuthenticationException;
 
 /**
  * ClassName:ValidateCodeException  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 9:39   <br/>

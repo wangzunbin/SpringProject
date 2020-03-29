@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * ClassName:BrowserProperties  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/4 12:09   <br/>

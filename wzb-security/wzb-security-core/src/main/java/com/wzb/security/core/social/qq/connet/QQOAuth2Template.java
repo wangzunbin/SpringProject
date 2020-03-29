@@ -12,11 +12,14 @@ import org.springframework.social.oauth2.OAuth2Template;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
- * @author zhailiang
+ * ClassName:QQOAuth2Template  <br/>
+ * Function:  <br/>
  *
+ * @author WangZunBin <br/>
+ * @version 0.4 2020/3/7 22:29   <br/>
  */
 public class QQOAuth2Template extends OAuth2Template {
 	
@@ -24,9 +27,16 @@ public class QQOAuth2Template extends OAuth2Template {
 
 	public QQOAuth2Template(String clientId, String clientSecret, String authorizeUrl, String accessTokenUrl) {
 		super(clientId, clientSecret, authorizeUrl, accessTokenUrl);
+		// 这两个需要设置为true, 它才回携带数据
 		setUseParametersForClientAuthentication(true);
 	}
-	
+
+	/**
+	 * 这是调用QQ认证完之后, 调用此方法
+	 * @param accessTokenUrl  去调用的接口
+	 * @param parameters 入参
+	 * @return  返回认证结果
+	 */
 	@Override
 	protected AccessGrant postForAccessGrant(String accessTokenUrl, MultiValueMap<String, String> parameters) {
 		String responseStr = getRestTemplate().postForObject(accessTokenUrl, parameters, String.class);
@@ -45,7 +55,7 @@ public class QQOAuth2Template extends OAuth2Template {
 	@Override
 	protected RestTemplate createRestTemplate() {
 		RestTemplate restTemplate = super.createRestTemplate();
-		restTemplate.getMessageConverters().add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
+		restTemplate.getMessageConverters().add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
 		return restTemplate;
 	}
 

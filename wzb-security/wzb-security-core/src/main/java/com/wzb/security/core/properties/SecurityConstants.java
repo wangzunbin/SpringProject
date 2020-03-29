@@ -2,7 +2,7 @@ package com.wzb.security.core.properties;
 
 /**
  * ClassName:SecurityConstants  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 16:51   <br/>

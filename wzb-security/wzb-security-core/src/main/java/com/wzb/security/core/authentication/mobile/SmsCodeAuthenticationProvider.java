@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * ClassName:SmsCodeAuthenticationProvider  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/7 18:28   <br/>

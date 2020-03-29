@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * ClassName:QueueListener  <br/>
- * Funtion:  <br/>
+ * Function:  <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/3 15:46   <br/>

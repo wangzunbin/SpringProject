@@ -5,7 +5,7 @@ import org.springframework.social.security.SpringSocialConfigurer;
 
 /**
  * ClassName:Wzb  <br/>
- * Funtion:  <br/>
+ * Function: 配置回调地址 <br/>
  *
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/8 15:54   <br/>
