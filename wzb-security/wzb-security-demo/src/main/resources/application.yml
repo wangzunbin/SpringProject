@@ -29,20 +29,18 @@ security:
 server:
   port: 80
 
-#wzb:
-#  security:
-#        code:
-#          image:
-#            length: 6
-#            width: 100
-# 什么样的验证码需要验证, 下面的url
-#            url: /user/*
-#    browser:
-#      loginPage: /demo-signIn.html
-#      loginResponseType: REDIRECT
-
 wzb:
   security:
+      code:
+        image:
+          length: 6
+          width: 100
+# 什么样的验证码需要验证, 下面的url
+          url: /user/*
+      browser:
+        loginPage: /demo-signIn.html
+        loginResponseType: REDIRECT
+        signUpUrl: /demo-signUp.html
       social:
         filterProcessesUrl: /qqLogin
         qq:

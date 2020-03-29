@@ -96,7 +96,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                             SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
                             securityProperties.getBrowser().getLoginPage(),
                             SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-                            "/auth/qq", "/qqLogin/qq"
+                            "/auth/qq", "/qqLogin/qq",
+                            securityProperties.getBrowser().getSignUpUrl(),
+                            "/user/register"
                     )
                     .permitAll()
                     .anyRequest()
