@@ -16,4 +16,5 @@ public class SocialProperties {
 
     private QQProperties qq = new QQProperties();
 
+    private WeChatProperties weChat = new WeChatProperties();
 }

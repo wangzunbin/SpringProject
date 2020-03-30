@@ -2,6 +2,7 @@ package com.wzb.security;
 
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
+import org.springframework.stereotype.Component;
 
 /**
  * ClassName:DemoConnectionSignUp  <br/>
@@ -10,7 +11,7 @@ import org.springframework.social.connect.ConnectionSignUp;
  * @author WangZunBin <br/>
  * @version 0.4 2020/3/30 0:14   <br/>
  */
-//@Component
+@Component
 public class DemoConnectionSignUp implements ConnectionSignUp {
 
     /* (non-Javadoc)

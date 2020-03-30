@@ -38,7 +38,7 @@ wzb:
 # 什么样的验证码需要验证, 下面的url
           url: /user/*
       browser:
-        loginPage: /demo-signIn.html
+#        loginPage: /demo-signIn.html
         loginResponseType: REDIRECT
         signUpUrl: /demo-signUp.html
       social:
@@ -47,3 +47,6 @@ wzb:
           app-id: 101860144
           app-secret: 8f92b83413f0c899bc284d2b27fdb82a
           providerId: callback.do
+        weChat:
+          app-id: wxd99431bbff8305a0
+          app-secret: 60f78681d063590a469f1b297feff3c4
