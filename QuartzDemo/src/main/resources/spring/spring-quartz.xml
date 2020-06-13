@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config/application-${spring.profiles.active}.properties</value>
+            </list>
+        </property>
+    </bean>
+    <context:component-scan base-package="com.wangzunbin.quartz.job"/>
+
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="dbType" value="${jdbc.type}"/>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <property name="initialSize" value="${jdbc.pool.init}"/>
+        <property name="minIdle" value="${jdbc.pool.minIdle}"/>
+        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+
+        <property name="maxWait" value="60000"/>
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="select 'a'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat"/>
+    </bean>
+
+
+    <!-- 调度工厂 -->
+    <bean id="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="nonTransactionalDataSource" ref="dataSource"/>
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.instanceName">rank-scheduler</prop>
+                <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+                <!-- 线程池配置 -->
+                <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+                <prop key="org.quartz.threadPool.threadCount">${quartz.job.thread.pool.size}</prop>
+                <prop key="org.quartz.threadPool.threadPriority">${quartz.job.thread.pool.priority}</prop>
+                <!-- JobStore 配置 -->
+                <!--<prop key="org.quartz.jobStore.class">org.quartz.simpl.RAMJobStore</prop>-->
+                <prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
+                <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+
+                <!-- 集群配置 -->
+                <prop key="org.quartz.jobStore.isClustered">false</prop>
+                <prop key="org.quartz.jobStore.clusterCheckinInterval">15000</prop>
+                <prop key="org.quartz.jobStore.maxMisfiresToHandleAtATime">1</prop>
+                <prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+                <prop key="org.quartz.jobStore.tablePrefix">qrtz_</prop>
+            </props>
+        </property>
+
+        <property name="schedulerName" value="scheduler"/>
+
+        <!--必须的，QuartzScheduler 延时启动，应用启动完后 QuartzScheduler 再启动 -->
+        <property name="startupDelay" value="30"/>
+
+        <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
+    </bean>
+</beans>
