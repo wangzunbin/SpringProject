@@ -11,16 +11,13 @@
         default-autowire="byName">
 
     <!-- service层配置 -->
+
+    <import resource="spring-dao.xml"/>
     <import resource="spring-quartz.xml"/>
     <import resource="spring-timer.xml"/>
 
     <context:component-scan base-package="com.wangzunbin.quartz.service"/>
 
-    <tx:annotation-driven transaction-manager="transactionManager"  order="3"/>
-
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
 
     <bean class="com.wangzunbin.quartz.common.SpringContextHolder" lazy-init="false"/>
 </beans>

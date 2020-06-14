@@ -1,9 +1,11 @@
-package com.wangzunbin.quartz.common.service;
+package com.wangzunbin.quartz.service.impl;
 
 
 import com.wangzunbin.quartz.common.model.JobAPIRequest;
 import com.wangzunbin.quartz.common.model.JobAPIResult;
 import com.wangzunbin.quartz.common.model.JobContext;
+import com.wangzunbin.quartz.common.service.IJobExecute;
+import com.wangzunbin.quartz.service.ISchedulerJobService;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -19,25 +21,25 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * QUARTZ 定时任务实现
  * @version 0.1 2017-03-23 11:34
  */
 @Service
+@Slf4j
 public class QuartzSchedulerJobService implements ISchedulerJobService {
 
 	public static final String BEAN_NAME = "beanName";
 	public static final String JOB_ID = "jobId";
 	public static final String JOB_CONTEXT = "job_context";
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private Scheduler scheduler;
@@ -94,13 +96,13 @@ public class QuartzSchedulerJobService implements ISchedulerJobService {
 			if (scheduler.checkExists(jobKey)) {
 				CronTrigger oldTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
 				scheduler.rescheduleJob(triggerKey, trigger);
-				logger.info("rescheduleJob jobKey=[{}] exists!update tigger[{}]---->[{}]", new Object[]{jobKey, oldTrigger.getCronExpression(), cronExpression});
+				log.info("rescheduleJob jobKey=[{}] exists!update tigger[{}]---->[{}]", new Object[]{jobKey, oldTrigger.getCronExpression(), cronExpression});
 			} else {
 				scheduler.scheduleJob(jobDetail, trigger);
-				logger.info("scheduleJob jobKey=[{}] tigger[{}]", new Object[]{jobKey, cronExpression});
+				log.info("scheduleJob jobKey=[{}] tigger[{}]", new Object[]{jobKey, cronExpression});
 			}
 		} catch (SchedulerException e) {
-			logger.error(e.getLocalizedMessage(), e);
+			log.error(e.getLocalizedMessage(), e);
 			apiResult.setResultCode(JobAPIResult.RC_EXCEPTION);
 		}
 		return apiResult;
@@ -111,10 +113,10 @@ public class QuartzSchedulerJobService implements ISchedulerJobService {
 		JobAPIResult apiResult = JobAPIResult.createSuccess();
 		TriggerKey tiggerKey = createTriggerKey(request);
 		try {
-			logger.info("stop job tiggerKey[{}]", tiggerKey);
+			log.info("stop job tiggerKey[{}]", tiggerKey);
 			boolean found = scheduler.unscheduleJob(tiggerKey);
 		} catch (SchedulerException e) {
-			logger.error(e.getLocalizedMessage(), e);
+			log.error(e.getLocalizedMessage(), e);
 			apiResult.setResultCode(JobAPIResult.RC_EXCEPTION);
 		}
 		return apiResult;
@@ -125,10 +127,10 @@ public class QuartzSchedulerJobService implements ISchedulerJobService {
 		JobAPIResult apiResult = JobAPIResult.createSuccess();
 		TriggerKey tiggerKey = createTriggerKey(request);
 		try {
-			logger.info("pause job tiggerKey[{}]", tiggerKey);
+			log.info("pause job tiggerKey[{}]", tiggerKey);
 			scheduler.pauseTrigger(tiggerKey);
 		} catch (SchedulerException e) {
-			logger.error(e.getLocalizedMessage(), e);
+			log.error(e.getLocalizedMessage(), e);
 			apiResult.setResultCode(JobAPIResult.RC_EXCEPTION);
 		}
 		return apiResult;
@@ -139,10 +141,10 @@ public class QuartzSchedulerJobService implements ISchedulerJobService {
 		JobAPIResult apiResult = JobAPIResult.createSuccess();
 		TriggerKey tiggerKey = createTriggerKey(request);
 		try {
-			logger.info("resume job tiggerKey[{}]", tiggerKey);
+			log.info("resume job tiggerKey[{}]", tiggerKey);
 			scheduler.resumeTrigger(tiggerKey);
 		} catch (SchedulerException e) {
-			logger.error(e.getLocalizedMessage(), e);
+			log.error(e.getLocalizedMessage(), e);
 			apiResult.setResultCode(JobAPIResult.RC_EXCEPTION);
 		}
 		return apiResult;
@@ -153,17 +155,18 @@ public class QuartzSchedulerJobService implements ISchedulerJobService {
 		JobAPIResult apiResult = JobAPIResult.createSuccess();
 		JobKey jobKey = createJobKey(request);
 		try {
-			logger.info("delete job jobKey[{}]", jobKey);
+			log.info("delete job jobKey[{}]", jobKey);
 			scheduler.deleteJob(jobKey);
 		} catch (SchedulerException e) {
-			logger.error(e.getLocalizedMessage(), e);
+			log.error(e.getLocalizedMessage(), e);
 			apiResult.setResultCode(JobAPIResult.RC_EXCEPTION);
 		}
 		return apiResult;
 	}
 
+	@Slf4j
 	public static class DelegatingSpringJob implements Job {
-		private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
 		@Override
 		public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -176,7 +179,7 @@ public class QuartzSchedulerJobService implements ISchedulerJobService {
 				ApplicationContext applicationContext = (ApplicationContext) context.getScheduler().getContext().get("applicationContextKey");
 				IJobExecute execute = applicationContext.getBean(beanName, IJobExecute.class);
 				if (execute == null) {
-					logger.warn("========bean[{}] not implements IJobExecute or not exists!skip job execute=========", beanName);
+					log.warn("========bean[{}] not implements IJobExecute or not exists!skip job execute=========", beanName);
 					return;
 				} else {
 					if (jobContext == null) {
@@ -185,12 +188,12 @@ public class QuartzSchedulerJobService implements ISchedulerJobService {
 					Object taskId = createTaskId(jobId, beanName, jobContext);
 					jobContext.put(JobContext.CK_TASK_ID, taskId);
 					long start = System.currentTimeMillis();
-					logger.info("job[{}] start...", taskId);
+					log.info("job[{}] start...", taskId);
 					execute.exec(jobId, jobContext);
-					logger.info("job[{}] end...used {} second", taskId, (System.currentTimeMillis() - start) / 1000);
+					log.info("job[{}] end...used {} second", taskId, (System.currentTimeMillis() - start) / 1000);
 				}
 			} catch (SchedulerException e) {
-				logger.error(e.getLocalizedMessage(), e);
+				log.error(e.getLocalizedMessage(), e);
 			} finally {
 				if (jobContext != null) {
 					jobContext.dispose();

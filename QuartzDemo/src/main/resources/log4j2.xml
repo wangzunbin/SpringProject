@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="LAYOUT" value="%d{yyyy-MM-dd HH:mm:ss.SSS} --%t-- [%-5level] [%logger.%M] %msg%n"/>
+        <Property name="LOG_PATH" value="../logs"/>
+        <Property name="PROJECT_NAME" value="quartz_demo"/>
+        <property name="FILE_SIZE">10M</property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LAYOUT}"/>
+        </Console>
+
+        <RollingFile name="RollingFileDebug" fileName="${LOG_PATH}/${PROJECT_NAME}-debug.log" filePattern="${LOG_PATH}/$${date:yyyy-MM}/${PROJECT_NAME}-debug-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <RollingFile name="RollingFileWarn" fileName="${LOG_PATH}/${PROJECT_NAME}-warn.log" filePattern="${LOG_PATH}/$${date:yyyy-MM}/${PROJECT_NAME}-warn-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="warn">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFileDebug"/>
+            <AppenderRef ref="RollingFileWarn"/>
+        </Root>
+
+        <logger name="com.wangzunbin.quartz" level="debug"/>
+        <!--<logger name="mybatis" level="debug"/>-->
+    </Loggers>
+</Configuration>

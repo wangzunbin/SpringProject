@@ -1,4 +1,4 @@
-package com.wangzunbin.quartz.common.service;
+package com.wangzunbin.quartz.service;
 
 
 import com.wangzunbin.quartz.common.model.JobAPIRequest;
