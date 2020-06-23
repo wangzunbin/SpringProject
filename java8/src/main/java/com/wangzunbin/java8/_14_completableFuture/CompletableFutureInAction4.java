@@ -35,6 +35,7 @@ public class CompletableFutureInAction4 {
                 .thenAccept(System.out::println);*/
 
         CompletableFuture.supplyAsync(() -> 1)
+                // 同时返回
                 .thenAcceptBoth(CompletableFuture.supplyAsync(() -> 2.0d), (r1, r2) -> {
                     System.out.println(r1);
                     System.out.println(r2);
