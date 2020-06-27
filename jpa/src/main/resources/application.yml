@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.10.201.5:3306/jpa?charactorEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: wzb@#205147
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+#    create 保存运行时创建数据库表(如果有表,, 先删除表再创建)
+#    update  程序运行时创建表(如果有表, 不会创建表)
+#    none: 不会创建表
+    hibernate:
+      ddl-auto: update
