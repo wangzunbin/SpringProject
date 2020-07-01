@@ -39,7 +39,7 @@
         <httpclient.version>4.5.3</httpclient.version>
         <poi.version>3.16-beta2</poi.version>
         <zookeeper.version>3.4.9</zookeeper.version>
-        <quartz.version>2.2.3</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
 
         <commons-fileupload.version>1.3.2</commons-fileupload.version>
         <mybatis.version>3.4.2</mybatis.version>
