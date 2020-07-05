@@ -12,7 +12,7 @@ import javax.persistence.Query;
 
 /**
  * ClassName:JpqlTest  <br/>
- * Function:  <br/>
+ * Function: jpql:jpa query language(jpq查询语言)  <br/>
  *
  * @author WangZunBin <br/>
  * @version 1.0 2020/7/4 18:26   <br/>
