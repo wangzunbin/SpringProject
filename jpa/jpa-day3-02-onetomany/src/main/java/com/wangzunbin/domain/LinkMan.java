@@ -1,8 +1,10 @@
 package com.wangzunbin.domain;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,7 +59,7 @@ public class LinkMan {
      *
      */
     @ManyToOne(targetEntity = Customer.class,fetch = FetchType.LAZY)
-    @JoinColumn(name = "lkm_cust_id", referencedColumnName = "cust_id")
+    @JoinColumn(name = "lkm_cust_id", referencedColumnName = "cust_id", foreignKey = @ForeignKey(name = "none",value = ConstraintMode.NO_CONSTRAINT))
     private Customer customer;
 
     @Override

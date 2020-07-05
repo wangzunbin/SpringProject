@@ -33,7 +33,7 @@
                 <!--指定数据库类型 -->
                 <property name="database" value="MYSQL" />
                 <!--数据库方言：支持的特有语法 -->
-                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+                <property name="databasePlatform" value="com.wangzunbin.utils.MySQLDialect" />
                 <!--是否显示sql -->
                 <property name="showSql" value="true" />
             </bean>

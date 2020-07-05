@@ -9,16 +9,16 @@ package com.wangzunbin.utils;
  */
 
 public class MySQLDialect extends org.hibernate.dialect.MySQLDialect {
-
-    @Override
-    public String getAddForeignKeyConstraintString(
-            String constraintName,
-            String[] foreignKey,
-            String referencedTable,
-            String[] primaryKey,
-            boolean referencesPrimaryKey) {
-        //      设置foreignkey对应的列值可以为空
-        return " alter "+ foreignKey[0] +" set default null " ;
-    }
+//
+//    @Override
+//    public String getAddForeignKeyConstraintString(
+//            String constraintName,
+//            String[] foreignKey,
+//            String referencedTable,
+//            String[] primaryKey,
+//            boolean referencesPrimaryKey) {
+//        //      设置foreignkey对应的列值可以为空
+//        return " alter "+ foreignKey[0] +" set default null " ;
+//    }
 }
 

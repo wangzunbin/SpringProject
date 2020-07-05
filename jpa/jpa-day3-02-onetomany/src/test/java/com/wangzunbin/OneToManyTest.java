@@ -155,7 +155,7 @@ public class OneToManyTest {
     @Test
     public void testFind() {
         //1.查询1号客户
-        Customer customer = customerDao.findOne(2L);
+        Customer customer = customerDao.findOne(5L);
         System.out.println(customer);
     }
 }

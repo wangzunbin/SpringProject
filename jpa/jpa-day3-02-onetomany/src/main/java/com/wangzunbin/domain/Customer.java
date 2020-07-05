@@ -1,6 +1,7 @@
 package com.wangzunbin.domain;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -92,8 +93,10 @@ public class Customer {
      *          LAZY    ：延迟加载
 
      */
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<LinkMan> linkMans;
+    @org.hibernate.annotations.ForeignKey(name = "none")
+    private Set<LinkMan> linkMans = new HashSet<>();
 
     @Override
     public String toString() {
