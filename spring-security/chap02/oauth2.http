@@ -1,0 +1,8 @@
+@password=a2d9469d-2777-446d-98b9-496116fbc264
+###
+GET http://localhost:8080/api/greeting HTTP/1.1
+#Authorization: Basic user {{password}}}
+###
+POST http://localhost:8080/api/greeting?name=王五
+Authorization: Basic  user {{password}}
+Content-Type: application/json

@@ -1,0 +1,27 @@
+logging:
+  level:
+    com:
+      wangzunbin: DEBUG
+    org:
+      springframework:
+        security: DEBUG
+  pattern:
+    console: '%clr(%d{E HH:mm:ss.SSS}){blue} %clr(%-5p) %clr(${PID}){faint} %clr(---){faint}
+              %clr([%8.15t]){cyan} %clr(%-40.40logger{0}){blue} %clr(:){red} %clr(%m){faint}%n'
+server:
+  error:
+    whitelabel:
+      enabled: true
+  port: 8080
+
+spring:
+  application:
+    name: uaa
+  messages:
+    basename: i18n.messages
+    encoding: UTF-8
+  security:
+    user:
+      name: user
+      password: 123456
+      roles: USER,ADMIN
