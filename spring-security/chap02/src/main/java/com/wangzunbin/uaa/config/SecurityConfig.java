@@ -1,7 +1,7 @@
 package com.wangzunbin.uaa.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wangzunbin.uaa.security.UaaSuccessHandler;
+import com.wangzunbin.uaa.security.filter.RestAuthenticationFilter;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
@@ -10,16 +10,16 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
  * ClassName:SecurityConfig  <br/>
@@ -40,25 +40,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                // 认证
-                .authorizeRequests(req -> req.anyRequest().authenticated())
+                // 替换UsernamePasswordAuthenticationFilter
+                .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests(authorizeRequests -> authorizeRequests
+                        .antMatchers("/authorize/**").permitAll()
+                        .antMatchers("/admin/**").hasRole("ADMIN")
+                        .antMatchers("/api/**").hasRole("USER")
+                        .anyRequest().authenticated())
                 // 登录页(不加上permitAll这个, 会出现不停地重定向)
-                .formLogin(form -> form.loginPage("/login")
-                        // 设置登录的用户字段, 跟
-//                        .usernameParameter("username")
-                        .defaultSuccessUrl("/")
-                        .successHandler(new UaaSuccessHandler())
-                        .failureHandler(jsonLoginFailureHandler())
-                        .permitAll())
+//                .formLogin(form -> form.loginPage("/login")
+//                        // 设置登录的用户字段, 跟
+////                        .usernameParameter("username")
+//                        .defaultSuccessUrl("/")
+//                        .successHandler(new UaaSuccessHandler())
+//                        .failureHandler(jsonLoginFailureHandler())
+//                        .permitAll())
                 // 展示登录弹框
 //                .httpBasic(withDefaults())
-                .csrf(withDefaults())
-                .logout(logout -> logout.logoutUrl("/perform_logout").permitAll());
+                .csrf(AbstractHttpConfigurer::disable);
+//                .logout(logout -> logout.logoutUrl("/perform_logout").permitAll());
 //                .rememberMe()
 
     }
+    private RestAuthenticationFilter restAuthenticationFilter() throws Exception {
+        RestAuthenticationFilter filter = new RestAuthenticationFilter(objectMapper);
+        filter.setAuthenticationSuccessHandler(jsonLoginSuccessHandler());
+        filter.setAuthenticationFailureHandler(jsonLoginFailureHandler());
+        filter.setAuthenticationManager(authenticationManager());
+        filter.setFilterProcessesUrl("/authorize/login");
+        return filter;
+    }
 
-    private AuthenticationSuccessHandler jsonAuthenticationSuccessHandler() {
+
+    private AuthenticationSuccessHandler jsonLoginSuccessHandler() {
         return (request, response, authentication) -> {
             ObjectMapper objectMapper = new ObjectMapper();
             response.setStatus(HttpStatus.OK.value());
