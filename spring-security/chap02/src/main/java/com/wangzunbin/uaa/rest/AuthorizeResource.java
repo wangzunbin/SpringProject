@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  * ClassName:AuthorizeResource  <br/>
  * Function:  <br/>
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthorizeResource {
 
     @PostMapping(value="/register")
-    public UserDto register(@RequestBody UserDto userDto) {
+    public UserDto register(@RequestBody @Valid UserDto userDto) {
         return userDto;
     }
 

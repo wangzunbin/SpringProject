@@ -1,5 +1,7 @@
 package com.wangzunbin.uaa.domain;
 
+import com.wangzunbin.uaa.annotation.ValidPassword;
+
 import java.io.Serializable;
 
 import javax.validation.constraints.Email;
@@ -22,6 +24,7 @@ public class UserDto implements Serializable {
     @NotBlank
     @Size(min = 4, max = 50, message = "用户畅读必须在4到50个字符之间")
     private String username;
+    @ValidPassword
     private String password;
     private String matchPassword;
     @Email

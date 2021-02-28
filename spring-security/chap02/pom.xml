@@ -17,6 +17,7 @@
     <properties>
         <java.version>11</java.version>
         <bootstrap.version>4.5.0</bootstrap.version>
+        <passay.version>1.6.0</passay.version>
     </properties>
     <dependencies>
         <dependency>
@@ -52,6 +53,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.passay</groupId>
+            <artifactId>passay</artifactId>
+            <version>${passay.version}</version>
         </dependency>
     </dependencies>
 
