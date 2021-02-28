@@ -4,13 +4,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wangzunbin.uaa.security.filter.RestAuthenticationFilter;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -100,5 +106,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/public/**", "/", "/error")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("user")
+                .password(passwordEncoder().encode("12345678"))
+                .roles("USER", "ADMIN");
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+//        return new MessageDigestPasswordEncoder();
+        val idForDefault = "bcrypt";
+        var encoders = Map.of(
+                idForDefault, new BCryptPasswordEncoder(),
+                "SHA-1", new MessageDigestPasswordEncoder("SHA-1")
+        );
+        return new DelegatingPasswordEncoder(idForDefault, encoders);
     }
 }
