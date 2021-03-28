@@ -3,10 +3,10 @@ package com.wangzunbin.uaa.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wangzunbin.uaa.security.filter.RestAuthenticationFilter;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
@@ -42,6 +43,7 @@ import lombok.val;
 @Configuration
 @RequiredArgsConstructor
 @Import(SecurityProblemSupport.class)
+@Order(90)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ObjectMapper objectMapper;
@@ -50,29 +52,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.exceptionHandling(exp -> exp
+        http.requestMatchers(req -> req.mvcMatchers("/authorize/**", "/admin/**", "/api/**"))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exp -> exp
                 .authenticationEntryPoint(securityProblemSupport)
                 .accessDeniedHandler(securityProblemSupport))
-                // 替换UsernamePasswordAuthenticationFilter
-                .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests(authorizeRequests -> authorizeRequests
                         .antMatchers("/authorize/**").permitAll()
                         .antMatchers("/admin/**").hasRole("ADMIN")
                         .antMatchers("/api/**").hasRole("USER")
                         .anyRequest().authenticated())
-                // 登录页(不加上permitAll这个, 会出现不停地重定向)
-//                .formLogin(form -> form.loginPage("/login")
-//                        // 设置登录的用户字段, 跟
-////                        .usernameParameter("username")
-//                        .defaultSuccessUrl("/")
-//                        .successHandler(new UaaSuccessHandler())
-//                        .failureHandler(jsonLoginFailureHandler())
-//                        .permitAll())
-                // 展示登录弹框
-//                .httpBasic(withDefaults())
+                // 替换UsernamePasswordAuthenticationFilter
+                .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable);
-//                .logout(logout -> logout.logoutUrl("/perform_logout").permitAll());
-//                .rememberMe()
 
     }
     private RestAuthenticationFilter restAuthenticationFilter() throws Exception {
@@ -111,8 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/public/**", "/", "/error")
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+                .antMatchers("/public/**", "/", "/error");
     }
 
     @Override
