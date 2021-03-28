@@ -6,6 +6,7 @@ import com.wangzunbin.uaa.security.filter.RestAuthenticationFilter;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import java.util.Map;
 
@@ -39,13 +41,18 @@ import lombok.val;
 //@EnableWebSecurity(debug = true)
 @Configuration
 @RequiredArgsConstructor
+@Import(SecurityProblemSupport.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ObjectMapper objectMapper;
 
+    private final SecurityProblemSupport securityProblemSupport;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.exceptionHandling(exp -> exp
+                .authenticationEntryPoint(securityProblemSupport)
+                .accessDeniedHandler(securityProblemSupport))
                 // 替换UsernamePasswordAuthenticationFilter
                 .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests(authorizeRequests -> authorizeRequests

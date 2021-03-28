@@ -9,12 +9,14 @@ import org.passay.IllegalSequenceRule;
 import org.passay.LengthRule;
 import org.passay.PasswordData;
 import org.passay.WhitespaceRule;
+import org.passay.spring.SpringMessageResolver;
 
 import java.util.Arrays;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import lombok.RequiredArgsConstructor;
 import lombok.val;
 
 /**
@@ -24,8 +26,11 @@ import lombok.val;
  * @author WangZunBin <br/>
  * @version 1.0 2021/2/28 23:41   <br/>
  */
+
+@RequiredArgsConstructor
 public class PasswordValidator implements ConstraintValidator<ValidPassword, String> {
 
+    private final SpringMessageResolver springMessageResolver;
 
     @Override
     public void initialize(ValidPassword constraintAnnotation) {
@@ -34,7 +39,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
-        val validator = new org.passay.PasswordValidator(
+        val validator = new org.passay.PasswordValidator(springMessageResolver,
                 Arrays.asList(
                         new LengthRule(8, 30),
                         new CharacterRule(EnglishCharacterData.UpperCase, 1),
@@ -45,6 +50,9 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
                         new WhitespaceRule()
                 ));
         val result = validator.validate(new PasswordData(password));
+        constraintValidatorContext.disableDefaultConstraintViolation();
+        constraintValidatorContext.buildConstraintViolationWithTemplate(String.join(",", validator.getMessages(result)))
+                .addConstraintViolation();
         return result.isValid();
     }
 }

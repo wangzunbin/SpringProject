@@ -1,5 +1,9 @@
 package com.wangzunbin.uaa.config;
 
+import org.passay.MessageResolver;
+import org.passay.spring.SpringMessageResolver;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -19,6 +23,16 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 public class WebMvcConfig  implements WebMvcConfigurer {
 
+    private final MessageSource messageSource;
+
+    /**
+     * 国际化
+     * @return 返回spring国际化处理器
+     */
+    @Bean
+    public MessageResolver messageResolver(){
+        return new SpringMessageResolver(messageSource);
+    }
 
     /**
      * 静态资源配置
