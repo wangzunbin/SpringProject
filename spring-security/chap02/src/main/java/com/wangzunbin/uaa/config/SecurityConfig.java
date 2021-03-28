@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -64,7 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .anyRequest().authenticated())
                 // 替换UsernamePasswordAuthenticationFilter
                 .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(AbstractHttpConfigurer::disable)
+                // 用basic认证
+                .httpBasic(Customizer.withDefaults());
 
     }
     private RestAuthenticationFilter restAuthenticationFilter() throws Exception {
@@ -99,12 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/public/**", "/", "/error");
-    }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

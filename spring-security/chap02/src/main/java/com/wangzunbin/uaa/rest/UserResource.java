@@ -1,6 +1,8 @@
 package com.wangzunbin.uaa.rest;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +42,19 @@ public class UserResource {
     public String saveGreeting(@PathVariable String name){
         return "hello World:" + name;
     }
+
+    @GetMapping("/principal")
+    public String getPrincipal(){
+        // SecurityContextHolder里面底层就是用的是ThreadLocal存储
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+    @GetMapping("/principal/authentication")
+    public Authentication getAuthentication(){
+        // SecurityContextHolder里面底层就是用的是ThreadLocal存储
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+
     @Data
     public static class Profile{
         String gender;

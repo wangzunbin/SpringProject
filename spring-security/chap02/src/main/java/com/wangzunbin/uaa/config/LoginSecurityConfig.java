@@ -1,8 +1,10 @@
 package com.wangzunbin.uaa.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
@@ -25,5 +27,13 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
                         .defaultSuccessUrl("/").permitAll())
                 .logout(logout -> logout.logoutUrl("perform_logout"))
                 .rememberMe(rememberMe -> rememberMe.tokenValiditySeconds(30 * 24 * 3600).rememberMeCookieName("someKeyToRemember"));
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/error/**")
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 }
