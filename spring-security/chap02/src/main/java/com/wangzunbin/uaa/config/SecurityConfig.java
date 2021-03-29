@@ -106,21 +106,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 使用的是jdbc来存储下面的两个用户
         auth.jdbcAuthentication()
-                .withDefaultSchema()
                 .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder())
-                .withUser("user")
-                .password(passwordEncoder().encode("12345678"))
-                .roles("USER", "ADMIN")
-                .and()
-                .withUser("old_user")
-                .password(passwordEncoder().encode("12345678"))
-                .roles("USER");
+                .usersByUsernameQuery("select username, password, enabled from wzb_users where username = ?")
+                .authoritiesByUsernameQuery("select username, authority from wzb_authorities where username = ?")
+                .passwordEncoder(passwordEncoder());
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
