@@ -26,6 +26,8 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -49,6 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final ObjectMapper objectMapper;
 
     private final SecurityProblemSupport securityProblemSupport;
+
+    private final DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -105,10 +109,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
+        // 使用的是jdbc来存储下面的两个用户
+        auth.jdbcAuthentication()
+                .withDefaultSchema()
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder())
                 .withUser("user")
                 .password(passwordEncoder().encode("12345678"))
-                .roles("USER", "ADMIN");
+                .roles("USER", "ADMIN")
+                .and()
+                .withUser("old_user")
+                .password(passwordEncoder().encode("12345678"))
+                .roles("USER");
     }
     @Bean
     public PasswordEncoder passwordEncoder() {

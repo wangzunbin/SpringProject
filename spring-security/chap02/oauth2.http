@@ -1,8 +1,56 @@
-@password=a2d9469d-2777-446d-98b9-496116fbc264
+GET http://localhost:80/api/item?id=99
+Accept: application/json
+
+###
+@password=12345678
+@username=user
 ###
 GET http://localhost:8080/api/greeting HTTP/1.1
-#Authorization: Basic user {{password}}}
+Authorization: Basic user {{password}}
 ###
 POST http://localhost:8080/api/greeting?name=王五
 Authorization: Basic  user {{password}}
 Content-Type: application/json
+
+{
+  "gender": "男",
+  "idNo": "22323232323"
+}
+
+###
+
+PUT  http://localhost:8080/api/greeting/王五
+###
+POST http://localhost:8080/authorize/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "1234567"
+}
+
+###
+POST http://localhost:8080/authorize/register?
+Content-Type: application/json
+Accept-Language: en-US
+
+{
+  "username": "user",
+  "password": "@Wangzunbin123"
+}
+###
+GET http://localhost:8080/api/principal/authentication
+Authorization: Basic dXNlcjoxMjM0NTY3OA==
+
+####
+#Get http://localhost:8080/api/principal
+#Content-Type: application/json
+#Authorization: Basic user 12345678
+#
+#
+#
+####
+#Get http://localhost:8080/api/principal/authentication
+#Content-Type: application/json
+## Authorization: Basic user 12345678
+#Authorization: Basic dXNlcjoxMjM0NTY3OA==

@@ -1,10 +1,8 @@
 logging:
   level:
-    com:
-      wangzunbin: DEBUG
-    org:
-      springframework:
-        security: DEBUG
+    com.wangzunbin: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.jdbc.core: TRACE
   pattern:
     console: '%clr(%d{E HH:mm:ss.SSS}){blue} %clr(%-5p) %clr(${PID}){faint} %clr(---){faint}
               %clr([%8.15t]){cyan} %clr(%-40.40logger{0}){blue} %clr(:){red} %clr(%m){faint}%n'
@@ -25,3 +23,31 @@ spring:
       name: user
       password: Wangzunbin123
       roles: USER,ADMIN
+  datasource:
+    # 数据库驱动
+    driver-class-name: org.h2.Driver
+    #  数据库密码
+    password: ''
+    #  数据库连接URL, 为了兼容MYSQL, 添加 MODE=MySQL  连接的是jdbc:h2:mem:test
+    #  DATABASE_TO_LOWER=TRUE 是让表名转为小写
+    #  CASE_INSENSITIVE_IDENTIFIERS=TRUE 不区分大小写
+    #  DB_CLOSE_DELAY=-1不自动关闭数据库连接
+    url: jdbc:h2:mem:test;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;DB_CLOSE_DELAY=-1
+    #  数据库用户名
+    username: sa
+  h2:
+    console:
+      #  显示H2嵌入式UI管理界面
+      enabled: true
+      #  访问H2管理界面的路径
+      path: /h2-console
+      settings:
+        #  禁止输出Trace信息
+        trace: false
+        #  禁止远程访问H2管理界面
+        web-allow-others: false
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
