@@ -45,9 +45,6 @@ public class WebMvcConfig  implements WebMvcConfigurer {
         registry.setOrder(1);
     }
 
-    /**
-     * 视图控制器配置
-     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");

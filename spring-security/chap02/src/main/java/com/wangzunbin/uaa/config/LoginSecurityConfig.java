@@ -25,7 +25,7 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin(form -> form.loginPage("/login")
                         .usernameParameter("username")
                         .defaultSuccessUrl("/").permitAll())
-                .logout(logout -> logout.logoutUrl("perform_logout"))
+                .logout(logout -> logout.logoutUrl("/perform_logout"))
                 .rememberMe(rememberMe -> rememberMe.tokenValiditySeconds(30 * 24 * 3600).rememberMeCookieName("someKeyToRemember"));
     }
 
@@ -33,7 +33,7 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/error/**", "/h2-console/**")
+                .antMatchers("/error/**", "/h2-console/**", "/public/**")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 }
