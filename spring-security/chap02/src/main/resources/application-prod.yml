@@ -16,16 +16,13 @@ server:
 spring:
   application:
     name: uaa
-  messages:
-    basename: i18n.messages
-    encoding: UTF-8
   security:
     user:
       name: user
       password: Wangzunbin123
       roles: USER,ADMIN
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       auto-commit: false
       data-source-properties:
@@ -69,4 +66,6 @@ spring:
           fail_on_pagination_over_collection_fetch: true
           in_clause_parameter_padding: true
     show-sql: true
-  profiles: local
+  config:
+    activate:
+      on-profile: prod

@@ -16,9 +16,6 @@ server:
 spring:
   application:
     name: uaa
-  messages:
-    basename: i18n.messages
-    encoding: UTF-8
   security:
     user:
       name: user
@@ -53,4 +50,6 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
