@@ -2,6 +2,7 @@ package com.wangzunbin.uaa.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wangzunbin.uaa.security.filter.RestAuthenticationFilter;
+import com.wangzunbin.uaa.security.userdetails.UserDetailsPasswordServiceImpl;
 import com.wangzunbin.uaa.security.userdetails.UserDetailsServiceImpl;
 
 import org.springframework.context.annotation.Bean;
@@ -52,6 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final SecurityProblemSupport securityProblemSupport;
 
     private final UserDetailsServiceImpl userDetailsService;
+
+    private final UserDetailsPasswordServiceImpl userDetailsPasswordServiceImpl;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -108,7 +112,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 使用的是jdbc来存储下面的两个用户
-        auth.userDetailsService(userDetailsService) .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder())
+                .userDetailsPasswordManager(userDetailsPasswordServiceImpl); // 配置密码自动升级服务
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
