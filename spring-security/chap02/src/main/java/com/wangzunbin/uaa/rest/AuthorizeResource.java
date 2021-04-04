@@ -1,6 +1,6 @@
 package com.wangzunbin.uaa.rest;
 
-import com.wangzunbin.uaa.domain.UserDto;
+import com.wangzunbin.uaa.domain.User;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class AuthorizeResource {
 
     @PostMapping(value="/register")
-    public UserDto register(@RequestBody @Valid UserDto userDto) {
+    public User register(@RequestBody @Valid User userDto) {
         return userDto;
     }
 

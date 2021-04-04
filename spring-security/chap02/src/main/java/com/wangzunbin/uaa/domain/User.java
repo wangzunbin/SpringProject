@@ -1,5 +1,6 @@
 package com.wangzunbin.uaa.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wangzunbin.uaa.annotation.ValidPassword;
 
 import org.hibernate.annotations.Fetch;
@@ -23,7 +24,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.With;
 
 /**
  * ClassName:User  <br/>
@@ -34,10 +39,14 @@ import lombok.Data;
  * @version 1.0 2021/2/28 23:27   <br/>
  */
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@With
 @Data
 @Entity
 @Table(name = "wzb_users")
-public class UserDto implements UserDetails, Serializable {
+public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +57,7 @@ public class UserDto implements UserDetails, Serializable {
     @Column(length = 50, unique = true, nullable = false)
     private String username;
     @ValidPassword
+    @JsonIgnore
     @Column(name = "password_hash", length = 80, nullable = false)
     private String password;
 

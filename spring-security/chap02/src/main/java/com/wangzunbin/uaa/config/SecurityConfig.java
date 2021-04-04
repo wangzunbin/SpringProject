@@ -2,6 +2,7 @@ package com.wangzunbin.uaa.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wangzunbin.uaa.security.filter.RestAuthenticationFilter;
+import com.wangzunbin.uaa.security.userdetails.UserDetailsServiceImpl;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +26,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import java.util.Map;
-
-import javax.sql.DataSource;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SecurityProblemSupport securityProblemSupport;
 
-    private final DataSource dataSource;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -109,11 +108,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 使用的是jdbc来存储下面的两个用户
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled from wzb_users where username = ?")
-                .authoritiesByUsernameQuery("select username, authority from wzb_authorities where username = ?")
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService) .passwordEncoder(passwordEncoder());
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
