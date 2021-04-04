@@ -67,10 +67,10 @@ spring:
           in_clause_parameter_padding: true
     show-sql: true
   ldap:
-    base: dc=imooc,dc=com
+    base: dc=wzb,dc=com
     password: admin
     urls: ldap://localhost:389/
-    username: cn=admin;dc=imooc,dc=com
+    username: cn=admin;dc=wzb,dc=com
   config:
     activate:
       on-profile: prod

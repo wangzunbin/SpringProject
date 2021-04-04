@@ -67,9 +67,9 @@ spring:
           in_clause_parameter_padding: true
     show-sql: true
   ldap:
-    base: dc=imooc,dc=com
+    base: dc=wzb,dc=com
     embedded:
-      base-dn: dc=imooc,dc=com
+      base-dn: dc=wzb,dc=com
       ldif: classpath:test-ldap-server.ldif
       port: 8389
     urls: "ldap://localhost:8389/"

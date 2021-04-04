@@ -1,8 +1,8 @@
-dn: dc=imooc,dc=com
+dn: dc=wzb,dc=com
 objectClass: top
 objectClass: domain
 
-dn: uid=zhaoliu,dc=imooc,dc=com
+dn: uid=zhaoliu,dc=wzb,dc=com
 objectClass: top
 objectClass: person
 objectClass: organizationalPerson
@@ -12,7 +12,7 @@ sn: liu
 uid: zhaoliu
 userPassword: 123
 
-dn: uid=mike,dc=imooc,dc=com
+dn: uid=mike,dc=wzb,dc=com
 objectClass: top
 objectClass: person
 objectClass: organizationalPerson
