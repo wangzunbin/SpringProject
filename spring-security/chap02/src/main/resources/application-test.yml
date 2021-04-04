@@ -68,9 +68,11 @@ spring:
     show-sql: true
   ldap:
     base: dc=imooc,dc=com
-    password: admin
-    urls: ldap://localhost:389/
-    username: cn=admin;dc=imooc,dc=com
+    embedded:
+      base-dn: dc=imooc,dc=com
+      ldif: classpath:test-ldap-server.ldif
+      port: 8389
+    urls: "ldap://localhost:8389/"
   config:
     activate:
-      on-profile: prod
+      on-profile: test

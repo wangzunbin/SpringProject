@@ -27,4 +27,4 @@ spring:
   datasource:
     initialization-mode: embedded
   profiles:
-    active: ${SPRING_ACTIVE_PROFILE:prod}
+    active: ${SPRING_ACTIVE_PROFILE:test}

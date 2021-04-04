@@ -1,6 +1,8 @@
 package com.wangzunbin.uaa.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wangzunbin.uaa.security.auth.ldap.LDAPAuthenticationProvider;
+import com.wangzunbin.uaa.security.auth.ldap.LDAPUserRepo;
 import com.wangzunbin.uaa.security.filter.RestAuthenticationFilter;
 import com.wangzunbin.uaa.security.userdetails.UserDetailsPasswordServiceImpl;
 import com.wangzunbin.uaa.security.userdetails.UserDetailsServiceImpl;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,7 +48,7 @@ import lombok.val;
 @Configuration
 @RequiredArgsConstructor
 @Import(SecurityProblemSupport.class)
-@Order(90)
+@Order(99)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ObjectMapper objectMapper;
@@ -55,6 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
 
     private final UserDetailsPasswordServiceImpl userDetailsPasswordServiceImpl;
+
+    private final LDAPUserRepo ldapUserRepo;
 
 
     @Override
@@ -108,14 +113,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
-
+    // api生效, 跟LoginSecurityConfig一样
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 使用的是jdbc来存储下面的两个用户
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder())
-                .userDetailsPasswordManager(userDetailsPasswordServiceImpl); // 配置密码自动升级服务
+        auth.authenticationProvider(daoAuthenticationProvider());
+        auth.authenticationProvider(ldapAuthenticationProvider());
     }
+
+    @Bean
+    LDAPAuthenticationProvider ldapAuthenticationProvider(){
+        return new LDAPAuthenticationProvider(ldapUserRepo);
+    }
+
+    @Bean
+    DaoAuthenticationProvider daoAuthenticationProvider(){
+        val daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsPasswordService(userDetailsPasswordServiceImpl); // 配置密码自动升级服务
+        return daoAuthenticationProvider;
+    }
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
 //        return new MessageDigestPasswordEncoder();
