@@ -1,5 +1,6 @@
 package com.wangzunbin.uaa.util;
 
+import com.wangzunbin.uaa.config.AppProperties;
 import com.wangzunbin.uaa.domain.Role;
 import com.wangzunbin.uaa.domain.User;
 
@@ -28,14 +29,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 // junit5
 @ExtendWith(SpringExtension.class)
 @Slf4j
-public class JetTest {
+public class JwtTest {
 
 
     private JWTUtil jwtUtil;
 
     @BeforeEach
     public void setUp(){
-        jwtUtil = new JWTUtil();
+        jwtUtil = new JWTUtil(new AppProperties());
     }
 
     @Test
@@ -49,7 +50,7 @@ public class JetTest {
                 .authorities(authorities)
                 .build();
         // 创建 jwt
-        val token = jwtUtil.createJWToken(user);
+        val token = jwtUtil.createAccessToken(user);
         log.debug("获取到的Token: {}", token);
         // 解析
         val parsedClaims = Jwts.parserBuilder().setSigningKey(JWTUtil.key)
