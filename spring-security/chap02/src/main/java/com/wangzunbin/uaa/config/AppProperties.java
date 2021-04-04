@@ -24,6 +24,8 @@ public class AppProperties {
     @Setter
     @Getter
     public static class Jwt {
+        private String header = "Authorization";
+        private String prefix = "Bearer ";
         // access token 过期时间
         private Long accessTokenExpireTime = 60_000L;
         // refresh token 过期时间

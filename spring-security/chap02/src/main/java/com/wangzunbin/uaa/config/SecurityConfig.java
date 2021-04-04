@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wangzunbin.uaa.security.auth.ldap.LDAPAuthenticationProvider;
 import com.wangzunbin.uaa.security.auth.ldap.LDAPUserRepo;
 import com.wangzunbin.uaa.security.filter.RestAuthenticationFilter;
+import com.wangzunbin.uaa.security.jwt.JwtFilter;
 import com.wangzunbin.uaa.security.userdetails.UserDetailsPasswordServiceImpl;
 import com.wangzunbin.uaa.security.userdetails.UserDetailsServiceImpl;
 
@@ -61,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final LDAPUserRepo ldapUserRepo;
 
+    private final JwtFilter jwtFilter;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -76,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .anyRequest().authenticated())
                 // 替换UsernamePasswordAuthenticationFilter
                 .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 // 用basic认证
                 .httpBasic(Customizer.withDefaults());
