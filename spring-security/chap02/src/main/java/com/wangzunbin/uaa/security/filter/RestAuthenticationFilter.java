@@ -19,7 +19,7 @@ import lombok.val;
 
 /**
  * ClassName:RestAuthenticationFilter  <br/>
- * Function:  <br/>
+ * Function: 自定义UsernamePasswordAuthenticationFilter <br/>
  *
  * @author WangZunBin <br/>
  * @version 1.0 2021/2/28 22:59   <br/>
@@ -35,8 +35,8 @@ public class RestAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         try (InputStream is = request.getInputStream()) {
             val jsonNode = objectMapper.readTree(is);
 
-            String username = jsonNode.get("username").textValue();
-            String password = jsonNode.get("password").textValue();
+            String username = jsonNode.get(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).textValue();
+            String password = jsonNode.get(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).textValue();
             authRequest = new UsernamePasswordAuthenticationToken(username, password);
         } catch (IOException e) {
             throw new BadCredentialsException("没有找到用户名或密码参数");
