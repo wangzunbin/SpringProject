@@ -68,16 +68,35 @@ public class User implements UserDetails, Serializable {
     @Email
     @Column(length = 255, unique = true, nullable = false)
     private String email;
+
     @Column(length = 50)
     private String name;
+
     @Column(nullable = false)
     private boolean enabled;
+
+    /**
+     * 是否启用两步验证
+     */
+    @Builder.Default
+    @Column(name = "using_mfa", nullable = false)
+    private boolean usingMfa = false;
+
+    /**
+     * 两步验证的key
+     */
+    @JsonIgnore
+    @Column(name = "mfa_key", nullable = false)
+    private String mfaKey;
+
     // 账号是否过期
     @Column(name = "account_non_expired", nullable = false)
     private boolean accountNonExpired;
+
     // 账号是否锁定
     @Column(name = "account_non_locked", nullable = false)
     private boolean accountNonLocked;
+
     // 密码是否过期
     @Column(name = "credentials_non_expired", nullable = false)
     private boolean credentialsNonExpired;

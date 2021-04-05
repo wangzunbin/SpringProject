@@ -8,6 +8,9 @@ import com.wangzunbin.uaa.exception.DuplicateProblem;
 import com.wangzunbin.uaa.service.UserService;
 import com.wangzunbin.uaa.util.JwtUtil;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -64,8 +67,24 @@ public class AuthorizeResource {
     }
 
     @PostMapping("/token")
-    public Auth login(@RequestBody @Valid LoginDto loginDto) throws Exception{
-        return userService.login(loginDto.getUsername(), loginDto.getPassword());
+    public ResponseEntity<?> login(@RequestBody @Valid LoginDto loginDto) throws Exception{
+       return userService.findOptionalByUsernameAndPassword(loginDto.getUsername(), loginDto.getPassword())
+                .map(user -> {
+                    // 1.升级密码编号;
+                    // 2.验证
+                    // 3.判断usingMfa, 如果是false, 我们就直接返回token
+                    if(!user.isUsingMfa()) {
+                        return ResponseEntity.ok().body(userService.login(loginDto.getUsername(), loginDto.getPassword()));
+                    }
+                    // 4.使用多因子认证
+                    val mfaId = userCacheService.cache(user);
+                    // 5. "X-Authenticate": "mfa", "realm=" + mfaId
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                            .header("X-Authenticate", "mfa", "realm=" + mfaId)
+                            .build();
+                })
+                .orElseThrow(() -> new BadCredentialsException("用户名或密码错误"));
+
     }
 
     @PostMapping("/token/refresh")
