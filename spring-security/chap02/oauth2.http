@@ -54,3 +54,12 @@ Authorization: Basic dXNlcjoxMjM0NTY3OA==
 #Content-Type: application/json
 ## Authorization: Basic user 12345678
 #Authorization: Basic dXNlcjoxMjM0NTY3OA==
+
+###
+POST http://localhost:8080/authorize/token
+Content-Type: application/json;charset=utf-8
+
+{
+  "username": "user",
+  "password": "12345678"
+}

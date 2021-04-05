@@ -78,4 +78,5 @@ public class UserService {
     public Optional<User> findOptionalByUsername(String username) {
         return userRepo.findOptionalByUsername(username);
     }
+
 }

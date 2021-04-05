@@ -5,6 +5,7 @@ import com.wangzunbin.uaa.domain.User;
 import com.wangzunbin.uaa.domain.dto.LoginDto;
 import com.wangzunbin.uaa.domain.dto.UserDto;
 import com.wangzunbin.uaa.exception.DuplicateProblem;
+import com.wangzunbin.uaa.service.UserCacheService;
 import com.wangzunbin.uaa.service.UserService;
 import com.wangzunbin.uaa.util.JwtUtil;
 
@@ -41,6 +42,7 @@ public class AuthorizeResource {
     private final UserService userService;
     private final static String PREFIX = "Bearer";
     private final JwtUtil jwtUtil;
+    private final UserCacheService userCacheService;
 
     @PostMapping(value="/register")
     public void register(@RequestBody @Valid UserDto userDto) {
@@ -77,14 +79,13 @@ public class AuthorizeResource {
                         return ResponseEntity.ok().body(userService.login(loginDto.getUsername(), loginDto.getPassword()));
                     }
                     // 4.使用多因子认证
-                    val mfaId = userCacheService.cache(user);
+                    val mfaId = userCacheService.cacheUser(user);
                     // 5. "X-Authenticate": "mfa", "realm=" + mfaId
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                             .header("X-Authenticate", "mfa", "realm=" + mfaId)
                             .build();
                 })
                 .orElseThrow(() -> new BadCredentialsException("用户名或密码错误"));
-
     }
 
     @PostMapping("/token/refresh")
