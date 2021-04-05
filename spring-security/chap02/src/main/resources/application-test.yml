@@ -71,8 +71,8 @@ spring:
     embedded:
       base-dn: dc=wzb,dc=com
       ldif: classpath:test-ldap-server.ldif
-      port: 8389
-    urls: "ldap://localhost:8389/"
+      port: 389
+    urls: "ldap://localhost:389/"
   config:
     activate:
       on-profile: test

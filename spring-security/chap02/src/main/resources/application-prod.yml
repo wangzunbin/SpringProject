@@ -68,9 +68,11 @@ spring:
     show-sql: true
   ldap:
     base: dc=wzb,dc=com
-    password: admin
-    urls: ldap://localhost:389/
-    username: cn=admin;dc=wzb,dc=com
+    embedded:
+        base-dn: dc=wzb,dc=com
+        ldif: classpath:test-ldap-server.ldif
+        port: 389
+    urls: "ldap://localhost:389/"
   config:
     activate:
       on-profile: prod

@@ -24,6 +24,6 @@ public class LeanCloudConfig {
         } else {
             AVOSCloud.setLogLevel(AVLogger.Level.DEBUG);
         }
-        AVOSCloud.initialize(appProperties.getLeanCloud().getAppId(), appProperties.getLeanCloud().getAppKey());
+//        AVOSCloud.initialize(appProperties.getLeanCloud().getAppId(), appProperties.getLeanCloud().getAppKey());
     }
 }

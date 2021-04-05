@@ -27,7 +27,7 @@ spring:
   datasource:
     initialization-mode: embedded
   profiles:
-    active: ${SPRING_ACTIVE_PROFILE:test}
+    active: ${SPRING_ACTIVE_PROFILE:prod}
   mail:
     host: ${SMTP_HOST}
     port: ${SMTP_PORT}
