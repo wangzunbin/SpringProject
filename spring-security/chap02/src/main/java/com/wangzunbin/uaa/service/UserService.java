@@ -9,6 +9,7 @@ import com.wangzunbin.uaa.util.JwtUtil;
 import com.wangzunbin.uaa.util.TotpUtil;
 
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -77,6 +78,30 @@ public class UserService {
 
     public Optional<User> findOptionalByUsername(String username) {
         return userRepo.findOptionalByUsername(username);
+    }
+
+    public void updatePassword(User user, String rawPassword) {
+        if (passwordEncoder.upgradeEncoding(user.getPassword())) {
+            userRepo.save(user.withPassword(passwordEncoder.encode(rawPassword)));
+        }
+    }
+
+    public Optional<String> createTotp(User user) {
+        return totpUtil.createTotp(user.getMfaKey());
+    }
+
+    public Auth loginWithTotp(User user) {
+        val toSave = user.withMfaKey(totpUtil.encodeKeyToString());
+        val saved = saveUser(toSave);
+        return login(saved);
+    }
+
+    public User saveUser(User user) {
+        return userRepo.save(user);
+    }
+
+    public Auth login(UserDetails userDetails) {
+        return new Auth(jwtUtil.createAccessToken(userDetails), jwtUtil.createRefreshToken(userDetails));
     }
 
 }
