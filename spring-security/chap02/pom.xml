@@ -22,6 +22,12 @@
         <passay.version>1.6.0</passay.version>
         <problem.version>0.26.1</problem.version>
         <jjwt.version>0.11.2</jjwt.version>
+        <otp.version>0.2.0</otp.version>
+        <redisson.version>3.12.5</redisson.version>
+        <embedded.redis.version>0.7.2</embedded.redis.version>
+        <aliyun.version>4.5.0</aliyun.version>
+        <leancloud.version>6.5.3</leancloud.version>
+        <sendgrid.version>4.7.0</sendgrid.version>
     </properties>
     <dependencies>
         <dependency>
@@ -129,6 +135,60 @@
             <version>${jjwt.version}</version>
         </dependency>
         <!--  JWT end-->
+
+        <!--  Java OTP start -->
+        <dependency>
+            <groupId>com.eatthepath</groupId>
+            <artifactId>java-otp</artifactId>
+            <version>${otp.version}</version>
+        </dependency>
+        <!--  Java OTP end -->
+        <!--  Redisson start-->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>${redisson.version}</version>
+        </dependency>
+        <!--  Redisson end-->
+        <!--  嵌入式redis 依赖, 集成测试是需要 start-->
+        <dependency>
+            <groupId>it.ozimov</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>${embedded.redis.version}</version>
+        </dependency>
+        <!--  嵌入式redis 依赖, 集成测试是需要 end-->
+        <!-- 阿里云 start-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>${aliyun.version}</version>
+        </dependency>
+        <!-- 阿里云 end-->
+        <!-- LeanCloud start -->
+        <dependency>
+            <groupId>cn.leancloud</groupId>
+            <artifactId>storage-core</artifactId>
+            <version>${leancloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.leancloud</groupId>
+            <artifactId>realtime-core</artifactId>
+            <version>${leancloud.version}</version>
+        </dependency>
+        <!-- LeanCloud start -->
+        <!-- Spring Email start -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <!-- Spring Email end -->
+        <!-- SendGrid 依赖 start-->
+        <dependency>
+            <groupId>com.sendgrid</groupId>
+            <artifactId>sendgrid-java</artifactId>
+            <version>${sendgrid.version}</version>
+        </dependency>
+        <!-- SendGrid 依赖 end-->
     </dependencies>
 
     <build>

@@ -28,7 +28,29 @@ spring:
     initialization-mode: embedded
   profiles:
     active: ${SPRING_ACTIVE_PROFILE:test}
+  mail:
+    host: ${SMTP_HOST}
+    port: ${SMTP_PORT}
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 wzb:
   jwt:
     access-token-expire-time: 30000
     refresh-token-expire-time: 2592000000
+  ali:
+    api-key: ${ALI_API_KEY}
+    api-secret: ${ALI_API_SECRET}
+  leanCloud:
+    appId: ${LEAN_CLOUD_APP_ID}
+    appKey: ${LEAN_CLOUD_APP_KEY}
+  sms-provider:
+    name: ali
+  email-provider:
+    api-key: ${EMAIL_API_KEY}
+    name: api
