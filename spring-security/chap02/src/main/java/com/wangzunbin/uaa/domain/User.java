@@ -1,7 +1,6 @@
 package com.wangzunbin.uaa.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wangzunbin.uaa.annotation.ValidPassword;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -56,7 +55,7 @@ public class User implements UserDetails, Serializable {
     @Size(min = 4, max = 50, message = "用户畅读必须在4到50个字符之间")
     @Column(length = 50, unique = true, nullable = false)
     private String username;
-    @ValidPassword
+//    @ValidPassword
     @JsonIgnore
     @Column(name = "password_hash", length = 80, nullable = false)
     private String password;

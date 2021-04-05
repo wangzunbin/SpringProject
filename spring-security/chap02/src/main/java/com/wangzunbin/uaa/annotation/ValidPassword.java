@@ -1,6 +1,6 @@
 package com.wangzunbin.uaa.annotation;
 
-import com.wangzunbin.uaa.validator.PasswordValidator;
+import com.wangzunbin.uaa.validator.PasswordConstraintValidator;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -21,7 +21,7 @@ import javax.validation.Payload;
 
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordValidator.class)
+@Constraint(validatedBy = PasswordConstraintValidator.class)
 @Documented
 public @interface ValidPassword {
 

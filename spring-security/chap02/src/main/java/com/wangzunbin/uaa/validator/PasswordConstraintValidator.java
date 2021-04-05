@@ -7,9 +7,9 @@ import org.passay.EnglishCharacterData;
 import org.passay.EnglishSequenceData;
 import org.passay.IllegalSequenceRule;
 import org.passay.LengthRule;
+import org.passay.MessageResolver;
 import org.passay.PasswordData;
 import org.passay.WhitespaceRule;
-import org.passay.spring.SpringMessageResolver;
 
 import java.util.Arrays;
 
@@ -27,19 +27,17 @@ import lombok.val;
  * @version 1.0 2021/2/28 23:41   <br/>
  */
 
+
 @RequiredArgsConstructor
-public class PasswordValidator implements ConstraintValidator<ValidPassword, String> {
+public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
-    private final SpringMessageResolver springMessageResolver;
 
-    @Override
-    public void initialize(ValidPassword constraintAnnotation) {
+    private final MessageResolver messageResolver;
 
-    }
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
-        val validator = new org.passay.PasswordValidator(springMessageResolver,
+        val validator = new org.passay.PasswordValidator(messageResolver,
                 Arrays.asList(
                         new LengthRule(8, 30),
                         new CharacterRule(EnglishCharacterData.UpperCase, 1),

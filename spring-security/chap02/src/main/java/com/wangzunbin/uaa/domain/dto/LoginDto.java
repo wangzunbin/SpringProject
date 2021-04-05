@@ -1,4 +1,4 @@
-package com.wangzunbin.uaa.domain;
+package com.wangzunbin.uaa.domain.dto;
 
 import java.io.Serializable;
 

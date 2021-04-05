@@ -4,6 +4,9 @@ import com.wangzunbin.uaa.domain.Role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+import java.util.Set;
+
 /**
  * ClassName:RoleRepo
  * Function:
@@ -14,5 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepo  extends JpaRepository<Role, Long> {
 
+    Set<Role> findByAuthorityIn(Set<String> authority);
 
+    Optional<Role> findOptionalByAuthority(String authority);
 }
