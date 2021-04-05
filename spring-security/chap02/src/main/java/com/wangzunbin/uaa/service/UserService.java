@@ -2,7 +2,7 @@ package com.wangzunbin.uaa.service;
 
 import com.wangzunbin.uaa.domain.Auth;
 import com.wangzunbin.uaa.repository.UserRepo;
-import com.wangzunbin.uaa.util.JWTUtil;
+import com.wangzunbin.uaa.util.JwtUtil;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +26,7 @@ public class UserService {
 
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
-    private final JWTUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     public Auth login(String username, String password) throws AuthenticationException{
         return userRepo.findOptionalByUsername(username)

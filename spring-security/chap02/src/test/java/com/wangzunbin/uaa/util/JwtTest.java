@@ -32,11 +32,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JwtTest {
 
 
-    private JWTUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
     @BeforeEach
     public void setUp(){
-        jwtUtil = new JWTUtil(new AppProperties());
+        jwtUtil = new JwtUtil(new AppProperties());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class JwtTest {
         val token = jwtUtil.createAccessToken(user);
         log.debug("获取到的Token: {}", token);
         // 解析
-        val parsedClaims = Jwts.parserBuilder().setSigningKey(JWTUtil.key)
+        val parsedClaims = Jwts.parserBuilder().setSigningKey(JwtUtil.key)
                 .build().parseClaimsJws(token).getBody();
         assertEquals(username, parsedClaims.getSubject(), "解析后 Subject 应是用户名");
     }

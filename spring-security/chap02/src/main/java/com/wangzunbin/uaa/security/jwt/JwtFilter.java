@@ -2,7 +2,7 @@ package com.wangzunbin.uaa.security.jwt;
 
 import com.wangzunbin.uaa.config.AppProperties;
 import com.wangzunbin.uaa.util.CollectionUtil;
-import com.wangzunbin.uaa.util.JWTUtil;
+import com.wangzunbin.uaa.util.JwtUtil;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -65,7 +65,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private Optional<Claims> validateToken(HttpServletRequest request) {
         String jwtToken = request.getHeader(appProperties.getJwt().getHeader()).replace(appProperties.getJwt().getPrefix(), "");
         try {
-            return Optional.of(Jwts.parserBuilder().setSigningKey(JWTUtil.key).build().parseClaimsJws(jwtToken).getBody());
+            return Optional.of(Jwts.parserBuilder().setSigningKey(JwtUtil.key).build().parseClaimsJws(jwtToken).getBody());
         } catch (ExpiredJwtException | SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
             return Optional.empty();
         }

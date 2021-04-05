@@ -34,7 +34,7 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Component
-public class JWTUtil {
+public class JwtUtil {
 
     // 用于签名的访问令牌的秘钥
     public static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);

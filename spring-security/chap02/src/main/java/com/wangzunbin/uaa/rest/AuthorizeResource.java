@@ -4,7 +4,7 @@ import com.wangzunbin.uaa.domain.Auth;
 import com.wangzunbin.uaa.domain.LoginDto;
 import com.wangzunbin.uaa.domain.User;
 import com.wangzunbin.uaa.service.UserService;
-import com.wangzunbin.uaa.util.JWTUtil;
+import com.wangzunbin.uaa.util.JwtUtil;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +35,7 @@ public class AuthorizeResource {
 
     private final UserService userService;
     private final static String PREFIX = "Bearer";
-    private final JWTUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     @PostMapping(value="/register")
     public User register(@RequestBody @Valid User userDto) {
