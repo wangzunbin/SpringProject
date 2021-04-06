@@ -12,7 +12,7 @@
     </parent>
 
     <modules>
-<!--        <module>uaa-ui</module>-->
+        <module>uaa-ui</module>
         <module>uaa</module>
     </modules>
 
@@ -24,7 +24,6 @@
     <description>Spring Security OAuth2 授权服务器，资源服务器和客户端</description>
 
     <properties>
-        <bootstrap.version>4.5.0</bootstrap.version>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
