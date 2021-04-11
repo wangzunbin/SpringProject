@@ -99,7 +99,7 @@ export default new Vuex.Store({
     },
     login: ({ commit }, { username, password, icode }) => {
       IMOOC_API.verifyCode(icode).then((res) => {
-        if (res.data.code === 1000) {
+        if (res.data.code === 1001) {
           AUTH_API.login(username, password)
             .then((res) => {
               if (res.data) {

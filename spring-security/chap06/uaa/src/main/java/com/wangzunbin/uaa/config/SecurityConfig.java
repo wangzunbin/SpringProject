@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -28,8 +30,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 import lombok.RequiredArgsConstructor;
@@ -64,6 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtFilter jwtFilter;
 
+    private final Environment environment;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -72,6 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling(exp -> exp
                 .authenticationEntryPoint(securityProblemSupport)
                 .accessDeniedHandler(securityProblemSupport))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeRequests(authorizeRequests -> authorizeRequests
                         .antMatchers("/authorize/**").permitAll()
                         .antMatchers("/admin/**").hasRole("ADMIN")
@@ -149,5 +159,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "SHA-1", new MessageDigestPasswordEncoder("SHA-1")
         );
         return new DelegatingPasswordEncoder(idForDefault, encoders);
+    }
+
+    /**
+     * 我们在 Spring Boot 中有几种其他方式配置 CORS
+     * 参见 https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-cors
+     * Mvc 的配置方式见 WebMvcConfig 中的代码
+     *
+     * @return CorsConfigurationSource
+     */
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        // 允许跨域访问的主机
+        if (environment.acceptsProfiles(Profiles.of("prod"))) {
+            configuration.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:4001"));
+        } else {
+            configuration.setAllowedOrigins(Collections.singletonList("https://www.wangzunbin.com"));
+        }
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
+        configuration.addExposedHeader("X-Authenticate");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
