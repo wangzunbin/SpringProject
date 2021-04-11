@@ -9,6 +9,7 @@ import com.wangzunbin.uaa.util.JwtUtil;
 import com.wangzunbin.uaa.util.TotpUtil;
 
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 /**
@@ -31,6 +33,7 @@ import lombok.val;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class UserService {
 
     private final UserRepo userRepo;
@@ -104,4 +107,7 @@ public class UserService {
         return new Auth(jwtUtil.createAccessToken(userDetails), jwtUtil.createRefreshToken(userDetails));
     }
 
+    public boolean isValidUser(Authentication authentication, String username){
+        return authentication.getName().equals(username);
+    }
 }

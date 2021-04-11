@@ -54,6 +54,11 @@ public class UserResource {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
+    @GetMapping("/users/{username}")
+    public String getCurrentUsername(@PathVariable String username){
+        return username;
+    }
+
 
     @Data
     public static class Profile{

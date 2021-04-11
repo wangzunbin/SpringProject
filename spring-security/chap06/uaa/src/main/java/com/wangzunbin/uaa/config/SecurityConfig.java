@@ -85,10 +85,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests(authorizeRequests -> authorizeRequests
                         .antMatchers("/authorize/**").permitAll()
                         .antMatchers("/admin/**").hasRole("ADMIN")
-                        .antMatchers("/api/**").hasRole("USER")
+//                        .antMatchers("/api/**").hasRole("USER")
+//                        .antMatchers("/api/users/**").access("hasRole('ADMIN') or hasRole('USER')")
+//                        .antMatchers("/api/users/{username}").access("hasRole('ADMIN') or authentication.name.equals(#username)")
+                        .antMatchers("/api/users/{username}").access("hasRole('ADMIN') or @userService.isValidUser(authentication, #username)")
                         .anyRequest().authenticated())
                 // 替换UsernamePasswordAuthenticationFilter
-                .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 // 用basic认证

@@ -9,8 +9,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import lombok.extern.slf4j.Slf4j;
+
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -22,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 @SpringBootTest
+@Slf4j
 public class SecuredRestAPIIntTests {
 
     @Autowired
@@ -42,5 +46,15 @@ public class SecuredRestAPIIntTests {
     @Test
     public void givenUserDto_thenRegisterSuccess() throws Exception {
         mockMvc.perform(get("/api/greeting")).andExpect(status().isOk());
+    }
+
+    // 默认是USER角色
+    @WithMockUser(username = "user", roles = {"ADMIN"})
+    @Test
+    public void givenRoleUserOrAdmin_thenAccessSuccess() throws Exception {
+        String contentAsString = mockMvc.perform(get("/api/users/{username}", "user"))
+                .andDo(print())
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        log.debug("打印内容: {}", contentAsString);
     }
 }

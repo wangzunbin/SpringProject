@@ -50,7 +50,7 @@ wzb:
     appId: ${LEAN_CLOUD_APP_ID}
     appKey: ${LEAN_CLOUD_APP_KEY}
   sms-provider:
-    name: ali
+    name: default
   email-provider:
     api-key: ${EMAIL_API_KEY}
     name: api
