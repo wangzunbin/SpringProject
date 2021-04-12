@@ -83,6 +83,10 @@ public class UserService {
         return userRepo.findOptionalByUsername(username);
     }
 
+    public Optional<User> findOptionalByEmail(String email) {
+        return userRepo.findOptionalByEmail(email);
+    }
+
     public void updatePassword(User user, String rawPassword) {
         if (passwordEncoder.upgradeEncoding(user.getPassword())) {
             userRepo.save(user.withPassword(passwordEncoder.encode(rawPassword)));

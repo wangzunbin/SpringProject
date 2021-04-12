@@ -1,6 +1,11 @@
 package com.wangzunbin.uaa.rest;
 
+import com.wangzunbin.uaa.domain.User;
+import com.wangzunbin.uaa.service.UserService;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * ClassName:UserResource  <br/>
@@ -25,43 +31,53 @@ import lombok.Data;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserResource {
 
+    private final UserService userService;
+
     @GetMapping("/greeting")
-    public String greeting(){
+    public String greeting() {
         return "hello World";
     }
 
     @PostMapping("/greeting")
     @ResponseStatus(HttpStatus.CREATED)
-    public String saveGreeting(@RequestParam String name, @RequestBody Profile profile){
+    public String saveGreeting(@RequestParam String name, @RequestBody Profile profile) {
         return "hello World:" + name + "\n" + profile.gender;
     }
 
     @PutMapping("/greeting/{name}")
-    public String saveGreeting(@PathVariable String name){
+    public String saveGreeting(@PathVariable String name) {
         return "hello World:" + name;
     }
 
     @GetMapping("/principal")
-    public String getPrincipal(){
+    public String getPrincipal() {
         // SecurityContextHolder里面底层就是用的是ThreadLocal存储
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
+
     @GetMapping("/principal/authentication")
-    public Authentication getAuthentication(){
+    public Authentication getAuthentication() {
         // SecurityContextHolder里面底层就是用的是ThreadLocal存储
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
     @GetMapping("/users/{username}")
-    public String getCurrentUsername(@PathVariable String username){
+    public String getCurrentUsername(@PathVariable String username) {
         return username;
     }
 
+    //    @PreAuthorize("hasRole('ADMIN')")
+    @PostAuthorize("returnObject.username == authentication.name")
+    @GetMapping("/users//by-email/{email}")
+    public User getUserByEmail(@PathVariable String email) {
+        return userService.findOptionalByEmail(email).orElseThrow();
+    }
 
     @Data
-    public static class Profile{
+    public static class Profile {
         String gender;
         String idNo;
     }

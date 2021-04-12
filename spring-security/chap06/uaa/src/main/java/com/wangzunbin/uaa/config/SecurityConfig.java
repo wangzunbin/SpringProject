@@ -89,6 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                        .antMatchers("/api/users/**").access("hasRole('ADMIN') or hasRole('USER')")
 //                        .antMatchers("/api/users/{username}").access("hasRole('ADMIN') or authentication.name.equals(#username)")
                         .antMatchers("/api/users/{username}").access("hasRole('ADMIN') or @userService.isValidUser(authentication, #username)")
+                        .antMatchers("/api/users/by-email/{email}").hasRole("USER")
                         .anyRequest().authenticated())
                 // 替换UsernamePasswordAuthenticationFilter
 //                .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

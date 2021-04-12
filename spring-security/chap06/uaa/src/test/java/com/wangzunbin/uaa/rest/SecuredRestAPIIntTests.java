@@ -57,4 +57,29 @@ public class SecuredRestAPIIntTests {
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         log.debug("打印内容: {}", contentAsString);
     }
+
+
+
+    @WithMockUser
+    @Test
+    public void givenUserRole_whenQueryUserByEmail_shouldSuccess() throws Exception {
+        mockMvc.perform(get("/api/users/by-email/{email}", "user@local.dev"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    /**
+     * 测试 @PostAuthorize("returnObject.username == authentication.name")
+     * 查询自己的信息应该成功
+     *
+     * @throws Exception 异常
+     */
+
+    @WithMockUser(username = "wangzunbin1")
+    @Test
+    public void givenUserRole_whenQueryUserByEmail_shouldSuccessByUser() throws Exception {
+        mockMvc.perform(get("/api/users/by-email/{email}", "wangzunbin1@local.dev"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 }
