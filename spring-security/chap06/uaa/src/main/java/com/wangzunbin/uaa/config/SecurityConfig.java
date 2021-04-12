@@ -16,6 +16,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -88,8 +90,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                        .antMatchers("/api/**").hasRole("USER")
 //                        .antMatchers("/api/users/**").access("hasRole('ADMIN') or hasRole('USER')")
 //                        .antMatchers("/api/users/{username}").access("hasRole('ADMIN') or authentication.name.equals(#username)")
-                        .antMatchers("/api/users/{username}").access("hasRole('ADMIN') or @userService.isValidUser(authentication, #username)")
+//                        .antMatchers("/api/users/{username}").access("hasRole('ADMIN') or @userService.isValidUser(authentication, #username)")
                         .antMatchers("/api/users/by-email/{email}").hasRole("USER")
+                        .antMatchers("/api/users/manager").hasRole("MANAGER")
                         .anyRequest().authenticated())
                 // 替换UsernamePasswordAuthenticationFilter
 //                .addFilterAt(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -187,5 +190,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public RoleHierarchy roleHierarchy(){
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        // 5.1之前ROLE_MANAGER ROLE_MANAGER中间是用空格来隔开([ROLE_ADMIN] one can reach [ROLE_MANAGER ROLE_MANAGER, ROLE_USER, ROLE_ADMIN] )
+        // 5.2之后ROLE_MANAGER ROLE_MANAGER中间是用\n来隔开(解析出来的From the roles [ROLE_ADMIN] one can reach [ROLE_USER, ROLE_MANAGER, ROLE_ADMIN] in zero or more steps.)
+        // 源码的RoleHierarchyImpl的buildRolesReachableInOneStepMap有提到用\n来分开
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_MANAGER\nROLE_MANAGER > ROLE_USER");
+        return roleHierarchy;
     }
 }

@@ -71,9 +71,14 @@ public class UserResource {
 
     //    @PreAuthorize("hasRole('ADMIN')")
     @PostAuthorize("returnObject.username == authentication.name")
-    @GetMapping("/users//by-email/{email}")
+    @GetMapping("/users/by-email/{email}")
     public User getUserByEmail(@PathVariable String email) {
         return userService.findOptionalByEmail(email).orElseThrow();
+    }
+
+    @GetMapping("/users/manager")
+    public String getManagerResource() {
+        return "hi";
     }
 
     @Data
