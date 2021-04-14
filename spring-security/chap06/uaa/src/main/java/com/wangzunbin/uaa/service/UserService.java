@@ -1,5 +1,6 @@
 package com.wangzunbin.uaa.service;
 
+import com.wangzunbin.uaa.annotation.RoleAdminOrSelfWithUserParam;
 import com.wangzunbin.uaa.domain.Auth;
 import com.wangzunbin.uaa.domain.User;
 import com.wangzunbin.uaa.repository.RoleRepo;
@@ -8,6 +9,7 @@ import com.wangzunbin.uaa.util.Constants;
 import com.wangzunbin.uaa.util.JwtUtil;
 import com.wangzunbin.uaa.util.TotpUtil;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -67,7 +69,7 @@ public class UserService {
     @Transactional
     public User register(User user){
         return roleRepo.findOptionalByAuthority(Constants.ROLE_USER).map(role -> {
-            val userToSave = user.withAuthorities(Set.of(role))
+            val userToSave = user.withRoles(Set.of(role))
                     .withPassword(passwordEncoder.encode(user.getPassword()))
                     .withMfaKey(totpUtil.encodeKeyToString());
             return userRepo.save(userToSave);
@@ -103,6 +105,15 @@ public class UserService {
         return login(saved);
     }
 
+    /**
+     * 保存用户
+     * hasRole hasAuthority
+     * @param user 被保存的对象
+     * @return 返回被保存的对象
+     * 下面的==可以用equals来代替
+     */
+    @Transactional
+    @RoleAdminOrSelfWithUserParam
     public User saveUser(User user) {
         return userRepo.save(user);
     }
