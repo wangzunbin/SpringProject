@@ -74,6 +74,11 @@ public class Role implements Serializable {
     @Column(name = "role_name", unique = true, nullable = false, length = 50)
     private String roleName;
 
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "display_name", nullable = false, length = 50)
+    private String displayName;
+
     @Builder.Default
     // 不要序列化
     @JsonIgnore
