@@ -2,11 +2,15 @@ package com.wangzunbin.uaa.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wangzunbin.uaa.annotation.ValidPassword;
+import com.wangzunbin.uaa.domain.User;
 import com.wangzunbin.uaa.util.Constants;
 import com.wangzunbin.uaa.validator.PasswordMatches;
 import com.wangzunbin.uaa.validator.ValidEmail;
 
 import java.io.Serializable;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -27,29 +31,40 @@ import lombok.With;
 @AllArgsConstructor
 public class UserDto implements Serializable {
 
+
     private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Size(min = 3, max = 50)
+    private Long id;
+
     private String username;
 
-    @NotNull
-    @Size(min = 1, max = 50)
     private String name;
 
-    @ValidPassword
-    private String password;
-
-    @NotNull
-    @Size(min = 1)
-    private String matchingPassword;
-
-    @ValidEmail
-    @NotNull
-    @Size(min = 1)
     private String email;
 
-    @Pattern(regexp = Constants.PATTERN_MOBILE)
-    @NotNull
     private String mobile;
+
+    private boolean enabled;
+
+    private boolean usingMfa;
+
+    private Set<RoleDto> roles;
+
+    public static Function<User, UserDto> fromUser = (user) -> UserDto.builder()
+            .id(user.getId())
+            .username(user.getUsername())
+            .name(user.getName())
+            .email(user.getEmail())
+            .mobile(user.getMobile())
+            .enabled(user.isEnabled())
+            .usingMfa(user.isUsingMfa())
+            .roles(user.getRoles().stream()
+                    .map(role -> RoleDto.builder()
+                            .id(role.getId())
+                            .roleName(role.getRoleName())
+                            .displayName(role.getDisplayName())
+                            .builtIn(role.isBuiltIn())
+                            .build())
+                    .collect(Collectors.toSet()))
+            .build();
 }

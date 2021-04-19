@@ -4,6 +4,7 @@ import com.wangzunbin.uaa.domain.Auth;
 import com.wangzunbin.uaa.domain.MfaType;
 import com.wangzunbin.uaa.domain.User;
 import com.wangzunbin.uaa.domain.dto.LoginDto;
+import com.wangzunbin.uaa.domain.dto.RegisterDto;
 import com.wangzunbin.uaa.domain.dto.SendTotpDto;
 import com.wangzunbin.uaa.domain.dto.TotpVerificationDto;
 import com.wangzunbin.uaa.domain.dto.UserDto;
@@ -23,6 +24,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,28 +63,34 @@ public class AuthorizeResource {
     private final IEmailService emailService;
     private final UserValidationService userValidationService;
 
-    @PostMapping(value="/register")
-    public void register(@RequestBody @Valid UserDto userDto) {
-        // TODO: 1. 检查username, email, mobile都是唯一的, 所以要查询数据库确保唯一
-        // TODO: 2. 我们需要userDto转换成User, 我们给一个默认角色{ROLE_USER}然后保存
-//        if(userService.isUsernameExisted(userDto.getUsername())) {
-//            throw new DuplicateProblem("用户名重复", "用户名重复详细信息");
-//        }
-//        if(userService.isEmailExisted(userDto.getEmail())) {
-//            throw new DuplicateProblem("邮箱重复", "邮箱重复详细信息");
-//        }
-//        if(userService.isMobileExisted(userDto.getMobile())) {
-//            throw new DuplicateProblem("手机号码重复", "手机号码重复详细信息");
-//        }
-        userValidationService.validateUserUniqueFields(userDto.getUsername(), userDto.getEmail(), userDto.getMobile());
+    @GetMapping("/validation/username")
+    public boolean validateUsername(@RequestParam String username) {
+        return userValidationService.isUsernameExisted(username);
+    }
+
+    @GetMapping("/validation/email")
+    public boolean validateEmail(@RequestParam String email) {
+        return userValidationService.isEmailExisted(email);
+    }
+
+    @GetMapping("/validation/mobile")
+    public boolean validateMobile(@RequestParam String mobile) {
+        return userValidationService.isMobileExisted(mobile);
+    }
+
+
+    @PostMapping("/register")
+    public void register(@Valid @RequestBody RegisterDto registerDto) {
+        userValidationService.validateUserUniqueFields(registerDto.getUsername(), registerDto.getEmail(), registerDto.getMobile());
         val user = User.builder()
-                .username(userDto.getUsername())
-                .name(userDto.getName())
-                .email(userDto.getEmail())
-                .mobile(userDto.getMobile())
-                .password(userDto.getPassword())
+                .username(registerDto.getUsername())
+                .name(registerDto.getName())
+                .email(registerDto.getEmail())
+                .mobile(registerDto.getMobile())
+                .password(registerDto.getPassword())
+                .usingMfa(true)
+                .enabled(false)
                 .build();
-        // TODO: 3. 我们给个默认角色{ROLE_USER}, 然后保存
         userService.register(user);
     }
 
@@ -117,7 +125,7 @@ public class AuthorizeResource {
                     }
                     // 3.判断usingMfa, 如果是false, 我们就直接返回token
                     if(!user.isUsingMfa()) {
-                        return ResponseEntity.ok().body(userService.login(loginDto.getUsername(), loginDto.getPassword()));
+                        return ResponseEntity.ok().body(userService.login(user));
                     }
                     // 4.使用多因子认证
                     val mfaId = userCacheService.cacheUser(user);
@@ -151,7 +159,9 @@ public class AuthorizeResource {
     @PostMapping("/totp")
     public Auth verifyTotp(@Valid @RequestBody TotpVerificationDto totpVerificationDto) {
         return userCacheService.verifyTotp(totpVerificationDto.getMfaId(), totpVerificationDto.getCode())
-                .map(user -> userService.login(user.getUsername(), user.getPassword()))
+                .map(User::getUsername)
+                .flatMap(userService::findOptionalByUsername)
+                .map(userService::loginWithTotp)
                 .orElseThrow(InvalidTotpProblem::new);
     }
 }

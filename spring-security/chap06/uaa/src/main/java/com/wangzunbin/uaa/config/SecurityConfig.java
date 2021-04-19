@@ -181,11 +181,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         // 允许跨域访问的主机
-        if (environment.acceptsProfiles(Profiles.of("prod"))) {
-            configuration.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:4001"));
-        } else {
-            configuration.setAllowedOrigins(Collections.singletonList("https://www.wangzunbin.com"));
-        }
+//        if (environment.acceptsProfiles(Profiles.of("prod"))) {
+//            configuration.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:4001"));
+//        } else {
+//            configuration.setAllowedOrigins(Collections.singletonList("https://www.wangzunbin.com"));
+//        }
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
         configuration.addExposedHeader("X-Authenticate");

@@ -44,14 +44,14 @@ public class UserService {
     private final RoleRepo roleRepo;
     private final TotpUtil totpUtil;
 
-    public Auth login(String username, String password){
-        return userRepo.findOptionalByUsername(username)
-                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
-                .map(user -> new Auth(
-                        jwtUtil.createAccessToken(user),
-                        jwtUtil.createRefreshToken(user)
-                ))
-                .orElseThrow(() -> new BadCredentialsException("用户名或密码错误"));
+    /**
+     * 根据 UserDetails 生成 accessToken 和 refreshToken
+     *
+     * @param userDetails 用户信息
+     * @return token 对
+     */
+    public Auth login(UserDetails userDetails) {
+        return new Auth(jwtUtil.createAccessToken(userDetails), jwtUtil.createRefreshToken(userDetails));
     }
 
     public boolean isUsernameExisted(String username){
@@ -118,9 +118,6 @@ public class UserService {
         return userRepo.save(user);
     }
 
-    public Auth login(UserDetails userDetails) {
-        return new Auth(jwtUtil.createAccessToken(userDetails), jwtUtil.createRefreshToken(userDetails));
-    }
 
     public boolean isValidUser(Authentication authentication, String username){
         return authentication.getName().equals(username);

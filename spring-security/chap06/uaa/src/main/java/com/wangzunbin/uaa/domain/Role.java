@@ -1,6 +1,7 @@
 package com.wangzunbin.uaa.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.querydsl.core.annotations.QueryEntity;
 import com.wangzunbin.uaa.util.Constants;
 
 import org.hibernate.annotations.BatchSize;
@@ -30,6 +31,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -45,11 +47,13 @@ import lombok.With;
 
 @With
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString(exclude = {"users"})
+@QueryEntity
 @Entity
-@Data
 @Table(name = "wzb_roles")
 public class Role implements Serializable {
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -44,11 +45,11 @@ public class JwtUtil {
     private final AppProperties appProperties;
 
     public String createAccessToken(UserDetails userDetails) {
-        return createJWToken(userDetails, appProperties.getJwt().getAccessTokenExpireTime(), key);
+        return createJWTToken(userDetails, appProperties.getJwt().getAccessTokenExpireTime(), key);
     }
 
     public String createRefreshToken(UserDetails userDetails) {
-        return createJWToken(userDetails, appProperties.getJwt().getRefreshTokenExpireTime(), refreshKey);
+        return createJWTToken(userDetails, appProperties.getJwt().getRefreshTokenExpireTime(), refreshKey);
     }
 
     public boolean validateAccessTokenWithoutExpiration(String token) {
@@ -95,17 +96,30 @@ public class JwtUtil {
             }
         }
     }
+    public String createJWTToken(UserDetails userDetails, long timeToExpire) {
+        return createJWTToken(userDetails, timeToExpire, key);
+    }
 
-    public String createJWToken(UserDetails userDetails, long timeToExpire, Key key) {
-        val now = System.currentTimeMillis();
-        return Jwts.builder()
+
+    /**
+     * 根据用户信息生成一个 JWT
+     *
+     * @param userDetails  用户信息
+     * @param timeToExpire 毫秒单位的失效时间
+     * @param signKey      签名使用的 key
+     * @return JWT
+     */
+    public String createJWTToken(UserDetails userDetails, long timeToExpire, Key signKey) {
+        return Jwts
+                .builder()
                 .setId("wzb")
-                .claim("authorities", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(toList()))
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(now))
-                // 过期时间
-                .setExpiration(new Date(now + 60_000))
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
+                .claim("authorities",
+                        userDetails.getAuthorities().stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .collect(Collectors.toList()))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + timeToExpire))
+                .signWith(signKey, SignatureAlgorithm.HS512).compact();
     }
 }
