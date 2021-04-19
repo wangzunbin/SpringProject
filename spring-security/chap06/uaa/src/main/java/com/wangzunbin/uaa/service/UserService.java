@@ -68,7 +68,7 @@ public class UserService {
 
     @Transactional
     public User register(User user){
-        return roleRepo.findOptionalByAuthority(Constants.ROLE_USER).map(role -> {
+        return roleRepo.findOptionalByRoleName(Constants.ROLE_USER).map(role -> {
             val userToSave = user.withRoles(Set.of(role))
                     .withPassword(passwordEncoder.encode(user.getPassword()))
                     .withMfaKey(totpUtil.encodeKeyToString());

@@ -1,6 +1,7 @@
 package com.wangzunbin.uaa.util;
 
 import com.wangzunbin.uaa.config.AppProperties;
+import com.wangzunbin.uaa.domain.Permission;
 import com.wangzunbin.uaa.domain.Role;
 import com.wangzunbin.uaa.domain.User;
 
@@ -43,8 +44,8 @@ public class JwtTest {
     public void givenUserDetails_thenCreateTokenSuccess() {
 //        val username = "user";
 //        val authorities = Set.of(
-//                Role.builder().roleName("ROLE_USER").build(),
-//                Role.builder().roleName("ROLE_ADMIN").build());
+//                Permission.builder().authority("ROLE_USER").build(),
+//                Role.builder().authority("ROLE_ADMIN").build());
 //        val user = User.builder()
 //                .username(username)
 //                .authorities(authorities)

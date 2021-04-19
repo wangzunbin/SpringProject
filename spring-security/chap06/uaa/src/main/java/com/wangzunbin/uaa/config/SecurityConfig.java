@@ -7,6 +7,7 @@ import com.wangzunbin.uaa.security.filter.RestAuthenticationFilter;
 import com.wangzunbin.uaa.security.jwt.JwtFilter;
 import com.wangzunbin.uaa.security.userdetails.UserDetailsPasswordServiceImpl;
 import com.wangzunbin.uaa.security.userdetails.UserDetailsServiceImpl;
+import com.wangzunbin.uaa.service.rolehierarchy.RoleHierarchyService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -75,6 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final Environment environment;
 
+    private final RoleHierarchyService roleHierarchyService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -193,12 +195,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public RoleHierarchy roleHierarchy(){
+    public RoleHierarchyImpl roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        // 5.1之前ROLE_MANAGER ROLE_MANAGER中间是用空格来隔开([ROLE_ADMIN] one can reach [ROLE_MANAGER ROLE_MANAGER, ROLE_USER, ROLE_ADMIN] )
-        // 5.2之后ROLE_MANAGER ROLE_MANAGER中间是用\n来隔开(解析出来的From the roles [ROLE_ADMIN] one can reach [ROLE_USER, ROLE_MANAGER, ROLE_ADMIN] in zero or more steps.)
-        // 源码的RoleHierarchyImpl的buildRolesReachableInOneStepMap有提到用\n来分开
-        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_MANAGER\nROLE_MANAGER > ROLE_USER");
+        roleHierarchy.setHierarchy(roleHierarchyService.getRoleHierarchyExpr());
         return roleHierarchy;
     }
 }

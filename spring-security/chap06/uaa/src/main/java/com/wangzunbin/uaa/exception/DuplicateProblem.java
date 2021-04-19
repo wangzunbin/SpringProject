@@ -12,11 +12,11 @@ public class DuplicateProblem extends AbstractThrowableProblem {
 
     private static final URI TYPE = URI.create(Constants.PROBLEM_BASE_URI + "/duplicate");
 
-    public DuplicateProblem(String title, String detail) {
+    public DuplicateProblem(String msg) {
         super(
-            TYPE,
-            title,
-            Status.CONFLICT,
-            detail);
+                TYPE,
+                "发现重复数据",
+                Status.CONFLICT,
+                msg);
     }
 }

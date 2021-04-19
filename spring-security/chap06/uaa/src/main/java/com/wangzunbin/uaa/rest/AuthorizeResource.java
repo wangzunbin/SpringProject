@@ -16,6 +16,7 @@ import com.wangzunbin.uaa.service.IEmailService;
 import com.wangzunbin.uaa.service.ISmsService;
 import com.wangzunbin.uaa.service.UserCacheService;
 import com.wangzunbin.uaa.service.UserService;
+import com.wangzunbin.uaa.service.validation.UserValidationService;
 import com.wangzunbin.uaa.util.JwtUtil;
 
 import org.springframework.data.util.Pair;
@@ -58,20 +59,22 @@ public class AuthorizeResource {
     private final UserCacheService userCacheService;
     private final ISmsService smsService;
     private final IEmailService emailService;
+    private final UserValidationService userValidationService;
 
     @PostMapping(value="/register")
     public void register(@RequestBody @Valid UserDto userDto) {
         // TODO: 1. 检查username, email, mobile都是唯一的, 所以要查询数据库确保唯一
         // TODO: 2. 我们需要userDto转换成User, 我们给一个默认角色{ROLE_USER}然后保存
-        if(userService.isUsernameExisted(userDto.getUsername())) {
-            throw new DuplicateProblem("用户名重复", "用户名重复详细信息");
-        }
-        if(userService.isEmailExisted(userDto.getEmail())) {
-            throw new DuplicateProblem("邮箱重复", "邮箱重复详细信息");
-        }
-        if(userService.isMobileExisted(userDto.getMobile())) {
-            throw new DuplicateProblem("手机号码重复", "手机号码重复详细信息");
-        }
+//        if(userService.isUsernameExisted(userDto.getUsername())) {
+//            throw new DuplicateProblem("用户名重复", "用户名重复详细信息");
+//        }
+//        if(userService.isEmailExisted(userDto.getEmail())) {
+//            throw new DuplicateProblem("邮箱重复", "邮箱重复详细信息");
+//        }
+//        if(userService.isMobileExisted(userDto.getMobile())) {
+//            throw new DuplicateProblem("手机号码重复", "手机号码重复详细信息");
+//        }
+        userValidationService.validateUserUniqueFields(userDto.getUsername(), userDto.getEmail(), userDto.getMobile());
         val user = User.builder()
                 .username(userDto.getUsername())
                 .name(userDto.getName())

@@ -8,7 +8,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -96,5 +95,9 @@ public class Role implements Serializable {
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
+
+    @NotNull
+    @Column(name = "built_in", nullable = false)
+    private boolean builtIn;
 
 }
