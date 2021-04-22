@@ -4,8 +4,9 @@ import AUTH_API from "../services/auth.service";
 import IMOOC_API from "../services/imooc.service";
 import router from "../router";
 import UTIL from "@/core/util";
-import { usersModule } from "./modules/users.js";
-import { registerModule } from "./modules/register.js";
+import { usersModule } from "./modules/users";
+import { rolesModule } from "./modules/roles";
+import { registerModule } from "./modules/register";
 
 Vue.use(Vuex);
 
@@ -69,8 +70,7 @@ export default new Vuex.Store({
         .catch((err) =>
           commit(
             "sendMfaFail",
-            UTIL.getErrorDetailFromResponse(err.response.data) ||
-              "发送验证码错误"
+            UTIL.getErrorDetailFromResponse(err) || "发送验证码错误"
           )
         );
     },
@@ -135,8 +135,7 @@ export default new Vuex.Store({
 
               commit(
                 "loginFail",
-                UTIL.getErrorDetailFromResponse(err.response.data) ||
-                  "用户名或密码错误"
+                UTIL.getErrorDetailFromResponse(err) || "用户名或密码错误"
               );
             });
         } else {
@@ -162,9 +161,19 @@ export default new Vuex.Store({
       const permissions = payload["authorities"];
       return permissions || [];
     },
+    username: (state) => {
+      const token = state.auth.accessToken;
+      if (!token) {
+        return "";
+      }
+      const payload = UTIL.parseJwt(token);
+      const username = payload["sub"];
+      return username || "";
+    },
   },
   modules: {
     usersModule,
+    rolesModule,
     registerModule,
   },
 });

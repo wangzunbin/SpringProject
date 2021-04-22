@@ -32,8 +32,8 @@ ADMIN_AXIOS.interceptors.response.use(
       (error.response.status === 401 ||
         (error.response.status === 500 &&
           (error.response.data.detail ===
-            "Full authentication is required to access this resource" || error.response.data.detail ===
-          "Access is denied"))) &&
+            "Full authentication is required to access this resource" ||
+            error.response.data.detail === "Access is denied"))) &&
       !originalRequest._retry
     ) {
       originalRequest._retry = true;

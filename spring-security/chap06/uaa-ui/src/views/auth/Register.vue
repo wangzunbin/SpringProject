@@ -141,7 +141,7 @@ export default {
   },
   computed: {
     registerError: function() {
-      return this.$store.state.register?.error;
+      return this.$store.state.register.error;
     },
   },
   mounted() {

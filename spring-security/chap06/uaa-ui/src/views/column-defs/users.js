@@ -40,6 +40,11 @@ export const usersColumns = () => [
     sorter: true,
   },
   {
+    title: "角色",
+    dataIndex: "roles",
+    scopedSlots: { customRender: "roles" },
+  },
+  {
     title: "激活",
     dataIndex: "enabled",
     scopedSlots: { customRender: "enabled" },

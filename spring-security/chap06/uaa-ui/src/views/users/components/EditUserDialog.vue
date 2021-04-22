@@ -1,5 +1,13 @@
 <template>
   <a-modal v-model="visible" title="修改用户" on-ok="handleOk">
+    <div v-if="$store.state.usersModule.updateError">
+      <a-alert
+        style="width:100%"
+        message="添加用户失败"
+        v-bind:description="$store.state.usersModule.updateError"
+        type="error"
+      />
+    </div>
     <a-form-model ref="form" :model="model" :rules="rules" v-bind="layout">
       <a-form-model-item has-feedback prop="name" label="姓名">
         <a-input v-model="model.name" type="text" autocomplete="off" />
@@ -18,8 +26,7 @@
         type="primary"
         :loading="$store.state.usersModule.loading"
         @click="handleOk"
-        >确认</a-button
-      >
+      >确认</a-button>
     </template>
   </a-modal>
 </template>
@@ -29,14 +36,14 @@ import { editUserRules } from "@/views/form-rules/edit-user";
 export default {
   props: {
     show: Boolean,
-    record: Object,
+    record: Object
   },
   data() {
     return {
       layout: {
         labelCol: { span: 4 },
-        wrapperCol: { span: 12 },
-      },
+        wrapperCol: { span: 12 }
+      }
     };
   },
   computed: {
@@ -49,23 +56,32 @@ export default {
       },
       set(value) {
         this.$emit("closed", value);
-      },
+      }
     },
     model: {
       get() {
         return this.record;
-      },
-    },
+      }
+    }
   },
   methods: {
     handleOk() {
-      this.$emit("submitted", this.model);
-      this.visible = false;
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.$emit("submitted", this.model);
+          this.$store.dispatch("usersModule/update", this.model).then(res => {
+            if (res) {
+              this.$refs.form.resetFields();
+              this.visible = false;
+            }
+          });
+        }
+      });
     },
     handleCancel() {
       this.visible = false;
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -25,8 +25,7 @@ export const registerModule = {
         .catch((err) => {
           commit(
             "registerFail",
-            UTIL.getErrorDetailFromResponse(err.response.data) ||
-              "获取用户列表失败"
+            UTIL.getErrorDetailFromResponse(err) || "获取用户列表失败"
           );
         });
     },
