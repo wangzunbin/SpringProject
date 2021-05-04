@@ -1,0 +1,56 @@
+logging:
+  level:
+    com.wangzunbin: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.jdbc.core: TRACE
+  pattern:
+    console: '%clr(%d{E HH:mm:ss.SSS}){blue} %clr(%-5p) %clr(${PID}){faint} %clr(---){faint}
+              %clr([%8.15t]){cyan} %clr(%-40.40logger{0}){blue} %clr(:){red} %clr(%m){faint}%n'
+server:
+  error:
+    whitelabel:
+      enabled: true
+#  系统环境有SERVER_PORT, 就会取的是SERVER_PORT, 没有的话就取8080
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: uaa
+  messages:
+    basename: messages
+    encoding: UTF-8
+  security:
+    user:
+      name: user
+      password: Wangzunbin123
+      roles: USER,ADMIN
+  datasource:
+    initialization-mode: embedded
+  profiles:
+    active: ${SPRING_ACTIVE_PROFILE:prod}
+  mail:
+    host: ${SMTP_HOST}
+    port: ${SMTP_PORT}
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+wzb:
+  jwt:
+    access-token-expire-time: 30000
+    refresh-token-expire-time: 2592000000
+  ali:
+    api-key: ${ALI_API_KEY}
+    api-secret: ${ALI_API_SECRET}
+  leanCloud:
+    appId: ${LEAN_CLOUD_APP_ID}
+    appKey: ${LEAN_CLOUD_APP_KEY}
+  sms-provider:
+    name: default
+  email-provider:
+    api-key: ${EMAIL_API_KEY}
+    name: api
