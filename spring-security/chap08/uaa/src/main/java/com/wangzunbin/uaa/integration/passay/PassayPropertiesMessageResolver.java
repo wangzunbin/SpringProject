@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class PassayPropertiesMessageResolver extends AbstractMessageResolver {
+
     private final MessageSource messageSource;
 
     @Override

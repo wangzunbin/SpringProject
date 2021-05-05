@@ -1,13 +1,13 @@
 package com.wangzunbin.uaa.aspect;
 
-import com.wangzunbin.uaa.service.rolehierarchy.RoleHierarchyService;
+
+import com.wangzunbin.uaa.security.rolehierarchy.RoleHierarchyService;
 
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;

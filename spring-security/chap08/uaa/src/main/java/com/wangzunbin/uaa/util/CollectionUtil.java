@@ -6,19 +6,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class CollectionUtil {
+
     public static TreeSet<? extends GrantedAuthority> toTreeSet(Collection<? extends GrantedAuthority> authorities) {
         return authorities.stream().collect(
-            Collectors.toCollection(
-                () -> new TreeSet<>(
-                    Comparator.comparing(GrantedAuthority::getAuthority)
+                Collectors.toCollection(
+                        () -> new TreeSet<>(
+                                Comparator.comparing(GrantedAuthority::getAuthority)
+                        )
                 )
-            )
         );
+    }
+
+    public static <T> Set<T> mergeSet(final Set<T> a, final Set<T> b) {
+
+        // Creating a set with 'a'
+        Set<T> mergedSet = new HashSet<>(a);
+
+        // add the second set to be merged
+        mergedSet.addAll(b);
+
+        // returning the merged set
+        return mergedSet;
     }
 
     public static List<?> convertObjectToList(Object obj) {

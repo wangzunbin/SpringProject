@@ -1,4 +1,4 @@
-package com.wangzunbin.uaa.service;
+package com.wangzunbin.uaa.service.sms;
 
 /**
  * ClassName:ISmsService

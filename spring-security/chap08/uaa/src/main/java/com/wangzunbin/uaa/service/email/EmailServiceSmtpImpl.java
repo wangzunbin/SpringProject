@@ -1,6 +1,6 @@
-package com.wangzunbin.uaa.service.impl;
+package com.wangzunbin.uaa.service.email;
 
-import com.wangzunbin.uaa.service.IEmailService;
+import com.wangzunbin.uaa.service.email.IEmailService;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.mail.SimpleMailMessage;

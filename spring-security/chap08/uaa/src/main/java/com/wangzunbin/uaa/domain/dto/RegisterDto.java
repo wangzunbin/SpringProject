@@ -1,6 +1,5 @@
 package com.wangzunbin.uaa.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wangzunbin.uaa.annotation.ValidPassword;
 import com.wangzunbin.uaa.util.Constants;
 import com.wangzunbin.uaa.validator.PasswordMatches;
@@ -26,7 +25,6 @@ import lombok.With;
  * @version 1.0 2021/4/19 23:20
  */
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @With
 @Builder
 @PasswordMatches

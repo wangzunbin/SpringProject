@@ -12,6 +12,7 @@ import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -29,8 +30,6 @@ import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -103,5 +102,20 @@ public class Role implements Serializable {
     @NotNull
     @Column(name = "built_in", nullable = false)
     private boolean builtIn;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) {
+            return false;
+        }
+        Role role = (Role) o;
+        return id != null && id.equals(role.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(roleName);
+    }
 
 }

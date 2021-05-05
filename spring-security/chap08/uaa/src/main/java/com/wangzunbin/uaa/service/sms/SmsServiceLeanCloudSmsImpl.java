@@ -1,6 +1,4 @@
-package com.wangzunbin.uaa.service.impl;
-
-import com.wangzunbin.uaa.service.ISmsService;
+package com.wangzunbin.uaa.service.sms;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;

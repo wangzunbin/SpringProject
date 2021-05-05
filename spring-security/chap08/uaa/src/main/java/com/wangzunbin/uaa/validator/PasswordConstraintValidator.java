@@ -1,17 +1,11 @@
 package com.wangzunbin.uaa.validator;
 
 import com.wangzunbin.uaa.annotation.ValidPassword;
+import com.wangzunbin.uaa.util.CryptoUtil;
 
-import org.passay.CharacterRule;
-import org.passay.EnglishCharacterData;
-import org.passay.EnglishSequenceData;
-import org.passay.IllegalSequenceRule;
-import org.passay.LengthRule;
 import org.passay.MessageResolver;
 import org.passay.PasswordData;
-import org.passay.WhitespaceRule;
-
-import java.util.Arrays;
+import org.passay.PasswordValidator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -33,24 +27,22 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 
 
     private final MessageResolver messageResolver;
-
+    private final CryptoUtil cryptoUtil;
 
     @Override
-    public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
-        val validator = new org.passay.PasswordValidator(messageResolver,
-                Arrays.asList(
-                        new LengthRule(8, 30),
-                        new CharacterRule(EnglishCharacterData.UpperCase, 1),
-                        new CharacterRule(EnglishCharacterData.LowerCase, 1),
-                        new CharacterRule(EnglishCharacterData.Special, 1),
-                        new IllegalSequenceRule(EnglishSequenceData.Alphabetical, 5, false),
-                        new IllegalSequenceRule(EnglishSequenceData.USQwerty, 5, false),
-                        new WhitespaceRule()
-                ));
+    public void initialize(final ValidPassword constraintAnnotation) {
+    }
+
+    @Override
+    public boolean isValid(final String password, final ConstraintValidatorContext context) {
+        val validator = new PasswordValidator(messageResolver, cryptoUtil.getPasswordRules());
         val result = validator.validate(new PasswordData(password));
-        constraintValidatorContext.disableDefaultConstraintViolation();
-        constraintValidatorContext.buildConstraintViolationWithTemplate(String.join(",", validator.getMessages(result)))
+        if (result.isValid()) {
+            return true;
+        }
+        context.disableDefaultConstraintViolation();
+        context.buildConstraintViolationWithTemplate(String.join(",", validator.getMessages(result)))
                 .addConstraintViolation();
-        return result.isValid();
+        return false;
     }
 }

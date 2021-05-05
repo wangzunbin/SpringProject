@@ -1,6 +1,5 @@
 package com.wangzunbin.uaa.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wangzunbin.uaa.util.Constants;
 import com.wangzunbin.uaa.validator.ValidEmail;
 
@@ -22,13 +21,16 @@ import lombok.With;
  * @version 1.0 2021/4/19 23:19
  */
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @With
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserProfileDto {
+
+    @NotNull
+    @Size(min = 1, max = 50)
+    private String username;
 
     @NotNull
     @Size(min = 1, max = 50)

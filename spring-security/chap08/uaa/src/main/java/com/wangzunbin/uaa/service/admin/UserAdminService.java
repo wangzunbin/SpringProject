@@ -10,7 +10,7 @@ import com.wangzunbin.uaa.domain.User;
 import com.wangzunbin.uaa.domain.dto.CreateUserDto;
 import com.wangzunbin.uaa.repository.RoleRepo;
 import com.wangzunbin.uaa.repository.UserRepo;
-import com.wangzunbin.uaa.service.IEmailService;
+import com.wangzunbin.uaa.service.email.IEmailService;
 import com.wangzunbin.uaa.util.CryptoUtil;
 import com.wangzunbin.uaa.util.TotpUtil;
 

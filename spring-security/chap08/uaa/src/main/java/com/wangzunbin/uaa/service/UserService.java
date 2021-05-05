@@ -1,26 +1,23 @@
 package com.wangzunbin.uaa.service;
 
 import com.wangzunbin.uaa.annotation.RoleAdminOrSelfWithUserParam;
-import com.wangzunbin.uaa.domain.Auth;
 import com.wangzunbin.uaa.domain.User;
 import com.wangzunbin.uaa.repository.RoleRepo;
 import com.wangzunbin.uaa.repository.UserRepo;
-import com.wangzunbin.uaa.util.Constants;
 import com.wangzunbin.uaa.util.TotpUtil;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+
+import static com.wangzunbin.uaa.util.Constants.ROLE_USER;
 
 /**
  * ClassName:UserService
@@ -36,73 +33,93 @@ import lombok.val;
 public class UserService {
 
     private final UserRepo userRepo;
-    private final PasswordEncoder passwordEncoder;
     private final RoleRepo roleRepo;
+    private final PasswordEncoder passwordEncoder;
     private final TotpUtil totpUtil;
 
-
-
-    public boolean isUsernameExisted(String username){
-        return userRepo.countByUsername(username) > 0;
+    /**
+     * 注册一个新用户
+     *
+     * @param user 用户实体
+     * @return 保存后的对象
+     */
+    @org.springframework.transaction.annotation.Transactional
+    public User register(User user) {
+        return roleRepo.findOptionalByRoleName(ROLE_USER)
+                .map(role -> {
+                    val userToSave = user
+                            .withRoles(Set.of(role))
+                            .withPassword(passwordEncoder.encode(user.getPassword()))
+                            .withMfaKey(totpUtil.encodeKeyToString());
+                    return userRepo.save(userToSave);
+                })
+                .orElseThrow();
     }
 
-    public boolean isEmailExisted(String email){
-        return userRepo.countByEmail(email) > 0;
+    /**
+     * 根据用户名查找用户
+     *
+     * @param username 用户名
+     * @return 用户
+     */
+    public Optional<User> findOptionalByUsername(String username) {
+        return userRepo.findOptionalByUsername(username);
     }
 
-    public boolean isMobileExisted(String mobile){
-        return userRepo.countByMobile(mobile) > 0;
+    /**
+     * 根据电子邮件查找用户
+     *
+     * @param email 电子邮件
+     * @return 用户
+     */
+    public Optional<User> findOptionalByEmail(String email) {
+        return userRepo.findOptionalByEmail(email);
     }
 
-    @Transactional
-    public User register(User user){
-        return roleRepo.findOptionalByRoleName(Constants.ROLE_USER).map(role -> {
-            val userToSave = user.withRoles(Set.of(role))
-                    .withPassword(passwordEncoder.encode(user.getPassword()))
-                    .withMfaKey(totpUtil.encodeKeyToString());
-            return userRepo.save(userToSave);
-        }).orElseThrow();
-    }
-
+    /**
+     * 根据用户名和密码进行匹配检查
+     *
+     * @param username 用户名
+     * @param password 明文密码
+     * @return 用户
+     */
     public Optional<User> findOptionalByUsernameAndPassword(String username, String password) {
         return findOptionalByUsername(username)
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()));
     }
 
-    public Optional<User> findOptionalByUsername(String username) {
-        return userRepo.findOptionalByUsername(username);
-    }
-
-    public Optional<User> findOptionalByEmail(String email) {
-        return userRepo.findOptionalByEmail(email);
-    }
-
-    public void updatePassword(User user, String rawPassword) {
-        if (passwordEncoder.upgradeEncoding(user.getPassword())) {
-            userRepo.save(user.withPassword(passwordEncoder.encode(rawPassword)));
-        }
-    }
-
-    public Optional<String> createTotp(User user) {
-        return totpUtil.createTotp(user.getMfaKey());
-    }
-
-
     /**
      * 保存用户
-     * hasRole hasAuthority
-     * @param user 被保存的对象
-     * @return 返回被保存的对象
-     * 下面的==可以用equals来代替
+     *
+     * @param user 用户
+     * @return 保存后的用户
      */
-    @Transactional
+    @org.springframework.transaction.annotation.Transactional
     @RoleAdminOrSelfWithUserParam
     public User saveUser(User user) {
         return userRepo.save(user);
     }
 
+    /**
+     * 创建 Totp
+     *
+     * @param user 用户
+     * @return Totp
+     */
+    public Optional<String> createTotp(User user) {
+        return totpUtil.createTotp(user.getMfaKey());
+    }
 
-    public boolean isValidUser(Authentication authentication, String username){
-        return authentication.getName().equals(username);
+    /**
+     * 如果用户密码采用的是旧的编码算法，那么利用此方法可以升级编码
+     *
+     * @param user        用户
+     * @param rawPassword 明文密码
+     */
+    @Transactional
+    public void upgradePasswordEncodingIfNeeded(User user, String rawPassword) {
+        if (passwordEncoder.upgradeEncoding(user.getPassword())) {
+            userRepo.save(user.withPassword(passwordEncoder.encode(rawPassword)));
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.wangzunbin.uaa.config;
 
 import com.wangzunbin.uaa.aspect.RoleHierarchyReloadAspect;
-import com.wangzunbin.uaa.service.rolehierarchy.RoleHierarchyService;
+import com.wangzunbin.uaa.security.rolehierarchy.RoleHierarchyService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

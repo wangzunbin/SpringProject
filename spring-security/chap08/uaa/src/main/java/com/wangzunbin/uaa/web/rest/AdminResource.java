@@ -1,9 +1,10 @@
-package com.wangzunbin.uaa.rest;
+package com.wangzunbin.uaa.web.rest;
 
 import com.querydsl.core.types.Predicate;
 import com.wangzunbin.uaa.domain.Permission;
 import com.wangzunbin.uaa.domain.Role;
 import com.wangzunbin.uaa.domain.User;
+import com.wangzunbin.uaa.domain.dto.CreateOrUpdateClientDto;
 import com.wangzunbin.uaa.domain.dto.CreateOrUpdateRoleDto;
 import com.wangzunbin.uaa.domain.dto.CreateUserDto;
 import com.wangzunbin.uaa.domain.dto.RoleDto;
@@ -19,6 +20,9 @@ import com.wangzunbin.uaa.service.validation.UserValidationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.client.BaseClientDetails;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +33,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
@@ -45,6 +52,12 @@ import lombok.val;
  * @version 1.0 2021/4/19 23:15
  */
 
+@SecurityScheme(
+        name = "bearerToken",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT"
+)
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin")
@@ -57,6 +70,51 @@ public class AdminResource {
     private final PermissionAdminService permissionAdminService;
     private final UserValidationService userValidationService;
     private final RoleValidationService roleValidationService;
+    private final JdbcClientDetailsService jdbcClientDetailsService;
+
+    @GetMapping("/clients")
+    public List<ClientDetails> findAllClients() {
+        return jdbcClientDetailsService.listClientDetails();
+    }
+
+    private ClientDetails updateClientDetails(CreateOrUpdateClientDto clientDto) {
+        BaseClientDetails client = new BaseClientDetails();
+        client.setClientId(clientDto.getClientId());
+        client.setScope(clientDto.getScopes());
+        client.setAuthorizedGrantTypes(clientDto.getGrantTypes());
+        client.setRegisteredRedirectUri(clientDto.getRedirectUris());
+        client.setAccessTokenValiditySeconds(clientDto.getAccessTokenValidity());
+        client.setRefreshTokenValiditySeconds(clientDto.getRefreshTokenValidity());
+        client.setAutoApproveScopes(clientDto.getAutoApproves() != null ? clientDto.getAutoApproves() : new HashSet<>());
+        return client;
+    }
+
+    @PostMapping("/clients")
+    public ClientDetails addClient(@RequestBody CreateOrUpdateClientDto clientDto) {
+        ClientDetails toAdd = updateClientDetails(clientDto);
+        jdbcClientDetailsService.addClientDetails(toAdd);
+        jdbcClientDetailsService.updateClientSecret(clientDto.getClientId(), clientDto.getClientSecret());
+        return jdbcClientDetailsService.listClientDetails().stream()
+                .filter(clientDetails -> clientDetails.getClientId().equals(clientDto.getClientId()))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    @PutMapping("/clients/{clientId}")
+    public ClientDetails updateClient(@PathVariable String clientId, @RequestBody CreateOrUpdateClientDto clientDto) {
+        ClientDetails toUpdate = updateClientDetails(clientDto);
+        jdbcClientDetailsService.updateClientDetails(toUpdate);
+        jdbcClientDetailsService.updateClientSecret(clientId, clientDto.getClientSecret());
+        return jdbcClientDetailsService.listClientDetails().stream()
+                .filter(clientDetails -> clientDetails.getClientId().equals(clientId))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    @DeleteMapping("/clients/{clientId}")
+    public void deleteClient(@PathVariable String clientId) {
+        jdbcClientDetailsService.removeClientDetails(clientId);
+    }
 
     @GetMapping("/users")
     public Page<UserDto> findAllUsers(@QuerydslPredicate(root = User.class) Predicate predicate, Pageable pageable) {

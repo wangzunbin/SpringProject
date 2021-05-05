@@ -2,10 +2,10 @@ import { OAUTH_AXIOS } from "@/core/http-client/oauth";
 import UTIL from "@/core/util";
 
 export default {
-  getToken(code, oauthState) {
-    if (oauthState !== sessionStorage.getItem("state")) {
-      return Promise.reject(new Error("非法请求"));
-    }
+  getToken(code) {
+    // if (oauthState !== sessionStorage.getItem("state")) {
+    //   return Promise.reject(new Error("非法请求"));
+    // }
     sessionStorage.removeItem("state");
     const url = `${process.env.VUE_APP_OAUTH_TOKEN_URL}`;
     return OAUTH_AXIOS.post(url, null, {

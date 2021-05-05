@@ -1,4 +1,4 @@
-package com.wangzunbin.uaa.service.impl;
+package com.wangzunbin.uaa.service.sms;
 
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.IAcsClient;
@@ -6,7 +6,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.wangzunbin.uaa.config.AppProperties;
-import com.wangzunbin.uaa.service.ISmsService;
+import com.wangzunbin.uaa.service.sms.ISmsService;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;

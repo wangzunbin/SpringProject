@@ -1,8 +1,8 @@
 package com.wangzunbin.uaa.config;
 
+import com.wangzunbin.uaa.security.rolehierarchy.RoleHierarchyService;
 import com.wangzunbin.uaa.security.userdetails.UserDetailsPasswordServiceImpl;
 import com.wangzunbin.uaa.security.userdetails.UserDetailsServiceImpl;
-import com.wangzunbin.uaa.service.rolehierarchy.RoleHierarchyService;
 import com.wangzunbin.uaa.util.Constants;
 
 import org.springframework.beans.factory.annotation.Value;

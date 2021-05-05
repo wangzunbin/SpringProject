@@ -43,15 +43,28 @@ public class AppProperties {
     @Valid
     private EmailProvider emailProvider = new EmailProvider();
 
+    @Getter
+    @Setter
+    @Valid
+    private Security security = new Security();
+
     @Setter
     @Getter
     public static class Jwt {
+
         private String header = "Authorization";
+
         private String prefix = "Bearer ";
+
         // access token 过期时间
         private Long accessTokenExpireTime = 60_000L;
+
         // refresh token 过期时间
         private Long refreshTokenExpireTime = 30 * 24 * 3600 * 1000L;
+
+        private String key;
+
+        private String refreshKey;
     }
 
     @Getter
@@ -80,5 +93,11 @@ public class AppProperties {
     public static class EmailProvider {
         private String name;
         private String apiKey;
+    }
+
+    @Getter
+    @Setter
+    public static class Security {
+        private boolean roleHierarchyEnabled;
     }
 }

@@ -21,6 +21,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class TotpVerificationDto implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @NotBlank
     private String mfaId;
 
