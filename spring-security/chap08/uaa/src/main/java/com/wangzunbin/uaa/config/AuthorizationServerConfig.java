@@ -79,7 +79,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         TokenEnhancerChain chain = new TokenEnhancerChain();
         chain.setTokenEnhancers(Collections.singletonList(accessTokenConverter()));
         endpoints
-            .accessTokenConverter(accessTokenConverter())
+//            .accessTokenConverter(accessTokenConverter())
                 .tokenEnhancer(chain)
                 .tokenStore(tokenStore()) // 从 token 中读取特定字段构成 Authentication
                 .authenticationManager(authenticationManager) // 配置认证 manager

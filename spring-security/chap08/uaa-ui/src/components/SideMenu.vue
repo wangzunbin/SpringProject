@@ -1,5 +1,10 @@
 <template>
-  <a-menu mode="inline" v-model="selectedKeys" :openKeys="openKeys" style="height: 100%">
+  <a-menu
+    mode="inline"
+    v-model="selectedKeys"
+    :openKeys="openKeys"
+    style="height: 100%"
+  >
     <a-sub-menu
       v-for="(item, index) in sideMenus"
       :key="`${index}`"
@@ -13,7 +18,8 @@
         v-for="(child, childIndex) in item.children"
         :key="`${index}-${childIndex}`"
         @click="handleNav(item.path, child.path)"
-      >{{ child.title }}</a-menu-item>
+        >{{ child.title }}</a-menu-item
+      >
     </a-sub-menu>
   </a-menu>
 </template>
@@ -25,7 +31,7 @@ export default {
     return {
       sideMenus: SIDE_MENU,
       selectedKeys: ["0-0"],
-      openKeys: ["0"]
+      openKeys: ["0"],
     };
   },
   methods: {
@@ -43,7 +49,7 @@ export default {
         return;
       }
       this.$router.push(path);
-    }
+    },
   },
   mounted() {
     // 根据路由处理菜单的打开以及子菜单的选中
@@ -65,6 +71,6 @@ export default {
     if (this.openKeys.length === 0) {
       this.openKeys = ["0"];
     }
-  }
+  },
 };
 </script>

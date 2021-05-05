@@ -116,7 +116,7 @@ export const usersModule = {
           return Promise.reject(err);
         });
     },
-    load: ({ commit }, { page, offset, sort, filters }) => {
+    load: ({ commit }, { size, page, offset, sort, filters }) => {
       commit("startLoad");
       const sortParam =
         sort && sort.order
@@ -128,7 +128,7 @@ export const usersModule = {
             {}
           )
         : null;
-      return ADMIN_API.loadUsers(page, offset, sortParam, filterParam)
+      return ADMIN_API.loadUsers(size, page, offset, sortParam, filterParam)
         .then((res) => {
           if (res && res.data) {
             commit("loadSuccess", {

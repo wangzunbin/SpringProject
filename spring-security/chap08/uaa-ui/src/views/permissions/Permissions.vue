@@ -1,7 +1,12 @@
 <template>
   <div>
     <div v-if="error">
-      <a-alert style="width:100%" message="请求失败" v-bind:description="error" type="error" />
+      <a-alert
+        style="width:100%"
+        message="请求失败"
+        v-bind:description="error"
+        type="error"
+      />
     </div>
     <a-table
       :rowKey="(item) => item.id"
@@ -19,18 +24,18 @@ const columns = [
   {
     title: "Id",
     dataIndex: "id",
-    key: "id"
+    key: "id",
   },
   {
     title: "代码",
     dataIndex: "authority",
-    key: "authority"
+    key: "authority",
   },
   {
     title: "名称",
     dataIndex: "displayName",
-    key: "displayName"
-  }
+    key: "displayName",
+  },
 ];
 
 export default {
@@ -38,17 +43,17 @@ export default {
     return {
       data: [],
       columns,
-      error: null
+      error: null,
     };
   },
   mounted() {
     ADMIN_API.loadPermissions()
-      .then(res => (this.data = res.data))
+      .then((res) => (this.data = res.data))
       .catch(
-        err =>
+        (err) =>
           (this.error =
             UTIL.getErrorDetailFromResponse(err) || "加载权限列表错误")
       );
-  }
+  },
 };
 </script>

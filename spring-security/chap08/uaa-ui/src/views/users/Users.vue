@@ -15,21 +15,19 @@
         @back="() => $router.go(-1)"
       >
         <template slot="extra">
-          <a-button key="1" type="primary" @click="saveUserRoles">保存</a-button>
+          <a-button key="1" type="primary" @click="saveUserRoles">
+            保存
+          </a-button>
         </template>
         <template slot="tags">
-          <a-tag color="blue">
-            {{
+          <a-tag color="blue">{{
             selectedUser.enabled ? "激活" : "禁用"
-            }}
-          </a-tag>
+          }}</a-tag>
         </template>
         <a-descriptions size="small" :column="3">
-          <a-descriptions-item label="电子邮件">
-            {{
+          <a-descriptions-item label="电子邮件">{{
             selectedUser.email
-            }}
-          </a-descriptions-item>
+          }}</a-descriptions-item>
           <a-descriptions-item label="手机">
             <a>{{ selectedUser.mobile }}</a>
           </a-descriptions-item>
@@ -38,7 +36,9 @@
     </div>
     <div v-else>
       <div style="margin-bottom: 16px">
-        <a-button type="primary" @click="showAdd" v-if="hasAddUserPermission">添加用户</a-button>
+        <a-button type="primary" @click="showAdd" v-if="hasAddUserPermission"
+          >添加用户</a-button
+        >
       </div>
       <a-table
         :row-key="(item) => item.id"
@@ -89,7 +89,8 @@
                 ? 'geekblue'
                 : 'green'
             "
-          >{{ role.displayName.toUpperCase() }}</a-tag>
+            >{{ role.displayName.toUpperCase() }}</a-tag
+          >
         </span>
         <!-- 自定义用户状态列 -->
         <template slot="enabled" slot-scope="text">
@@ -111,24 +112,30 @@
         <!-- 操作列模版 -->
         <template slot="operation" slot-scope="text, record">
           <!-- 操作列的几个按钮 -->
-          <a-button type="link" @click="showEdit(record)" :disabled="!hasUpdateUserPermission">编辑</a-button>
+          <a-button
+            icon="edit"
+            @click="showEdit(record)"
+            :disabled="!hasUpdateUserPermission"
+          >
+          </a-button>
           <a-popconfirm
             title="确认切换用户状态？"
             ok-text="确认"
             cancel-text="取消"
             :disabled="!hasUpdateUserPermission || isSelf(record.username)"
-            @confirm="toggleUserEnabled(record.username)"
+            @confirm="() => toggleUserEnabled(record.username)"
           >
             <a-button
-              type="link"
+              :icon="record.enabled ? 'close-square' : 'check-square'"
               :disabled="!hasUpdateUserPermission || isSelf(record.username)"
-            >{{ record.enabled ? "禁用" : "启用" }}</a-button>
+            >
+            </a-button>
           </a-popconfirm>
           <a-button
-            type="link"
+            icon="usergroup-add"
             @click="navToUserRoles(record.username)"
             :disabled="!hasUpdateUserPermission || isSelf(record.username)"
-          >分配角色</a-button>
+          ></a-button>
         </template>
       </a-table>
       <!-- 添加用户对话框 -->
@@ -159,7 +166,7 @@ export default {
   components: {
     EditUserDialog,
     AddUserDialog,
-    TableFilter
+    TableFilter,
   },
   data() {
     return {
@@ -167,19 +174,22 @@ export default {
       editModel: {
         name: "",
         email: "",
-        mobile: ""
+        mobile: "",
       },
       showAddDialog: false,
       addModel: {
         username: "",
         name: "",
         email: "",
-        mobile: ""
+        mobile: "",
       },
       pagination: {
-        defaultPageSize: 20,
-        showTotal: () => `共 ${this.$store.state.usersModule.total} 条数据`
-      }
+        defaultPageSize: 10,
+        pageSize: 10,
+        current: 1,
+        total: 0,
+        showTotal: () => `共 ${this.$store.state.usersModule.total} 条数据`,
+      },
     };
   },
   computed: {
@@ -199,7 +209,7 @@ export default {
       return this.$store.getters["usersModule/userByUsername"](
         this.$route.params.username
       );
-    }
+    },
   },
   methods: {
     showAdd() {
@@ -207,7 +217,7 @@ export default {
         username: "",
         name: "",
         email: "",
-        mobile: ""
+        mobile: "",
       };
       this.showAddDialog = true;
     },
@@ -220,13 +230,14 @@ export default {
       this.$store.dispatch("usersModule/toggleEnabled", username);
     },
     handleTableChange(pagination, filters, sorter) {
-      this.pagination = pagination;
       this.$store.dispatch("usersModule/load", {
-        page: pagination.current - 1,
-        offset: (pagination.current - 1) * pagination.pageSize,
-        sort: { field: sorter.field, order: sorter.order },
-        filters: { ...filters }
-      });
+                size: pagination.pageSize,
+                page: pagination.current - 1,
+                offset: (pagination.current - 1) * pagination.pageSize,
+                sort: { field: sorter.field, order: sorter.order },
+                filters: { ...filters },
+              })
+              .then(() => this.pagination = {...pagination, total: this.$store.state.usersModule.total});
     },
     navToUserRoles(username) {
       this.$router.push({ path: `/users/${username}` });
@@ -242,13 +253,15 @@ export default {
         "usersModule/userRolesModule/save",
         this.selectedUser.username
       );
-    }
+    },
   },
   mounted() {
     this.$store.dispatch("usersModule/load", {
-      page: 0,
-      offset: 0
-    });
-  }
+              size: 10,
+              page: 0,
+              offset: 0,
+            })
+            .then(() => this.pagination.total = this.$store.state.usersModule.total);
+  },
 };
 </script>

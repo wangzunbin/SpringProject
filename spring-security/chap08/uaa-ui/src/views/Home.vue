@@ -8,7 +8,7 @@
         <BreadCrumb />
         <router-view></router-view>
       </a-layout-content>
-      <a-layout-footer style="text-align: center">
+      <a-layout-footer style="text-align: center; position: sticky; bottom: 0;">
         <AppFooter />
       </a-layout-footer>
     </a-layout>
@@ -37,6 +37,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  height: 100%;
+}
+#layout-top-side {
+  height: 100%;
 }
 #layout-top-side .logo {
   width: 120px;

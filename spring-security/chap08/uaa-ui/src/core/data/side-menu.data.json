@@ -21,19 +21,23 @@
     ]
   },
   {
-    "title": "菜单二",
-    "path": "/menu2",
-    "type": "route",
+    "title": "OAuth2 管理",
+    "icon": "deployment-unit",
+    "children": [
+      {
+        "title": "客户端管理",
+        "path": "/clients",
+        "type": "route"
+      }
+    ]
+  },
+  {
+    "title": "非管理功能",
     "icon": "notification",
     "children": [
       {
-        "title": "子菜单一",
-        "path": "/1",
-        "type": "route"
-      },
-      {
-        "title": "子菜单二",
-        "path": "/2",
+        "title": "日历",
+        "path": "/calendar",
         "type": "route"
       }
     ]

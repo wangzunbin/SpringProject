@@ -1,32 +1,36 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import AUTH_API from "../services/auth.service";
-import IMOOC_API from "../services/imooc.service";
+import OAUTH_API from "../services/oauth.service";
 import router from "../router";
 import UTIL from "@/core/util";
 import { usersModule } from "./modules/users";
 import { rolesModule } from "./modules/roles";
-import { registerModule } from "./modules/register";
+import { clientsModule } from "./modules/clients";
 
 Vue.use(Vuex);
+const secret = "secret";
+const getAuthFromStorage = () => {
+  return sessionStorage.getItem("auth")
+    ? JSON.parse(UTIL.decryptStr(sessionStorage.getItem("auth"), secret))
+    : null;
+};
+
+const auth = getAuthFromStorage();
+const getDefaultState = () => {
+  return {
+    login: !!sessionStorage.getItem("auth"),
+    secret: secret,
+    mfa: null,
+    loginErrMsg: null,
+    auth: {
+      accessToken: auth ? auth["access_token"] : null,
+      refreshToken: auth ? auth["refresh_token"] : null,
+    },
+  };
+};
 
 // 初始化状态
-let initialState = {
-  // 开发模式下，有的时候为了不用每次登录，我们可以根据环境变量的设置去跳过登录步骤
-  login:
-    process.env.NODE_ENV === "development" &&
-    process.env.VUE_APP_SKIP_LOGIN === "true",
-  mfa: null,
-  loginErrMsg: null,
-  auth:
-    process.env.NODE_ENV === "development" &&
-    process.env.VUE_APP_SKIP_LOGIN === "true"
-      ? {
-          accessToken: process.env.VUE_APP_AUTH_ACCESS_TOKEN,
-          refreshToken: process.env.VUE_APP_AUTH_REFRESH_TOKEN,
-        }
-      : null,
-};
+let initialState = getDefaultState();
 
 export default new Vuex.Store({
   state: initialState,
@@ -40,112 +44,50 @@ export default new Vuex.Store({
         refreshToken: payload.refreshToken,
       };
     },
-    sendMfaSuccess: (state) => {
-      state.loginErrMsg = null;
-    },
-    sendMfaFail: (state, payload) => {
-      state.loginErrMsg = payload;
-    },
-    setMfa: (state, payload) => {
-      state.mfa = payload;
-      state.loginErrMsg = null;
-    },
     loginFail: (state, payload) => {
       state.login = false;
       state.loginErrMsg = payload;
       state.auth = null;
     },
     reset(state) {
-      Object.keys(state)
-        .filter((key) => !!state[key])
-        .forEach((key) => {
-          Object.assign(state[key], initialState[key]);
-        });
+      Object.assign(state, getDefaultState());
     },
   },
   actions: {
-    sendMfa: ({ commit, getters }, payload) => {
-      AUTH_API.sendMfa(getters.mfaId, payload)
-        .then(() => commit("sendMfaSuccess"))
-        .catch((err) =>
-          commit(
-            "sendMfaFail",
-            UTIL.getErrorDetailFromResponse(err) || "发送验证码错误"
-          )
-        );
-    },
-    verifyMfa: ({ commit }, { mfaId, code }) => {
-      AUTH_API.verifyMfa(mfaId, code)
+    login: ({ commit, state }, { code, oauthState }) => {
+      return OAUTH_API.getToken(code, oauthState)
         .then((res) => {
           if (res.data) {
             commit("loginSuccess", {
-              accessToken: res.data.accessToken,
-              refreshToken: res.data.refreshToken,
+              accessToken: res.data.access_token,
+              refreshToken: res.data.refresh_token,
             });
+            const jsonData = JSON.stringify(res.data);
+            const encrypted = UTIL.encryptStr(jsonData, state.secret);
+            sessionStorage.setItem("auth", encrypted);
             router.push("/");
             return;
           }
           commit("loginFail", "服务器返回结果异常");
-          router.push("/login");
+          return Promise.resolve();
         })
         .catch((err) => {
           commit(
             "loginFail",
-            UTIL.getErrorDetailFromResponse(err.response.data) ||
-              "验证码不正确或过期"
+            UTIL.getErrorDetailFromResponse(err) || "用户名或密码错误"
           );
-          router.push("/login");
+          return Promise.reject(err);
         });
-    },
-    login: ({ commit }, { username, password, icode }) => {
-      IMOOC_API.verifyCode(icode).then((res) => {
-        if (res.data.code === 1001) {
-          AUTH_API.login(username, password)
-            .then((res) => {
-              if (res.data) {
-                commit("loginSuccess", {
-                  accessToken: res.data.accessToken,
-                  refreshToken: res.data.refreshToken,
-                });
-                router.push("/");
-                return;
-              }
-              commit("loginFail", "服务器返回结果异常");
-            })
-            .catch((err) => {
-              if (err.response) {
-                const headers = err.response.headers;
-                // 判断是否需要多因子认证
-                const MFA_PREFIX = "realm=";
-                for (const key in headers) {
-                  if (key === "x-authenticate") {
-                    const elements = headers[key].split(", ");
-                    if (
-                      elements.length === 2 &&
-                      elements[0] === "mfa" &&
-                      elements[1].startsWith(MFA_PREFIX)
-                    ) {
-                      commit("setMfa", elements[1].replace(MFA_PREFIX, ""));
-                      router.push("/mfa");
-                      return;
-                    }
-                  }
-                }
-              }
-
-              commit(
-                "loginFail",
-                UTIL.getErrorDetailFromResponse(err) || "用户名或密码错误"
-              );
-            });
-        } else {
-          commit("loginFail", res.data.msg);
-        }
-      });
     },
     reset: ({ commit }) => {
       commit("reset");
-      router.push("/login");
+      sessionStorage.clear();
+      document.cookie.split(";").forEach(function(c) {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
+      router.push("/logout");
     },
   },
   getters: {
@@ -167,13 +109,13 @@ export default new Vuex.Store({
         return "";
       }
       const payload = UTIL.parseJwt(token);
-      const username = payload["sub"];
+      const username = payload["user_name"];
       return username || "";
     },
   },
   modules: {
     usersModule,
     rolesModule,
-    registerModule,
+    clientsModule,
   },
 });

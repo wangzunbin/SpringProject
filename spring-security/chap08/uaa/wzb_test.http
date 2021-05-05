@@ -1,0 +1,8 @@
+###  获取jwks给前端加密
+GET {{host}}/.well-known/jwks.json
+
+###
+POST {{host}}/oauth/token?grant_type=password&username=user&password=@Wang2965058
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic web-client secret
+

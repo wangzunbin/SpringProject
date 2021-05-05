@@ -15,13 +15,17 @@
         @back="() => $router.go(-1)"
       >
         <template slot="extra">
-          <a-button key="1" type="primary" @click="saveRolePermissions">保存</a-button>
+          <a-button key="1" type="primary" @click="saveRolePermissions">
+            保存
+          </a-button>
         </template>
       </a-page-header>
     </div>
     <div v-else>
       <div style="margin-bottom: 16px">
-        <a-button type="primary" @click="showAdd" v-if="hasAddRolePermission">添加角色</a-button>
+        <a-button type="primary" @click="showAdd" v-if="hasAddRolePermission"
+          >添加角色</a-button
+        >
       </div>
       <a-table
         :row-key="(item) => item.id"
@@ -89,7 +93,8 @@
                 ? 'geekblue'
                 : 'green'
             "
-          >{{ permission.displayName.toUpperCase() }}</a-tag>
+            >{{ permission.displayName.toUpperCase() }}</a-tag
+          >
         </span>
         <!-- 操作列模版 -->
         <template slot="operation" slot-scope="text, record">
@@ -98,20 +103,27 @@
             type="link"
             @click="showEdit(record)"
             :disabled="!hasUpdateRolePermission || record.builtIn"
-          >编辑</a-button>
+            >编辑</a-button
+          >
           <a-popconfirm
             title="确认删除角色？"
             ok-text="确认"
             cancel-text="取消"
+            :disabled="!hasUpdateRolePermission || record.builtIn"
             @confirm="() => deleteById(record.id)"
           >
-            <a-button type="link" :disabled="!hasUpdateRolePermission || record.builtIn">删除</a-button>
+            <a-button
+              type="link"
+              :disabled="!hasUpdateRolePermission || record.builtIn"
+              >删除</a-button
+            >
           </a-popconfirm>
           <a-button
             type="link"
             @click="navToRolePermissions(record.id)"
             :disabled="!hasUpdateRolePermission"
-          >分配权限</a-button>
+            >分配权限</a-button
+          >
         </template>
       </a-table>
       <!-- 添加角色对话框 -->
@@ -142,24 +154,27 @@ export default {
   components: {
     EditRoleDialog,
     AddRoleDialog,
-    TableFilter
+    TableFilter,
   },
   data() {
     return {
       showEditDialog: false,
       editModel: {
         roleName: "",
-        displayName: ""
+        displayName: "",
       },
       showAddDialog: false,
       addModel: {
         roleName: "",
-        displayName: ""
+        displayName: "",
       },
       pagination: {
-        defaultPageSize: 20,
-        showTotal: () => `共 ${this.$store.state.rolesModule.total} 条数据`
-      }
+        defaultPageSize: 10,
+        pageSize: 10,
+        current: 1,
+        total: 0,
+        showTotal: () => `共 ${this.$store.state.rolesModule.total} 条数据`,
+      },
     };
   },
   computed: {
@@ -176,7 +191,7 @@ export default {
       return this.$store.getters["rolesModule/roleById"](
         this.$route.params.roleId
       );
-    }
+    },
   },
   methods: {
     showAdd() {
@@ -188,13 +203,14 @@ export default {
       this.editModel = { ...record };
     },
     handleTableChange(pagination, filters, sorter) {
-      this.pagination = pagination;
       this.$store.dispatch("rolesModule/load", {
+        size: pagination.pageSize,
         page: pagination.current - 1,
         offset: (pagination.current - 1) * pagination.pageSize,
         sort: { field: sorter.field, order: sorter.order },
-        filters: { ...filters }
-      });
+        filters: { ...filters },
+      })
+              .then(() => this.pagination = {...pagination, total: this.$store.state.rolesModule.total});
     },
     deleteById(id) {
       this.$store.dispatch("rolesModule/delete", id);
@@ -210,14 +226,16 @@ export default {
         "rolesModule/rolePermissionsModule/save",
         this.selectedRole.id
       );
-    }
+    },
   },
   mounted() {
     this.$store.dispatch("rolesModule/load", {
+      size: 10,
       page: 0,
-      offset: 0
-    });
-  }
+      offset: 0,
+    })
+            .then(() => this.pagination.total = this.$store.state.rolesModule.total);
+  },
 };
 </script>
 

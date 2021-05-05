@@ -114,7 +114,7 @@ export const rolesModule = {
           );
         });
     },
-    load: ({ commit }, { page, offset, sort, filters }) => {
+    load: ({ commit }, { size, page, offset, sort, filters }) => {
       commit("startLoad");
       const sortParam =
         sort && sort.order
@@ -126,7 +126,7 @@ export const rolesModule = {
             {}
           )
         : null;
-      ADMIN_API.loadRoles(page, offset, sortParam, filterParam)
+      ADMIN_API.loadRoles(size, page, offset, sortParam, filterParam)
         .then((res) => {
           if (res && res.data) {
             commit("loadSuccess", {

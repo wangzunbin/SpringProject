@@ -38,20 +38,22 @@ ADMIN_AXIOS.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       const refreshToken = store.state.auth.refreshToken;
-      const accessToken = store.state.auth.accessToken;
       // 刷新 token
       return axios
-        .post(`${process.env.VUE_APP_API_URL}/authorize/token/refresh`, null, {
-          headers: {
-            Authorization: "Bearer " + accessToken,
-          },
+        .post(`${process.env.VUE_APP_OAUTH_TOKEN_URL}`, null, {
           params: {
-            refreshToken: refreshToken,
+            grant_type: "refresh_token",
+            client_id: `${process.env.VUE_APP_OAUTH_CLIENT_ID}`,
+            client_secret: `${process.env.VUE_APP_OAUTH_CLIENT_SECRET}`,
+            refresh_token: refreshToken,
           },
         })
         .then((res) => {
           // 在 store 中存储
-          store.commit("loginSuccess", res.data);
+          store.commit("loginSuccess", {
+            accessToken: res.data.access_token,
+            refreshToken: res.data.refresh_token,
+          });
           // 使用新的 token 发送原有的请求
           ADMIN_AXIOS.defaults.headers.common["Authorization"] =
             "Bearer " + store.state.auth.accessToken;

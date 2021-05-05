@@ -15,6 +15,7 @@
         :row-selection="availableRowSelection"
         :columns="columns"
         :data-source="availableRoles"
+        :scroll="{ y: 300 }"
       >
         <template slot="title">
           未分配角色
@@ -32,6 +33,7 @@
         :row-selection="assignedRowSelection"
         :columns="columns"
         :data-source="assignedRoles"
+        :scroll="{ y: 300 }"
       >
         <template slot="title">
           已分配角色

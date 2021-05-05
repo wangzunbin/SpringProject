@@ -8,23 +8,9 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/login",
-    name: "Login",
+    path: "/logout",
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/auth/Login.vue"),
-  },
-  {
-    path: "/mfa",
-    name: "mfa",
-    beforeEnter: guards.guardMfa,
-    component: () =>
-      import(/* webpackChunkName: "mfa" */ "../views/auth/Mfa.vue"),
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: () =>
-      import(/* webpackChunkName: "register" */ "../views/auth/Register.vue"),
+      import(/* webpackChunkName: "logout" */ "../views/Logout.vue"),
   },
   {
     path: "/forbidden",
@@ -115,6 +101,19 @@ const routes = [
               breadcrumb: [
                 { to: "/", label: "首页" },
                 { to: "", label: "权限管理" },
+              ],
+            },
+          },
+          {
+            path: "clients",
+            component: () =>
+              import(
+                /* webpackChunkName: "permissions" */ "../views/clients/Clients.vue"
+              ),
+            meta: {
+              breadcrumb: [
+                { to: "/", label: "首页" },
+                { to: "", label: "OAuth2 客户端管理" },
               ],
             },
           },

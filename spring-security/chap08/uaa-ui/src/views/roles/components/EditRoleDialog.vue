@@ -23,7 +23,8 @@
         type="primary"
         :loading="$store.state.rolesModule.loading"
         @click="handleOk"
-      >确认</a-button>
+        >确认</a-button
+      >
     </template>
   </a-modal>
 </template>
@@ -33,14 +34,14 @@ import { editRoleRules } from "@/views/form-rules/edit-roles";
 export default {
   props: {
     show: Boolean,
-    record: Object
+    record: Object,
   },
   data() {
     return {
       layout: {
         labelCol: { span: 4 },
-        wrapperCol: { span: 12 }
-      }
+        wrapperCol: { span: 12 },
+      },
     };
   },
   computed: {
@@ -53,20 +54,20 @@ export default {
       },
       set(value) {
         this.$emit("closed", value);
-      }
+      },
     },
     model: {
       get() {
         return this.record;
-      }
-    }
+      },
+    },
   },
   methods: {
     handleOk() {
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate((valid) => {
         if (valid) {
           this.$emit("submitted", this.model);
-          this.$store.dispatch("rolesModule/update", this.model).then(res => {
+          this.$store.dispatch("rolesModule/update", this.model).then((res) => {
             if (res) {
               this.$refs.form.resetFields();
               this.visible = false;
@@ -77,8 +78,8 @@ export default {
     },
     handleCancel() {
       this.visible = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,9 +1,9 @@
 package com.wangzunbin.uaa.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wangzunbin.uaa.integration.passay.PassayPropertiesMessageResolver;
 
 import org.passay.MessageResolver;
-import org.passay.spring.SpringMessageResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +43,7 @@ public class WebMvcConfig  implements WebMvcConfigurer {
      */
     @Bean
     public MessageResolver messageResolver(){
-        return new SpringMessageResolver(messageSource);
+        return new PassayPropertiesMessageResolver(messageSource);
     }
 
     /**

@@ -1,9 +1,9 @@
 import ADMIN_AXIOS from "@/core/http-client/admin";
 
 export default {
-  loadUsers(page, offset, sort, filters) {
+  loadUsers(size, page, offset, sort, filters) {
     return ADMIN_AXIOS.get("/users", {
-      params: { page, offset, sort, ...filters },
+      params: { size, page, offset, sort, ...filters },
     });
   },
   loadByUsername(username) {
@@ -38,9 +38,9 @@ export default {
     const url = `/users/${username}/enabled`;
     return ADMIN_AXIOS.put(url, null);
   },
-  loadRoles(page, offset, sort, filters) {
+  loadRoles(size, page, offset, sort, filters) {
     return ADMIN_AXIOS.get("/roles", {
-      params: { page, offset, sort, ...filters },
+      params: { size, page, offset, sort, ...filters },
     });
   },
   checkRoleName(roleName) {
@@ -78,5 +78,21 @@ export default {
   saveRolePermissions(roleId, permissionIds) {
     const url = `/roles/${roleId}/permissions`;
     return ADMIN_AXIOS.put(url, permissionIds);
+  },
+  loadClients() {
+    const url = `/clients`;
+    return ADMIN_AXIOS.get(url);
+  },
+  addClient(client) {
+    const url = `/clients`;
+    return ADMIN_AXIOS.post(url, client);
+  },
+  updateClient(client) {
+    const url = `/clients/${client.clientId}`;
+    return ADMIN_AXIOS.put(url, client);
+  },
+  deleteClient(id) {
+    const url = `/clients/${id}`;
+    return ADMIN_AXIOS.delete(url);
   },
 };

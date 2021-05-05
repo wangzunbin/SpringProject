@@ -2,6 +2,7 @@ export const usersColumns = () => [
   {
     title: "Id",
     dataIndex: "id",
+    width: 80,
   },
   {
     title: "用户名",
@@ -53,6 +54,7 @@ export const usersColumns = () => [
       { text: "启用", value: "true" },
       { text: "禁用", value: "false" },
     ],
+    width: 80,
   },
   {
     title: "操作",

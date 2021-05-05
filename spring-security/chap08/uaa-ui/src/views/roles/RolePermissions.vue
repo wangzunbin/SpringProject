@@ -17,6 +17,7 @@
         :row-selection="availableRowSelection"
         :columns="columns"
         :data-source="availablePermissions"
+        :scroll="{ y: 300 }"
       >
         <template slot="title">
           未分配权限
@@ -34,6 +35,7 @@
         :row-selection="assignedRowSelection"
         :columns="columns"
         :data-source="assignedPermissions"
+        :scroll="{ y: 300 }"
       >
         <template slot="title">
           已分配权限
