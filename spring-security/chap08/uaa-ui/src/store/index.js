@@ -54,8 +54,8 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    login: ({ commit, state }, { code }) => {
-      return OAUTH_API.getToken(code)
+    login: ({ commit, state }, { code, oauthState }) => {
+      return OAUTH_API.getToken(code, oauthState)
         .then((res) => {
           if (res.data) {
             commit("loginSuccess", {
