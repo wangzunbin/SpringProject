@@ -1,6 +1,5 @@
 package com.wangzunbin.uaa.config;
 
-import com.wangzunbin.uaa.security.auth.ldap.LDAPAuthenticationProvider;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
@@ -25,33 +24,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final DaoAuthenticationProvider daoAuthenticationProvider;
-    private final LDAPAuthenticationProvider ldapAuthenticationProvider;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests(req -> req.anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/login")
-                        .usernameParameter("username")
-                        .defaultSuccessUrl("/").permitAll())
-                .logout(logout -> logout.logoutUrl("/perform_logout"))
-                .rememberMe(rememberMe -> rememberMe.tokenValiditySeconds(30 * 24 * 3600).rememberMeCookieName("someKeyToRemember"));
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/perform_logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll())
+                .rememberMe(rememberMe -> rememberMe
+                        .key("someSecret")
+                        .tokenValiditySeconds(86400))
+                .authorizeRequests(authorizeRequests -> authorizeRequests
+                        .anyRequest().authenticated());
     }
 
-    // 表单生效需求加上这个, 跟SecurityConfig一样
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 使用的是jdbc来存储下面的两个用户
-        auth.authenticationProvider(ldapAuthenticationProvider);
-        auth.authenticationProvider(daoAuthenticationProvider);
-    }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/error/**", "/h2-console/**", "/public/**")
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }
 }

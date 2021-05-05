@@ -16,11 +16,6 @@ server:
 spring:
   application:
     name: uaa
-  security:
-    user:
-      name: user
-      password: Wangzunbin123
-      roles: USER,ADMIN
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:

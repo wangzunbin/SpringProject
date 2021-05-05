@@ -6,11 +6,8 @@ import com.wangzunbin.uaa.domain.User;
 import com.wangzunbin.uaa.repository.RoleRepo;
 import com.wangzunbin.uaa.repository.UserRepo;
 import com.wangzunbin.uaa.util.Constants;
-import com.wangzunbin.uaa.util.JwtUtil;
 import com.wangzunbin.uaa.util.TotpUtil;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,19 +37,10 @@ public class UserService {
 
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
     private final RoleRepo roleRepo;
     private final TotpUtil totpUtil;
 
-    /**
-     * 根据 UserDetails 生成 accessToken 和 refreshToken
-     *
-     * @param userDetails 用户信息
-     * @return token 对
-     */
-    public Auth login(UserDetails userDetails) {
-        return new Auth(jwtUtil.createAccessToken(userDetails), jwtUtil.createRefreshToken(userDetails));
-    }
+
 
     public boolean isUsernameExisted(String username){
         return userRepo.countByUsername(username) > 0;
@@ -99,11 +87,6 @@ public class UserService {
         return totpUtil.createTotp(user.getMfaKey());
     }
 
-    public Auth loginWithTotp(User user) {
-        val toSave = user.withMfaKey(totpUtil.encodeKeyToString());
-        val saved = saveUser(toSave);
-        return login(saved);
-    }
 
     /**
      * 保存用户

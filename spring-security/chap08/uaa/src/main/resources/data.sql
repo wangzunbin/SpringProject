@@ -17,3 +17,9 @@ values (1, 'ROLE_USER', '客户端用户', true),
        (3, 'ROLE_STAFF', '管理后台用户', true);
 insert into wzb_users_roles(user_id, role_id) values (1, 1), (1, 2), (1, 3), (2, 1);
 insert into wzb_roles_permissions(role_id, permission_id) values (1, 1), (2, 1), (2, 2), (2, 3), (2, 4);
+INSERT INTO oauth_client_details (client_id, client_name, client_secret, scope, authorized_grant_types, web_server_redirect_uri, access_token_validity, refresh_token_validity, additional_information, autoapprove)
+VALUES ('web-client', '第三方前端', '{noop}secret', 'todo.read,todo.write', 'authorization_code,password,refresh_token,client_credentials', 'http://localhost:8081/login/oauth2/code/web-client-auth-code', '900', '31536000', '{}', null),
+       ('admin-client', '后台管理客户端', '{noop}secret', 'user.admin,client.admin', 'authorization_code,password,refresh_token,client_credentials', 'http://localhost:4001', '60', '31536000', '{}', true),
+       ('ios-client', 'iOS 客户端', '{noop}secret', 'todo.read,todo.write', 'authorization_code,password,refresh_token,client_credentials', 'com.example.app://action', '900', '31536000', '{}', null),
+       ('android-client', 'Android 客户端', '{noop}secret', 'todo.read,todo.write', 'authorization_code,password,refresh_token,client_credentials', 'com.example.app://action', '900', '31536000', '{}', null),
+       ('todos-service', '微服务', '{noop}secret', 'todo.read,todo.write', 'authorization_code,refresh_token,client_credentials', 'http://localhost:8082/authorized', '900', '31536000', '{}', true );

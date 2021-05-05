@@ -1,0 +1,1 @@
+keytool -genkeypair -alias wzb-oauth-jwt -keyalg RSA -keypass wzb-pass -keystore wzb-jwt.jks -storepass wzb-pass

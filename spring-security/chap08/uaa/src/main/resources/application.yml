@@ -19,11 +19,6 @@ spring:
   messages:
     basename: messages
     encoding: UTF-8
-  security:
-    user:
-      name: user
-      password: Wangzunbin123
-      roles: USER,ADMIN
   datasource:
     initialization-mode: embedded
   profiles:
@@ -39,6 +34,11 @@ spring:
           auth: true
           starttls:
             enable: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${JWK_SET_URI:http://localhost:8080/.well-known/jwks.json}
 wzb:
   jwt:
     access-token-expire-time: 30000
@@ -46,6 +46,8 @@ wzb:
   ali:
     api-key: ${ALI_API_KEY}
     api-secret: ${ALI_API_SECRET}
+  security:
+    role-hierarchy-enabled: true
   leanCloud:
     appId: ${LEAN_CLOUD_APP_ID}
     appKey: ${LEAN_CLOUD_APP_KEY}

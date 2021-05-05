@@ -1,0 +1,67 @@
+POST http://localhost:8080/auth/realms/imooc/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&client_id=sso-client-1&client_secret=edc45ef0-32ca-434f-a9f9-87ca4f80ca3f
+
+
+###
+POST http://localhost:8080/auth/realms/imooc/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username=user&password=12345678&client_id=sso-client-1&client_secret=edc45ef0-32ca-434f-a9f9-87ca4f80ca3f
+
+###
+GET http://localhost:8081/client-one/api/hello HTTP/1.1
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJONm11Z3EyZVRQTGFNbS12ZUJualRLSUtxZGw0TU5aOXJJc2JPcVhaY1lJIn0.eyJleHAiOjE2MDcxNDY0NDAsImlhdCI6MTYwNzE0NjE0MCwianRpIjoiYTk5OThhZmItZWZhMC00ZTVjLTg4M2EtNThlNTAyOGZhNDlkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2F1dGgvcmVhbG1zL2ltb29jIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjZhZGRkYWMyLWFlMzYtNDdhMC04YmVjLTQzODYwYWE2MDM2OSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNzby1jbGllbnQtMSIsInNlc3Npb25fc3RhdGUiOiJlZWRlMWM0NS02MGNlLTRmZjYtODM4ZC0xY2Y3MGVhMTdlZTIiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoidXNlciJ9.Lj7z8W6YeMqtnicxHps0xlVbIHKOJTbDZ__sUdEZhGbMMm0jKfhOXj4M7gVJZU5qdXdEa9Q_L-BMuHcJ0nTRmBnyrITrgMZ5yfGEkBkJlT9-y8OaLdxoJV8ZJIQAiEmMLDYR4mp9piYlsUG9fw2sq3gAR2cIvcJJ00zpdE_84lM6bnaK61oiKXySOkczNMEi05HLwiFN-_omEZaxykvAzXL77D5Zkr4MsIJwbfmzEDhFFi1KrMoPKKmGNM_A3iXvkDCwqxdWx0lPsBxmSTpNd8QAw6s1F2YGx8aT_Z5Ys1JrL6Po_8rTYoKGeI06XeHFhvyFkPMbPSOAU4RLbUQhng
+
+###
+GET {{host}}/.well-known/jwks.json
+
+### 授权码流程
+GET {{host}}/oauth/authorize?response_type=code&client_id=admin-client&redirect_uri=http://localhost:4001&state=123
+
+###
+# @name passwordFlow
+POST {{host}}/oauth/token
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic web-client secret
+
+grant_type=password&username=user&password=12345678
+
+###
+@refreshToken={{passwordFlow.response.body.refresh_token}}
+@accessToken={{passwordFlow.response.body.access_token}}
+
+###
+GET http://localhost:8082/todos HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+###
+POST {{host}}/oauth/token?grant_type=refresh_token&refresh_token={{refreshToken}}
+Authorization: Basic admin-client secret
+
+###
+POST {{host}}/oauth/token?grant_type=client_credentials
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic admin-client secret
+
+###
+GET {{host}}/api/me HTTP/1.1
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTExNTAzODksInVzZXJfbmFtZSI6InVzZXIiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiLCJST0xFX1NUQUZGIiwiVVNFUl9BRE1JTiIsIlVTRVJfQ1JFQVRFIiwiVVNFUl9VUERBVEUiLCJST0xFX0FETUlOIiwiVVNFUl9SRUFEIl0sImp0aSI6ImhRb2F0OUVrMlJQOGpzei1sZWoxZ2ZzVVVtNCIsImNsaWVudF9pZCI6ImFwcC1jbGllbnQiLCJzY29wZSI6WyJyZWFkIl19.ohc9jtF4gcfu9VlZ0hRYcJC7mOIifJ8UgUW8t-wBYBkZZXoA6hOZBV137NurtSvx3vxWg9gdo3hTcSf3VGwjeuL8use7x3wGzWmq3Dv6O2BW_k-tTKqLhbR-SE0b82ad4AAgXWCxqNkMEx3Cz86SLcbEpjfyZCqak_tY0EB4DgSD2bOFp_P3fATqkiv3F3Vj7SlS5vCHQp-VDjEkiFbEL5SPL7Obo14lDOcID2vxEoT3eia5OuiI7W79rgUUpt8NmY_lz4e6wid9NT_rnvQHWAMbgZxl5_U0s3pcNnqHgotorYVSP-t9h2gRReTvo7I8NLSpZsFsaVEhMS0b-TBhnw
+
+###
+POST {{host}}/process
+Content-Type: application/x-www-form-urlencoded
+
+username=user
+&password=12345678
+
+###
+POST {{host}}/clients
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "client_id": "test-client",
+  "client_secret": "secret"
+}
