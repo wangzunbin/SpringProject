@@ -25,7 +25,7 @@
         <springframework.version>4.3.8.RELEASE</springframework.version>
         <aspectj.version>1.8.10</aspectj.version>
         <slf4j.version>1.7.24</slf4j.version>
-        <log4j.version>2.8.1</log4j.version>
+        <log4j.version>2.16.0</log4j.version>
         <fastjson.version>1.2.32</fastjson.version>
         <commons-lang3.version>3.5</commons-lang3.version>
         <commons-io.version>2.5</commons-io.version>
