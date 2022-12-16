@@ -22,7 +22,7 @@
         <project.build.locale>zh_CN</project.build.locale>
 
         <!--依赖库 版本号定义-->
-        <springframework.version>4.3.8.RELEASE</springframework.version>
+        <springframework.version>5.2.20.RELEASE</springframework.version>
         <aspectj.version>1.8.10</aspectj.version>
         <slf4j.version>1.7.24</slf4j.version>
         <log4j.version>2.8.1</log4j.version>
